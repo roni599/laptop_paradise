@@ -1,0 +1,308 @@
+<template>
+    <div class="main">
+        <nav class="sb-topnav navbar navbar-expand navbar-info bg-info"
+            v-show="$route.path === '/' || $route.path === '/register' || $route.path === '/forget' ? false : true">
+            <router-link class="navbar-brand ps-3" to="/home">
+                <img src="/public/backend/assets/img/laptop_paradise2.png" alt="logo image" style="margin-left: -75px"
+                    width="300" class="logo-lg">
+            </router-link>
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!">
+                <i class="fas fa-bars text-white fs-4"></i>
+            </button>
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <div class="form-group mb-0 d-flex align-items-center">
+                        <input type="search" class="form-control border-0 shadow-none" placeholder="Search here. . .">
+                        <button class="btn btn-light-secondary btn-search"><i
+                                class="fas fa-search text-white"></i></button>
+                    </div>
+                </div>
+            </form>
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw text-white"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!">Settings</a></li>
+                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li>
+                            <hr class="dropdown-divider" />
+                        </li>
+                        <li>
+                            <router-link class="dropdown-item" to="/logout">Logout</router-link>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav"
+                v-show="$route.path === '/' || $route.path === '/register' || $route.path === '/forget' ? false : true">
+                <nav class="sb-sidenav accordion sb-sidenav-light shadow" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav sb-sidenav-menu-heading">
+                            <div class="sb-sidenav-menu-heading">
+                                <p>Navigation</p>
+                            </div>
+                            <router-link class="nav-link rounded-end mb-3 bg-secondary text-white" to="/home">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-home text-white"></i>
+                                </div>
+                                Dashboard
+                            </router-link>
+                            <!-- <router-link class="nav-link bg-secondary text-white fw-bold" to="/pos">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-tachometer-alt text-white"></i>
+                                </div>
+                                POS
+                            </router-link>
+                            <div class="sb-sidenav-menu-heading">Interface</div> -->
+
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-id-card mt-1"></i>
+                                </div>
+                                Users
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                                data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <router-link class="nav-link" to="/user_create">User Create</router-link>
+                                    <router-link class="nav-link" to="/all_user">User List</router-link>
+                                    <router-link class="nav-link" to="/role">Role</router-link>
+                                </nav>
+                            </div>
+
+                            <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#collapseSuppliers" aria-expanded="false"
+                                aria-controls="collapseSuppliers">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fa-solid fa-people-arrows"></i>
+                                </div>
+                                Suppliers
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="collapse" id="collapseSuppliers" aria-labelledby="headingTwo"
+                                data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                    <router-link class="nav-link" to="/supplier_create">Add Suppliers</router-link>
+                                    <router-link class="nav-link" to="/all_supplier">All Suppliers</router-link>
+                                </nav>
+                            </div> -->
+
+                            <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#collapseCustomers" aria-expanded="false"
+                                aria-controls="collapseCustomers">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                Customers
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="collapse" id="collapseCustomers" aria-labelledby="headingTwo"
+                                data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                    <router-link class="nav-link" to="/customer_create">Add Customers</router-link>
+                                    <router-link class="nav-link" to="/all_customer">All Customers</router-link>
+                                </nav>
+                            </div> -->
+
+                            <!-- 
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#collapseCategories" aria-expanded="false"
+                                aria-controls="collapseCategories">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fa-solid fa-layer-group"></i>
+                                </div>
+                                Categories
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="collapse" id="collapseCategories" aria-labelledby="headingTwo"
+                                data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                    <router-link class="nav-link" to="/category_create">Add Categories</router-link>
+                                    <router-link class="nav-link" to="/all_category">All Category</router-link>
+                                </nav>
+                            </div> -->
+
+                            <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#collapseProducts" aria-expanded="false"
+                                aria-controls="collapseProducts">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                Products
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="collapse" id="collapseProducts" aria-labelledby="headingTwo"
+                                data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                    <router-link class="nav-link" to="/product_create">Add Product</router-link>
+                                    <router-link class="nav-link" to="/all_product">All Products</router-link>
+                                </nav>
+                            </div>
+
+
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#collapseExpense" aria-expanded="false"
+                                aria-controls="collapseProducts">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fa-solid fa-wallet"></i>
+                                </div>
+                                Expense
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="collapse" id="collapseExpense" aria-labelledby="headingTwo"
+                                data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                    <router-link class="nav-link" to="/expense_create">Add Expense</router-link>
+                                    <router-link class="nav-link" to="/all_expense">All Expense</router-link>
+                                </nav>
+                            </div> -->
+                            <!-- <router-link class="nav-link" to="/stocks">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Stocks
+                            </router-link> -->
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content"
+                :class="{ 'pc-container': true, 'custom-style': $route.path !== '/' && $route.path !== '/register' && $route.path !== '/forget' }">
+                <main>
+                    <div class="container-fluid px-2"
+                        :class="{ 'pc-content': true, 'no-padding': $route.path === '/' || $route.path === '/register' || $route.path === '/forget' }">
+                        <router-view></router-view>
+                    </div>
+                </main>
+                <footer class="py-3 w-100">
+                    <div class="container-fluid"
+                        v-show="$route.path === '/' || $route.path === '/register' || $route.path === '/forget' ? false : true">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                            <div>
+                                <a href="#">Privacy Policy</a>
+                                &middot;
+                                <a href="#">Terms &amp; Conditions</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    name: "App",
+    data() {
+        return {};
+    },
+};
+</script>
+
+<style>
+.input-group {
+    position: relative;
+}
+
+.input-group .input-group-text {
+    position: absolute;
+    left: 10px;
+    /* Adjust position */
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.input-group .form-control {
+    padding-left: 35px;
+    /* Adjust padding to make room for the icon */
+}
+
+.pc-container {
+    position: relative;
+}
+
+.pc-container .pc-content {
+    padding-left: 35px;
+    /* padding-right: 35px; */
+    /* padding-top: 35px; */
+}
+
+.custom-style {
+    padding-left: 227px;
+    top: 56px;
+    padding-top: 5px;
+    min-height: calc(100vh - 130px);
+}
+
+.no-padding {
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+}
+
+@media (max-width: 1200px) {
+    .custom-style {
+        margin-left: 200px;
+        padding-left: 245px;
+        top: 50px;
+    }
+}
+
+@media (max-width: 992px) {
+    .custom-style {
+        margin-left: 150px;
+        top: 40px;
+        min-height: calc(100vh - 100px);
+    }
+
+    .no-padding {
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .custom-style {
+        margin-left: 0;
+        top: 40px;
+        min-height: calc(100vh - 80px);
+    }
+
+    .no-padding {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+
+@media (max-width: 576px) {
+    .custom-style {
+        margin-left: 0;
+        top: 40px;
+        min-height: calc(100vh - 60px);
+    }
+
+    .no-padding {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+</style>
