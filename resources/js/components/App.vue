@@ -21,7 +21,12 @@
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw text-white"></i></a>
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <!-- <img
+                            src="/public/backend/images/users/135_ekRoni.png" class="images" alt=""> -->
+                        </a>
+                    <!-- <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw text-white"></i></a> -->
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#!">Settings</a></li>
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
@@ -77,6 +82,23 @@
                                 </nav>
                             </div>
 
+                            <router-link to="/brand" class="nav-link collapsed">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-id-card mt-1"></i>
+                                </div>
+                                Brands
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </router-link>
+                            <!-- <div class="collapse" id="collapseBrand" aria-labelledby="headingOne"
+                                data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <router-link class="nav-link" to="/user_create">User Create</router-link>
+                                    <router-link class="nav-link" to="/all_user">User List</router-link>
+                                    <router-link class="nav-link" to="/role">Role</router-link>
+                                </nav>
+                            </div> -->
                             <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                                 data-bs-target="#collapseSuppliers" aria-expanded="false"
                                 aria-controls="collapseSuppliers">
@@ -181,6 +203,7 @@
                     </div>
                 </nav>
             </div>
+
             <div id="layoutSidenav_content"
                 :class="{ 'pc-container': true, 'custom-style': $route.path !== '/' && $route.path !== '/register' && $route.path !== '/forget' }">
                 <main>
@@ -208,6 +231,8 @@
 </template>
 
 <script>
+import User from '../Helpers/User';
+
 export default {
     name: "App",
     data() {
@@ -278,6 +303,13 @@ export default {
         padding-right: 10px;
         padding-top: 20px;
     }
+}
+
+.images {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 2px solid #708090;
 }
 
 @media (max-width: 768px) {

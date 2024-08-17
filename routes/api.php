@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Employee\EmployeeController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\POS\PosController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\Supplier\SupplierController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,11 +29,32 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function () {
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('signup', [AuthController::class, 'signup']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::get('me', [AuthController::class, 'me']);
+});
 
+//for role
 Route::get('/roles',[RoleController::class, 'index']);
 Route::post('/roles/store',[RoleController::class,'store']);
 Route::put('/roles/update',[RoleController::class,'update']);
 Route::delete('/roles/delete/{id}',[RoleController::class,'delete']);
+
+//for user
+Route::get('/alluser',[RoleController::class, 'all']);
+Route::put('/user/update',[RoleController::class, 'userUpdate']);
+Route::delete('/user/delete/{id}',[RoleController::class,'deleted']);
+
+//for brand
+Route::get('/brands', [BrandController::class, 'index']);
+Route::post('/brands/store', [BrandController::class, 'store']);
+// Route::post('/users/store',[UserController::class, 'store']);
 // Route::get('/employees', [EmployeeController::class, 'index']);
 // Route::post('/employees/store', [EmployeeController::class, 'store']);
 // Route::delete('/employees/delete/{id}', [EmployeeController::class, 'delete']);

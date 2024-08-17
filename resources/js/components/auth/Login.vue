@@ -29,9 +29,12 @@
                       <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
                     </div>
                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                      <!-- <a class="small" href="password.html">Forgot Password?</a> -->
-                      <!-- <router-link to="/forget">Forgot Password?</router-link> -->
-                      <button class="btn btn-primary w-100 mb-2">Login</button>
+                      <button class="btn btn-primary w-100 mb-2" :disabled="loading">
+                        <span v-if="loading" class="spinner-border spinner-border-sm me-2" role="status"
+                          aria-hidden="true"></span>
+                        <span v-if="!loading">Login</span>
+                        <span v-if="loading">Logging in...</span>
+                      </button>
                     </div>
                   </form>
                 </div>
@@ -59,13 +62,14 @@ export default {
         email: "",
         password: "",
       },
-      errors: {}
+      errors: {},
+      loading: false
     };
   },
   methods: {
     async login() {
-      await axios
-        .post("/api/auth/login", this.form)
+      this.loading = true
+      await axios.post("/api/auth/login", this.form)
         .then((res) => {
           User.responseAfterLogin(res);
           Toast.fire({
@@ -80,6 +84,9 @@ export default {
             icon: "warning",
             title: "Invalid emial or password"
           })
+        })
+        .finally(() => {
+          this.loading = false
         })
     },
   },

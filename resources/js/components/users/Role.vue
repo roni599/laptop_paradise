@@ -7,8 +7,6 @@
       </div>
     </div>
     <button class="btn shadow-sm btn-primary mb-2" @click="openCreateRoleModal()">Add Role</button>
-
-
     <div class="card mb-4 tt">
       <div class="card-header d-flex justify-content-between">
         <div class="employee_table fw-bold text-muted">
@@ -36,7 +34,14 @@
             <tr v-for="role in roles" :key="role.id">
               <td>{{ role.id }}</td>
               <td>{{ role.role_name }}</td>
-              <td>{{ role.permissions }}</td>
+              <!-- <td>{{ role.permissions }}</td> -->
+              <td>
+                <span v-if="role.permissions == 1">Read</span>
+                <span v-else-if="role.permissions == 2">Write</span>
+                <span v-else-if="role.permissions == 3">Read Write Update</span>
+                <span v-else-if="role.permissions == 4">Read Write Update Delete</span>
+                <span v-else>No Permissions</span>
+              </td>
               <td>{{ role.status }}</td>
               <td>
                 <div class="buttonGroup py-2">
@@ -114,9 +119,6 @@
         </div>
       </div>
     </div>
-
-
-
     <div class="modal fade" id="editRoleModal" tabindex="-1" aria-labelledby="editRoleModalLabel" aria-hidden="true">
       <div class="modal-dialog full-width-modal mt-5">
         <div class="modal-content">

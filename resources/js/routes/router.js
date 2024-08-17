@@ -28,6 +28,7 @@ import Pos from '../components/pos/Pos.vue';
 import Create_user from '../components/users/Create_user.vue';
 import User_list from '../components/users/User_list.vue';
 import Role from '../components/users/Role.vue';
+import Brand from '../components/brands/Brand.vue';
 
 const routes = [
     { name: 'LoginForm', component: Login, path: '/' },
@@ -61,6 +62,8 @@ const routes = [
     { name: 'User_create', component: Create_user, path: '/user_create' },
     { name: 'All_user', component: User_list, path: '/all_user' },
     { name: 'Role', component: Role, path: '/role' },
+
+    { name: 'Brand', component: Brand, path: '/brand' },
 ];
 
 const router = createRouter({
