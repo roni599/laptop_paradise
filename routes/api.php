@@ -56,6 +56,12 @@ Route::get('/brands', [BrandController::class, 'index']);
 Route::post('/brands/store', [BrandController::class, 'store']);
 Route::put('/brands/update', [BrandController::class, 'brandUpdate']);
 Route::delete('/brands/delete/{id}', [BrandController::class, 'delete']);
+
+//for category
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::post('/categories/store', [CategoryController::class, 'store']);
+Route::put('/categories/update', [CategoryController::class, 'CategoryUpdate']);
+Route::delete('/categories/delete/{id}', [CategoryController::class, 'delete']);
 // Route::post('/users/store',[UserController::class, 'store']);
 // Route::get('/employees', [EmployeeController::class, 'index']);
 // Route::post('/employees/store', [EmployeeController::class, 'store']);

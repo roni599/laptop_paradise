@@ -4,16 +4,15 @@
             <div class="card-header border-bottom-0 p-4">
                 <router-link class="text-decoration-none h5" to="/home">Dashboard</router-link><span
                     class="text-muted h5"> /
-                    Brands</span>
+                    Category</span>
             </div>
         </div>
-        <button class="btn shadow-sm btn-primary mb-2" @click="openCreateBrandModal()">Add Brand</button>
-
+        <button class="btn shadow-sm btn-primary mb-2" @click="openCreateCategoryModal()">Add Category</button>
         <div class="card mb-4 tt">
             <div class="card-header d-flex justify-content-between">
                 <div class="employee_table fw-bold text-muted">
                     <i class="fas fa-table me-1"></i>
-                    Roles
+                    Category
                 </div>
             </div>
             <div class="card-body">
@@ -21,27 +20,28 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Brand Name</th>
+                            <th scope="col">Category Name</th>
                             <th scope="col">Status</th>
                             <th scope="col">Image</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="brand in brands" :key="brand.id">
-                            <th scope="row">{{ brand.id }}</th>
-                            <td>{{ brand.brand_name }}</td>
-                            <td>{{ brand.status }}</td>
+                        <tr v-for="category in categories" :key="category.id">
+                            <th scope="row">{{ category.id }}</th>
+                            <td>{{ category.cat_name }}</td>
+                            <td>{{ category.status }}</td>
                             <td>
-                                <img :src="`/backend/images/brands/${brand.brand_image}`" alt="User Image" width="50"
+                                <img :src="`/backend/images/categories/${category.cat_img}`" alt="User Image" width="50"
                                     height="50" />
                             </td>
                             <td>
                                 <div class="buttonGroup py-2">
-                                    <button type="button" class="btn btn-sm btn-success" @click="openEditModal(brand)">
+                                    <button type="button" class="btn btn-sm btn-success"
+                                        @click="openEditModal(category)">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
-                                    <button class="btn btn-sm btn-danger mx-2" @click="deleteBrand(brand.id)">
+                                    <button class="btn btn-sm btn-danger mx-2" @click="deleteCategory(category.id)">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </div>
@@ -51,13 +51,14 @@
                 </table>
             </div>
         </div>
-        <div class="modal fade" id="createBrandModal" tabindex="-1" aria-labelledby="createBrandModalLabel"
+
+        <div class="modal fade" id="createCategoryModal" tabindex="-1" aria-labelledby="createCategoryLabel"
             aria-hidden="true">
             <div class="modal-dialog full-width-modal mt-4">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title text-muted" id="createBrandModal">
-                            Add Role
+                        <h5 class="modal-title text-muted" id="createCategoryModal">
+                            Add Category
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -68,20 +69,20 @@
                                     <div class="card-header d-flex justify-content-between align-items-center">
                                         <div class="icon_text d-flex gap-2 mt-3">
                                             <p><i class="fa-solid fa-chart-line"></i></p>
-                                            <p class="text-muted font-bold">Add Role</p>
+                                            <p class="text-muted font-bold">Add Category</p>
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <form @submit.prevent="brand_create" enctype="multipart/form-data">
+                                        <form @submit.prevent="category_create" enctype="multipart/form-data">
                                             <div class="row mb-1">
                                                 <div class="col-md-12 mb-2">
                                                     <div class="form-floating mb-3 mb-md-0">
                                                         <input class="form-control" id="inputCategoryName" type="text"
-                                                            placeholder="Enter your name" v-model="form.brand_name" />
-                                                        <small class="text-danger" v-if="errors.brand_name">{{
-                                                            errors.brand_name[0]
-                                                            }}</small>
-                                                        <label for="inputName">Brand Name</label>
+                                                            placeholder="Enter your name" v-model="form.cat_name" />
+                                                        <small class="text-danger" v-if="errors.cat_name">{{
+                                                            errors.cat_name[0]
+                                                        }}</small>
+                                                        <label for="inputName">Category Name</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -106,8 +107,8 @@
                                                         <span v-if="loading"
                                                             class="spinner-border spinner-border-sm me-2" role="status"
                                                             aria-hidden="true"></span>
-                                                        <span v-if="!loading">Login</span>
-                                                        <span v-if="loading">Logging in...</span>
+                                                        <span v-if="!loading">Submit</span>
+                                                        <span v-if="loading">Submitting...</span>
                                                     </button>
                                                 </div>
                                             </div>
@@ -121,13 +122,13 @@
             </div>
         </div>
 
-        <div class="modal fade" id="editBrandModal" tabindex="-1" aria-labelledby="editBrandModalLabel"
+        <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryLabel"
             aria-hidden="true">
             <div class="modal-dialog full-width-modal mt-5">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title text-muted" id="editBrandModal">
-                            Edit Brand
+                        <h5 class="modal-title text-muted" id="editCategoryModal">
+                            Edit Categoy
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -138,21 +139,20 @@
                                     <div class="card-header d-flex justify-content-between align-items-center">
                                         <div class="icon_text d-flex gap-2 mt-3">
                                             <p><i class="fa-solid fa-chart-line"></i></p>
-                                            <p class="text-muted font-bold">Edit Brand</p>
+                                            <p class="text-muted font-bold">Edit Category</p>
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <form @submit.prevent="brand_update" enctype="multipart/form-data">
+                                        <form @submit.prevent="category_update" enctype="multipart/form-data">
                                             <div class="row mb-1">
                                                 <div class="col-md-12 mb-2">
                                                     <div class="form-floating mb-3 mb-md-0">
                                                         <input class="form-control" id="inputCategoryName" type="text"
-                                                            placeholder="Enter your name"
-                                                            v-model="editForm.brand_name" />
-                                                        <small class="text-danger" v-if="errors.brand_name">{{
+                                                            placeholder="Enter your name" v-model="editForm.cat_name" />
+                                                        <small class="text-danger" v-if="errors.cat_name">{{
                                                             errors.brand_name[0]
                                                             }}</small>
-                                                        <label for="inputName">Brand Name</label>
+                                                        <label for="inputName">Category Name</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -186,12 +186,12 @@
                                             </div>
                                             <div class="mt-3 mb-0">
                                                 <div class="d-grid">
-                                                    <button class="btn btn-primary w-100 mb-2" :disabled="loading">
+                                                    <button class="btn btn-primary w-100 mb-2" :disabled="updating">
                                                         <span v-if="updating"
                                                             class="spinner-border spinner-border-sm me-2" role="status"
                                                             aria-hidden="true"></span>
-                                                        <span v-if="!updating">Login</span>
-                                                        <span v-if="updating">Logging in...</span>
+                                                        <span v-if="!updating">Update</span>
+                                                        <span v-if="updating">Updating...</span>
                                                     </button>
                                                 </div>
                                             </div>
@@ -211,22 +211,22 @@
 import axios from 'axios';
 
 export default {
-    name: "Brand-vue",
+    name: "Category-vue",
     data() {
         return {
-            brands: [],
+            loading: false,
+            updating: false,
+            categories: [],
             form: {
-                brand_name: null,
+                cat_name: null,
                 image: '/backend/assets/img/pic.jpeg',
             },
             editForm: {
                 id: null,
-                brand_name: null,
+                cat_name: null,
                 image: null,
                 status: null
             },
-            loading: false,
-            updating: false,
             errors: {}
         }
     },
@@ -247,45 +247,43 @@ export default {
                 reader.readAsDataURL(file);
             }
         },
-        async brand_create() {
+        openCreateCategoryModal() {
+            let myModal = new bootstrap.Modal(
+                document.getElementById("createCategoryModal"),
+                {}
+            );
+            myModal.show();
+        },
+        async category_create() {
             this.loading = true
-            await axios.post('/api/brands/store', this.form)
+            await axios.post('/api/categories/store', this.form)
                 .then((res) => {
                     this.form = {
-                        brand_name: null,
+                        cat_name: null,
                         image: '/backend/assets/img/pic.jpeg',
                     };
                     let myModal = bootstrap.Modal.getInstance(
-                        document.getElementById("createBrandModal")
+                        document.getElementById("createCategoryModal")
                     );
                     myModal.hide();
-                    this.fetch_brands();
+                    this.feth_category();
                     Toast.fire({
                         icon: "success",
                         title: res.data.message,
                     });
                 })
                 .catch((error) => {
-                    this.errors = error.response.data.errors
+                    this.errors = error.response.data.errors;
                 })
                 .finally(() => {
-                    this.loading = false
+                    this.loading = false;
                 })
         },
-        async fetch_brands() {
-            await axios.get('/api/brands')
-                .then((res) => {
-                    this.brands = res.data;
-                })
-                .catch((error) => {
-
-                })
-        },
-        openEditModal(brand) {
-            this.editForm = { ...brand }
-            this.editForm.image = brand.brand_image
+        openEditModal(category) {
+            this.editForm = { ...category };
+            this.editForm.image = category.cat_img;
             let myModal = new bootstrap.Modal(
-                document.getElementById("editBrandModal"),
+                document.getElementById("editCategoryModal"),
                 {}
             );
             myModal.show();
@@ -311,31 +309,24 @@ export default {
                 if (this.editForm.image.startsWith("data")) {
                     return this.editForm.image;
                 } else {
-                    return `/backend/images/brands/${this.editForm.image}`;
+                    return `/backend/images/categories/${this.editForm.image}`;
                 }
             }
             return "";
         },
-        openCreateBrandModal() {
-            let myModal = new bootstrap.Modal(
-                document.getElementById("createBrandModal"),
-                {}
-            );
-            myModal.show();
-        },
-        async brand_update() {
+        async category_update() {
             this.updating = true;
-            axios.put('/api/brands/update', this.editForm)
+            axios.put('/api/categories/update', this.editForm)
                 .then((res) => {
                     this.editForm = {
                         id: null,
-                        brand_name: null,
+                        cat_name: null,
                         image: null,
                         status: null
                     }
-                    this.fetch_brands();
+                    this.feth_category();
                     let myModal = bootstrap.Modal.getInstance(
-                        document.getElementById("editBrandModal")
+                        document.getElementById("editCategoryModal")
                     );
                     myModal.hide();
                     Toast.fire({
@@ -350,7 +341,7 @@ export default {
                     this.updating = false
                 })
         },
-        async deleteBrand(id) {
+        async deleteCategory(id) {
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
@@ -362,9 +353,11 @@ export default {
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     await axios
-                        .delete("/api/brands/delete/" + id)
+                        .delete("/api/categories/delete/" + id)
                         .then((res) => {
-                            this.fetch_brands()
+                            this.categories = this.categories.filter((cat) => {
+                                return cat.id != id
+                            })
                         })
                         .catch((error) => {
                         });
@@ -375,11 +368,19 @@ export default {
                     });
                 }
             });
-        }
+        },
+        async feth_category() {
+            await axios.get("/api/categories")
+                .then((res) => {
+                    this.categories = res.data;
+                })
+                .catch((error) => {
 
+                })
+        },
     },
     created() {
-        this.fetch_brands();
+        this.feth_category();
     }
 }
 </script>

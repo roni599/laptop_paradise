@@ -12,10 +12,10 @@
           <div class="card-header d-flex justify-content-between align-items-center">
             <div class="icon_text d-flex gap-2 mt-3">
               <p> <i class="fa-solid fa-chart-line"></i></p>
-              <p class="text-black font-bold">Employee Insert</p>
+              <p class="text-black font-bold">User Create</p>
             </div>
             <div class="code">
-              <router-link class="btn btn-sm btn-success" to="/all_employee">All Employee</router-link>
+              <router-link class="btn btn-sm btn-success" to="/all_user">All User</router-link>
             </div>
           </div>
           <div class="card-body">
@@ -160,7 +160,7 @@ export default {
       console.log(this.form)
       this.loading = true
       await axios.post("/api/auth/signup", this.form)
-       .then((res) => {
+        .then((res) => {
           this.form = {
             name: null,
             email: null,

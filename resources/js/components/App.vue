@@ -91,6 +91,16 @@
                                     <i class="fas fa-angle-down"></i>
                                 </div>
                             </router-link>
+
+                            <router-link to="/category" class="nav-link collapsed">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-id-card mt-1"></i>
+                                </div>
+                                Category
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </router-link>
                             <!-- <div class="collapse" id="collapseBrand" aria-labelledby="headingOne"
                                 data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
