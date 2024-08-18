@@ -22,18 +22,35 @@
                         <tr>
                             <th scope="col">#ID</th>
                             <th scope="col">Brand Name</th>
-                            <th scope="col">Image</th>
                             <th scope="col">Status</th>
+                            <th scope="col">Image</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-
+                        <tr v-for="brand in brands" :key="brand.id">
+                            <th scope="row">{{ brand.id }}</th>
+                            <td>{{ brand.brand_name }}</td>
+                            <td>{{ brand.status }}</td>
+                            <td>
+                                <img :src="`/backend/images/brands/${brand.brand_image}`" alt="User Image" width="50"
+                                    height="50" />
+                            </td>
+                            <td>
+                                <div class="buttonGroup py-2">
+                                    <button type="button" class="btn btn-sm btn-success" @click="openEditModal(brand)">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger mx-2" @click="deleteBrand(brand.id)">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-
         <div class="modal fade" id="createBrandModal" tabindex="-1" aria-labelledby="createRoleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog full-width-modal mt-4">
@@ -103,6 +120,90 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="editRoleModal" tabindex="-1" aria-labelledby="editRoleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog full-width-modal mt-5">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-muted" id="editRoleModal">
+                            Edit Brand
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body mb-2">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card rounded-lg">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <div class="icon_text d-flex gap-2 mt-3">
+                                            <p><i class="fa-solid fa-chart-line"></i></p>
+                                            <p class="text-muted font-bold">Edit Brand</p>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <form @submit.prevent="brand_update" enctype="multipart/form-data">
+                                            <div class="row mb-1">
+                                                <div class="col-md-12 mb-2">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" id="inputCategoryName" type="text"
+                                                            placeholder="Enter your name"
+                                                            v-model="editForm.brand_name" />
+                                                        <small class="text-danger" v-if="errors.brand_name">{{
+                                                            errors.brand_name[0]
+                                                        }}</small>
+                                                        <label for="inputName">Brand Name</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <div class="col-md-12 mb-2">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" id="inputCategoryName" type="text"
+                                                            placeholder="Enter your name" v-model="editForm.status" />
+                                                        <small class="text-danger" v-if="errors.status">{{
+                                                            errors.status[0]
+                                                        }}</small>
+                                                        <label for="inputName">Status</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <div class="col-md-10">
+                                                    <div class="form-floating mb-2 mb-md-0">
+                                                        <input class="form-control p-3 px-4" id="inputFile" type="file"
+                                                            @change="onUpdateFileSelect" />
+                                                        <small class="text-danger" v-if="errors.image">{{
+                                                            errors.image[0] }}</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <img v-if="editForm.image !== null" :src="getupdateimageSrc()"
+                                                            alt="" width="55" height="55" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-3 mb-0">
+                                                <div class="d-grid">
+                                                    <button class="btn btn-primary w-100 mb-2" :disabled="loading">
+                                                        <span v-if="updating"
+                                                            class="spinner-border spinner-border-sm me-2" role="status"
+                                                            aria-hidden="true"></span>
+                                                        <span v-if="!updating">Login</span>
+                                                        <span v-if="updating">Logging in...</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -113,11 +214,19 @@ export default {
     name: "Brand-vue",
     data() {
         return {
+            brands: [],
             form: {
                 brand_name: null,
                 image: '/backend/assets/img/pic.jpeg',
             },
+            editForm: {
+                id: null,
+                brand_name: null,
+                image: null,
+                status: null
+            },
             loading: false,
+            updating: false,
             errors: {}
         }
     },
@@ -138,19 +247,23 @@ export default {
                 reader.readAsDataURL(file);
             }
         },
-
-        openCreateBrandModal() {
-            let myModal = new bootstrap.Modal(
-                document.getElementById("createBrandModal"),
-                {}
-            );
-            myModal.show();
-        },
         async brand_create() {
             this.loading = true
             await axios.post('/api/brands/store', this.form)
                 .then((res) => {
-                    console.log(res);
+                    this.form = {
+                        brand_name: null,
+                        image: '/backend/assets/img/pic.jpeg',
+                    };
+                    let myModal = bootstrap.Modal.getInstance(
+                        document.getElementById("createBrandModal")
+                    );
+                    myModal.hide();
+                    this.fetch_brands();
+                    Toast.fire({
+                        icon: "success",
+                        title: res.data.message,
+                    });
                 })
                 .catch((error) => {
                     this.errors = error.response.data.errors
@@ -158,7 +271,109 @@ export default {
                 .finally(() => {
                     this.loading = false
                 })
+        },
+        async fetch_brands() {
+            await axios.get('/api/brands')
+                .then((res) => {
+                    this.brands = res.data;
+                })
+                .catch((error) => {
+
+                })
+        },
+        openEditModal(brand) {
+            this.editForm = { ...brand }
+            this.editForm.image = brand.brand_image
+            let myModal = new bootstrap.Modal(
+                document.getElementById("editRoleModal"),
+                {}
+            );
+            myModal.show();
+        },
+        onUpdateFileSelect(event) {
+            let file = event.target.files[0]
+            if (file.size > 1048576) {
+                Toast.fire({
+                    icon: "warning",
+                    title: "image must be less then 1 mb!"
+                });
+            }
+            else {
+                let reader = new FileReader();
+                reader.onload = (event) => {
+                    this.editForm.image = event.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        },
+        getupdateimageSrc() {
+            if (this.editForm.image) {
+                if (this.editForm.image.startsWith("data")) {
+                    return this.editForm.image;
+                } else {
+                    return `/backend/images/brands/${this.editForm.image}`;
+                }
+            }
+            return "";
+        },
+        openCreateBrandModal() {
+            let myModal = new bootstrap.Modal(
+                document.getElementById("createBrandModal"),
+                {}
+            );
+            myModal.show();
+        },
+        async brand_update() {
+            this.updating = true;
+            axios.put('/api/brands/update', this.editForm)
+                .then((res) => {
+                    this.fetch_brands();
+                    let myModal = bootstrap.Modal.getInstance(
+                        document.getElementById("editRoleModal")
+                    );
+                    myModal.hide();
+                    Toast.fire({
+                        icon: "success",
+                        title: res.data.message,
+                    });
+                })
+                .catch((error) => {
+                    this.errors = error.response.data.errors;
+                })
+                .finally(() => {
+                    this.updating = false
+                })
+        },
+        async deleteBrand(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await axios
+                        .delete("/api/brands/delete/" + id)
+                        .then((res) => {
+                            this.fetch_brands()
+                        })
+                        .catch((error) => {
+                        });
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Category has been deleted.",
+                        icon: "success",
+                    });
+                }
+            });
         }
+
+    },
+    created() {
+        this.fetch_brands();
     }
 }
 </script>

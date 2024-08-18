@@ -54,6 +54,8 @@ Route::delete('/user/delete/{id}',[RoleController::class,'deleted']);
 //for brand
 Route::get('/brands', [BrandController::class, 'index']);
 Route::post('/brands/store', [BrandController::class, 'store']);
+Route::put('/brands/update', [BrandController::class, 'brandUpdate']);
+Route::delete('/brands/delete/{id}', [BrandController::class, 'delete']);
 // Route::post('/users/store',[UserController::class, 'store']);
 // Route::get('/employees', [EmployeeController::class, 'index']);
 // Route::post('/employees/store', [EmployeeController::class, 'store']);

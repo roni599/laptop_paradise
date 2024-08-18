@@ -234,7 +234,7 @@ export default {
     },
     openRoleEditModal(role) {
       this.edit_form.id = role.id,
-        this.edit_form.role_name = role.role_name;
+      this.edit_form.role_name = role.role_name;
       this.edit_form.privilege = role.permissions;
       let myModal = new bootstrap.Modal(
         document.getElementById("editRoleModal"),
