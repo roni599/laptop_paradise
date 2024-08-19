@@ -14,14 +14,15 @@ import Brand from '../components/brands/Brand.vue';
 
 import Category from '../components/category/Category.vue';
 
+import Product_create from '../components/product/Product_create.vue';
+import All_product from '../components/product/All_product.vue';
+
 const routes = [
     { name: 'LoginForm', component: Login, path: '/' },
     { name: 'RegisterForm', component: Register, path: '/register' },
     { name: 'Forget', component: Forget, path: '/forget' },
     { name: 'Home', component: Home, path: '/home' },
     { name: 'Logout', component: Logout, path: '/logout' },
-
-
 
     { name: 'User_create', component: Create_user, path: '/user_create' },
     { name: 'All_user', component: User_list, path: '/all_user' },
@@ -30,6 +31,9 @@ const routes = [
     { name: 'Brand', component: Brand, path: '/brand' },
 
     { name: 'Category', component: Category, path: '/category' },
+
+    { name: 'Product_create', component:Product_create, path: '/product_create' },
+    { name: 'All_product', component: All_product, path: '/all_product' },
 ];
 
 const router = createRouter({

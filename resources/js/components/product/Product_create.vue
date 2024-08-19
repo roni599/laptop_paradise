@@ -1,19 +1,20 @@
 <template>
     <div class="container">
-        <div class="card mt-4">
-            <div class="card-header border-bottom-0 p-3">
-                <router-link class="text-decoration-none" to="/home">Dashboard</router-link><span class="text-muted"> /
-                    Product-Create</span>
+        <div class="card mt-4 mb-2">
+            <div class="card-header border-bottom-0 p-4">
+                <router-link class="text-decoration-none h5" to="/home">Dashboard</router-link><span
+                    class="text-muted h5"> /
+                    Products-Create</span>
             </div>
         </div>
 
         <div class="row">
             <div class="col-lg-12">
-                <div class="card rounded-lg mt-4">
+                <div class="card rounded-lg mt-2">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div class="icon_text d-flex gap-2 mt-3">
                             <p><i class="fa-solid fa-chart-line"></i></p>
-                            <p class="text-black font-bold">Employee Insert</p>
+                            <p class="text-black font-bold">Product Create</p>
                         </div>
                         <div class="code">
                             <router-link class="btn btn-sm btn-success" to="/all_product">All Product</router-link>
@@ -25,21 +26,21 @@
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
                                         <input class="form-control" id="inputProductName" type="text"
-                                            placeholder="Enter product name" v-model="form.product_name" />
-                                        <small class="text-danger" v-if="errors.product_name">{{
-                                            errors.product_name[0]
-                                            }}</small>
-                                        <label for="inputProductName">Product Name</label>
+                                            placeholder="Enter product name" v-model="form.product_model" />
+                                        <small class="text-danger" v-if="errors.product_model">{{
+                                            errors.product_model[0]
+                                        }}</small>
+                                        <label for="inputProductName">Product Model</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputProductCode" type="text"
-                                            placeholder="Product Code" v-model="form.product_code" />
-                                        <small class="text-danger" v-if="errors.product_code">{{
-                                            errors.product_code[0]
-                                            }}</small>
-                                        <label for="inputEmail">Product Code</label>
+                                        <textarea class="form-control" id="inputProductCode" type="text"
+                                            placeholder="Product Code" v-model="form.specification"></textarea>
+                                        <small class="text-danger" v-if="errors.specification">{{
+                                            errors.specification[0]
+                                        }}</small>
+                                        <label for="inputEmail">Specification</label>
                                     </div>
                                 </div>
                             </div>
@@ -47,106 +48,79 @@
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
                                         <input class="form-control" id="inputRoot" type="text" placeholder="Root"
-                                            v-model="form.root" />
-                                        <small class="text-danger" v-if="errors.root">{{
-                                            errors.root[0]
-                                            }}</small>
-                                        <label for="inputRoot">Root</label>
+                                            v-model="form.quantity" />
+                                        <small class="text-danger" v-if="errors.quantity">{{
+                                            errors.quantity[0]
+                                        }}</small>
+                                        <label for="inputRoot">Quentity</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputBuyingPrice" type="text"
-                                            placeholder="Buying Price" v-model="form.buying_price" />
-                                        <small class="text-danger" v-if="errors.buying_price">{{
-                                            errors.buying_price[0]
-                                            }}</small>
-                                        <label for="Buying Price">Buying Price</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputSellingPrice" type="text"
-                                            placeholder="Selling Price" v-model="form.selling_price" />
-                                        <small class="text-danger" v-if="errors.selling_price">{{
-                                            errors.selling_price[0]
-                                            }}</small>
-                                        <label for="inputSellingPrice">Selling Price</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputBuyingDate" type="date"
-                                            placeholder="Buying Date" v-model="form.buying_date" />
-                                        <small class="text-danger" v-if="errors.buying_date">{{
-                                            errors.buying_date[0]
-                                            }}</small>
-                                        <label for="inputBuyingDate">Buying Date</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6 mb-3">
                                     <div class="form-floating mb-3 mb-md-0">
                                         <select class="form-select" aria-label="Default select example"
-                                            v-model="form.category_id">
+                                            v-model="form.cat_id">
                                             <option v-for="category in categories" :key="category.id"
                                                 :value="category.id">
-                                                {{ category.category_name }}
+                                                {{ category.cat_name }}
                                             </option>
                                         </select>
-                                        <small class="text-danger" v-if="errors.category_id">{{
-                                            errors.category_id[0]
-                                            }}</small>
-                                        <label class="h6 text-black mb-0" for="inputCategory">Category</label>
+                                        <small class="text-danger" v-if="errors.cat_id">{{
+                                            errors.cat_id[0]
+                                        }}</small>
+                                        <label for="Buying Price">Category</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <select class="form-select" aria-label="Default select example"
+                                            v-model="form.brand_id">
+                                            <option v-for="brand in brands" :key="brand.id" :value="brand.id">
+                                                {{ brand.brand_name }}
+                                            </option>
+                                        </select>
+                                        <small class="text-danger" v-if="errors.brand_id">{{
+                                            errors.brand_id[0]
+                                        }}</small>
+                                        <label for="inputSellingPrice">Brand</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <input class="form-control" id="inputBuyingDate" type="text"
+                                            placeholder="Buying Date" v-model="form.touch_status" />
+                                        <small class="text-danger" v-if="errors.touch_status">{{
+                                            errors.touch_status[0]
+                                        }}</small>
+                                        <label for="inputBuyingDate">Touch Status</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-floating mb-3 mb-md-0">
+                                        <input class="form-control" id="inputBuyingDate" type="text"
+                                            placeholder="Buying Date" v-model="form.discount" />
+                                        <small class="text-danger" v-if="errors.discount">{{
+                                            errors.discount[0]
+                                        }}</small>
+                                        <label class="h6 text-black mb-0" for="inputCategory">Discount</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-floating mb-3 mb-md-0">
                                         <select class="form-select" aria-label="Default select example"
-                                            v-model="form.supplier_id">
-                                            <option v-for="supplier in suppliers" :key="supplier.id"
-                                                :value="supplier.id">
-                                                {{ supplier.name }}
-                                            </option>
+                                            v-model="form.user_id">
+                                            <option v-for="user in users" :key="user.id" :value="user.id">{{
+                                                user.user_name }}</option>
                                         </select>
-                                        <small class="text-danger" v-if="errors.supplier_id">{{
-                                            errors.supplier_id[0]
-                                            }}</small>
-                                        <label class="h6 text-black mb-0" for="inputSupplier">Supplier</label>
+                                        <small class="text-danger" v-if="errors.user_id">{{ errors.user_id[0] }}</small>
+                                        <label class="h6 text-black mb-0" for="inputSupplier">User</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputProductQuentity" type="text"
-                                            placeholder="Product Quentity" v-model="form.product_quantity" />
-                                        <small class="text-danger" v-if="errors.product_quantity">{{
-                                            errors.product_quantity[0]
-                                            }}</small>
-                                        <label for="inputProductQuentity">Product Quentity</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-5">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control p-3 px-4" id="inputFile" type="file"
-                                            @change="onFileSelect" />
-                                        <small class="text-danger" v-if="errors.image">{{
-                                            errors.image[0]
-                                            }}</small>
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <img :src="form.image" width="55" height="55" />
-                                    </div>
-                                </div>
-                            </div>
-
                             <div class="mt-4 mb-0">
                                 <div class="d-grid">
                                     <button class="btn btn-primary btn-block">Submit</button>
@@ -168,60 +142,53 @@ export default {
     data() {
         return {
             form: {
-                product_name: null,
-                product_code: null,
-                root: null,
-                buying_price: null,
-                selling_price: null,
-                buying_date: null,
-                product_quantity: null,
-                category_id: null,
-                supplier_id: null,
-                image: "/backend/assets/img/pic.jpeg",
+                product_model: null,
+                specification: null,
+                quantity: null,
+                touch_status: null,
+                discount: null,
+                user_id: null,
+                cat_id: null,
+                brand_id: null,
             },
             categories: [],
+            brands: [],
+            users: [],
             suppliers: [],
             errors: {},
         };
     },
-    created() {
-        axios.get("/api/categories").then((res) => {
-            this.categories = res.data;
-        });
-        axios.get("/api/suppliers").then((res) => {
-            this.suppliers = res.data;
-        });
-    },
     methods: {
-        onFileSelect(event) {
-            let file = event.target.files[0];
-            if (file.size > 1048576) {
-                Toast.fire({
-                    icon: "warning",
-                    title: "image must be less then 1 mb!",
-                });
-            } else {
-                let reader = new FileReader();
-                reader.onload = (event) => {
-                    this.form.image = event.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
+        async fetch_categories() {
+            await axios.get("/api/categories")
+                .then((res) => {
+                    this.categories = res.data;
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         },
-        getimageSrc() {
-            if (this.form.image) {
-                if (this.form.image.startsWith("data")) {
-                    return this.form.image;
-                } else {
-                    return `/backend/images/employee/${this.form.image}`;
-                }
-            }
-            return "";
+        async fetch_brands() {
+            await axios.get("/api/brands")
+                .then((res) => {
+                    this.brands = res.data;
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        },
+        async fetch_users() {
+            await axios.get("/api/alluser")
+                .then((res) => {
+                    this.users = res.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         },
         async product_create() {
             await axios.post('/api/products/store', this.form)
                 .then((res) => {
-                    this.form = ''
                     Toast.fire({
                         icon: "success",
                         title: res.data.message
@@ -232,7 +199,12 @@ export default {
                     this.errors = error.response.data.errors
                 })
         }
-    }
+    },
+    created() {
+        this.fetch_categories();
+        this.fetch_brands();
+        this.fetch_users()
+    },
 
 };
 </script>

@@ -101,6 +101,24 @@
                                     <i class="fas fa-angle-down"></i>
                                 </div>
                             </router-link>
+
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#collapseproducts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-id-card mt-1"></i>
+                                </div>
+                                Products
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="collapse" id="collapseproducts" aria-labelledby="headingOne"
+                                data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <router-link class="nav-link" to="/product_create">Products Create</router-link>
+                                    <router-link class="nav-link" to="/all_product">Products List</router-link>
+                                </nav>
+                            </div>
                             <!-- <div class="collapse" id="collapseBrand" aria-labelledby="headingOne"
                                 data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">

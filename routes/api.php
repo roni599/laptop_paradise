@@ -41,15 +41,15 @@ Route::group([
 });
 
 //for role
-Route::get('/roles',[RoleController::class, 'index']);
-Route::post('/roles/store',[RoleController::class,'store']);
-Route::put('/roles/update',[RoleController::class,'update']);
-Route::delete('/roles/delete/{id}',[RoleController::class,'delete']);
+Route::get('/roles', [RoleController::class, 'index']);
+Route::post('/roles/store', [RoleController::class, 'store']);
+Route::put('/roles/update', [RoleController::class, 'update']);
+Route::delete('/roles/delete/{id}', [RoleController::class, 'delete']);
 
 //for user
-Route::get('/alluser',[RoleController::class, 'all']);
-Route::put('/user/update',[RoleController::class, 'userUpdate']);
-Route::delete('/user/delete/{id}',[RoleController::class,'deleted']);
+Route::get('/alluser', [RoleController::class, 'all']);
+Route::put('/user/update', [RoleController::class, 'userUpdate']);
+Route::delete('/user/delete/{id}', [RoleController::class, 'deleted']);
 
 //for brand
 Route::get('/brands', [BrandController::class, 'index']);
@@ -62,6 +62,12 @@ Route::get('/categories', [CategoryController::class, 'index']);
 Route::post('/categories/store', [CategoryController::class, 'store']);
 Route::put('/categories/update', [CategoryController::class, 'CategoryUpdate']);
 Route::delete('/categories/delete/{id}', [CategoryController::class, 'delete']);
+
+//for products
+Route::get('/products', [ProductController::class, 'index']);
+Route::post('/products/store', [ProductController::class, 'store']);
+Route::put('/products/update', [ProductController::class, 'ProductsUpdate']);
+Route::delete('/products/delete/{id}', [ProductController::class, 'delete']);
 // Route::post('/users/store',[UserController::class, 'store']);
 // Route::get('/employees', [EmployeeController::class, 'index']);
 // Route::post('/employees/store', [EmployeeController::class, 'store']);
