@@ -29,7 +29,7 @@
                                             placeholder="Enter product name" v-model="form.product_model" />
                                         <small class="text-danger" v-if="errors.product_model">{{
                                             errors.product_model[0]
-                                        }}</small>
+                                            }}</small>
                                         <label for="inputProductName">Product Model</label>
                                     </div>
                                 </div>
@@ -39,7 +39,7 @@
                                             placeholder="Product Code" v-model="form.specification"></textarea>
                                         <small class="text-danger" v-if="errors.specification">{{
                                             errors.specification[0]
-                                        }}</small>
+                                            }}</small>
                                         <label for="inputEmail">Specification</label>
                                     </div>
                                 </div>
@@ -51,7 +51,7 @@
                                             v-model="form.quantity" />
                                         <small class="text-danger" v-if="errors.quantity">{{
                                             errors.quantity[0]
-                                        }}</small>
+                                            }}</small>
                                         <label for="inputRoot">Quentity</label>
                                     </div>
                                 </div>
@@ -66,7 +66,7 @@
                                         </select>
                                         <small class="text-danger" v-if="errors.cat_id">{{
                                             errors.cat_id[0]
-                                        }}</small>
+                                            }}</small>
                                         <label for="Buying Price">Category</label>
                                     </div>
                                 </div>
@@ -83,7 +83,7 @@
                                         </select>
                                         <small class="text-danger" v-if="errors.brand_id">{{
                                             errors.brand_id[0]
-                                        }}</small>
+                                            }}</small>
                                         <label for="inputSellingPrice">Brand</label>
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@
                                             placeholder="Buying Date" v-model="form.touch_status" />
                                         <small class="text-danger" v-if="errors.touch_status">{{
                                             errors.touch_status[0]
-                                        }}</small>
+                                            }}</small>
                                         <label for="inputBuyingDate">Touch Status</label>
                                     </div>
                                 </div>
@@ -105,16 +105,17 @@
                                             placeholder="Buying Date" v-model="form.discount" />
                                         <small class="text-danger" v-if="errors.discount">{{
                                             errors.discount[0]
-                                        }}</small>
-                                        <label class="h6 text-black mb-0" for="inputCategory">Discount</label>
+                                            }}</small>
+                                        <label class="h6 text-muted mb-0" for="inputCategory">Discount</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <select class="form-select" aria-label="Default select example"
+                                        <select class="form-select" readonly aria-label="Default select example"
                                             v-model="form.user_id">
-                                            <option v-for="user in users" :key="user.id" :value="user.id">{{
-                                                user.user_name }}</option>
+                                            <option :value="users.id">
+                                                {{ users.user_name }}
+                                            </option>
                                         </select>
                                         <small class="text-danger" v-if="errors.user_id">{{ errors.user_id[0] }}</small>
                                         <label class="h6 text-black mb-0" for="inputSupplier">User</label>
@@ -177,15 +178,6 @@ export default {
                     console.log(error)
                 })
         },
-        async fetch_users() {
-            await axios.get("/api/alluser")
-                .then((res) => {
-                    this.users = res.data;
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
-        },
         async product_create() {
             await axios.post('/api/products/store', this.form)
                 .then((res) => {
@@ -198,12 +190,27 @@ export default {
                 .catch((error) => {
                     this.errors = error.response.data.errors
                 })
+        },
+        async fetchData() {
+            const token = localStorage.getItem('token');
+            await axios.get("/api/auth/me", {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then((res) => {
+                this.users = res.data;
+            })
+            .catch((error) => {
+                console.log(error.response ? error.response.data : error.message);
+            });
         }
     },
     created() {
         this.fetch_categories();
         this.fetch_brands();
-        this.fetch_users()
+        this.fetchData()
+
     },
 
 };

@@ -51,21 +51,28 @@
           </div>
         </div>
       </div>
+      <p>{{ nnn }}</p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Login-Vue",
-  mounted() {
-    if (!User.loggedIn()) {
-      this.$router.push({ name: "LoginForm" });
-    }
-  },
+  name: "Home-vue",
+  // mounted() {
+  //   if (!User.loggedIn()) {
+  //     this.$router.push({ name: "LoginForm" });
+  //   }
+  // },
   data() {
-    return {};
+    return {
+      nnn:''
+    };
   },
+  mounted(){
+    let name=localStorage.getItem('user');
+    this.nnn=name;
+  }
 };
 </script>
 

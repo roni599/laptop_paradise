@@ -66,7 +66,7 @@
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                                 data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon">
-                                    <i class="fas fa-id-card mt-1"></i>
+                                    <i class="fas fa-users mt-1"></i>
                                 </div>
                                 Users
                                 <div class="sb-sidenav-collapse-arrow">
@@ -84,7 +84,7 @@
 
                             <router-link to="/brand" class="nav-link collapsed">
                                 <div class="sb-nav-link-icon">
-                                    <i class="fas fa-id-card mt-1"></i>
+                                    <i class="fas fa-tags mt-1"></i>
                                 </div>
                                 Brands
                                 <div class="sb-sidenav-collapse-arrow">
@@ -94,7 +94,7 @@
 
                             <router-link to="/category" class="nav-link collapsed">
                                 <div class="sb-nav-link-icon">
-                                    <i class="fas fa-id-card mt-1"></i>
+                                    <i class="fas fa-th-large mt-1"></i>
                                 </div>
                                 Category
                                 <div class="sb-sidenav-collapse-arrow">
@@ -103,9 +103,10 @@
                             </router-link>
 
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                data-bs-target="#collapseproducts" aria-expanded="false" aria-controls="collapseLayouts">
+                                data-bs-target="#collapseproducts" aria-expanded="false"
+                                aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon">
-                                    <i class="fas fa-id-card mt-1"></i>
+                                    <i class="fas fa-box-open mt-1"></i>
                                 </div>
                                 Products
                                 <div class="sb-sidenav-collapse-arrow">
@@ -119,119 +120,28 @@
                                     <router-link class="nav-link" to="/all_product">Products List</router-link>
                                 </nav>
                             </div>
-                            <!-- <div class="collapse" id="collapseBrand" aria-labelledby="headingOne"
+
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#collapseStocks" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-chart-line mt-1"></i>
+                                </div>
+                                Stocks
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="collapse" id="collapseStocks" aria-labelledby="headingOne"
                                 data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <router-link class="nav-link" to="/user_create">User Create</router-link>
-                                    <router-link class="nav-link" to="/all_user">User List</router-link>
-                                    <router-link class="nav-link" to="/role">Role</router-link>
-                                </nav>
-                            </div> -->
-                            <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                data-bs-target="#collapseSuppliers" aria-expanded="false"
-                                aria-controls="collapseSuppliers">
-                                <div class="sb-nav-link-icon">
-                                    <i class="fa-solid fa-people-arrows"></i>
-                                </div>
-                                Suppliers
-                                <div class="sb-sidenav-collapse-arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </div>
-                            </a>
-                            <div class="collapse" id="collapseSuppliers" aria-labelledby="headingTwo"
-                                data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <router-link class="nav-link" to="/supplier_create">Add Suppliers</router-link>
-                                    <router-link class="nav-link" to="/all_supplier">All Suppliers</router-link>
-                                </nav>
-                            </div> -->
-
-                            <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                data-bs-target="#collapseCustomers" aria-expanded="false"
-                                aria-controls="collapseCustomers">
-                                <div class="sb-nav-link-icon">
-                                    <i class="fa-solid fa-user-tie"></i>
-                                </div>
-                                Customers
-                                <div class="sb-sidenav-collapse-arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </div>
-                            </a>
-                            <div class="collapse" id="collapseCustomers" aria-labelledby="headingTwo"
-                                data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <router-link class="nav-link" to="/customer_create">Add Customers</router-link>
-                                    <router-link class="nav-link" to="/all_customer">All Customers</router-link>
-                                </nav>
-                            </div> -->
-
-                            <!-- 
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                data-bs-target="#collapseCategories" aria-expanded="false"
-                                aria-controls="collapseCategories">
-                                <div class="sb-nav-link-icon">
-                                    <i class="fa-solid fa-layer-group"></i>
-                                </div>
-                                Categories
-                                <div class="sb-sidenav-collapse-arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </div>
-                            </a>
-                            <div class="collapse" id="collapseCategories" aria-labelledby="headingTwo"
-                                data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <router-link class="nav-link" to="/category_create">Add Categories</router-link>
-                                    <router-link class="nav-link" to="/all_category">All Category</router-link>
-                                </nav>
-                            </div> -->
-
-                            <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                data-bs-target="#collapseProducts" aria-expanded="false"
-                                aria-controls="collapseProducts">
-                                <div class="sb-nav-link-icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </div>
-                                Products
-                                <div class="sb-sidenav-collapse-arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </div>
-                            </a>
-                            <div class="collapse" id="collapseProducts" aria-labelledby="headingTwo"
-                                data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <router-link class="nav-link" to="/product_create">Add Product</router-link>
-                                    <router-link class="nav-link" to="/all_product">All Products</router-link>
+                                    <router-link class="nav-link" to="/stocks_create">Stocks Create</router-link>
+                                    <router-link class="nav-link" to="/all_stocks">Stocks List</router-link>
                                 </nav>
                             </div>
-
-
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                data-bs-target="#collapseExpense" aria-expanded="false"
-                                aria-controls="collapseProducts">
-                                <div class="sb-nav-link-icon">
-                                    <i class="fa-solid fa-wallet"></i>
-                                </div>
-                                Expense
-                                <div class="sb-sidenav-collapse-arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </div>
-                            </a>
-                            <div class="collapse" id="collapseExpense" aria-labelledby="headingTwo"
-                                data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <router-link class="nav-link" to="/expense_create">Add Expense</router-link>
-                                    <router-link class="nav-link" to="/all_expense">All Expense</router-link>
-                                </nav>
-                            </div> -->
-                            <!-- <router-link class="nav-link" to="/stocks">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Stocks
-                            </router-link> -->
                         </div>
                     </div>
                 </nav>
             </div>
-
             <div id="layoutSidenav_content"
                 :class="{ 'pc-container': true, 'custom-style': $route.path !== '/' && $route.path !== '/register' && $route.path !== '/forget' }">
                 <main>
@@ -264,7 +174,9 @@ import User from '../Helpers/User';
 export default {
     name: "App",
     data() {
-        return {};
+        return {
+            
+        };
     },
 };
 </script>

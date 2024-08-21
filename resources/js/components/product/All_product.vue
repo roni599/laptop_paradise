@@ -29,7 +29,7 @@
                             <th scope="col">Quantity</th>
                             <th scope="col">Touch Status</th>
                             <th scope="col">Discount</th>
-                            <th scope="col">User Name</th>
+                            <th scope="col">Stored By</th>
                             <th scope="col">Category Name</th>
                             <th scope="col">Brand Name</th>
                             <th scope="col">Action</th>
@@ -172,17 +172,16 @@
                                                         <small class="text-danger" v-if="errors.discount">{{
                                                             errors.discount[0]
                                                             }}</small>
-                                                        <label class="h6 text-black mb-0"
-                                                            for="inputCategory">Discount</label>
+                                                        <label class="h6 mb-0" for="inputCategory">Discount</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <select class="form-select" aria-label="Default select example"
-                                                            v-model="form.user_id">
-                                                            <option v-for="user in users" :key="user.id"
-                                                                :value="user.id">{{
-                                                                    user.user_name }}</option>
+                                                        <select class="form-select" readonly
+                                                            aria-label="Default select example" v-model="form.user_id">
+                                                            <option :value="users.id">
+                                                                {{ users.user_name }}
+                                                            </option>
                                                         </select>
                                                         <small class="text-danger" v-if="errors.user_id">{{
                                                             errors.user_id[0] }}</small>
@@ -231,7 +230,7 @@ export default {
             errors: {},
             categories: [],
             brands: [],
-            users: []
+            users: ''
         };
     },
     created() {
@@ -242,10 +241,11 @@ export default {
         axios.get("/api/brands").then((res) => {
             this.brands = res.data;
         });
-        axios.get("/api/alluser")
-            .then((res) => {
-                this.users = res.data;
-            })
+        // axios.get("/api/alluser")
+        //     .then((res) => {
+        //         this.users = res.data;
+        //     });
+        this.fetchData();
     },
     computed: {
         filteredProducts() {
@@ -321,6 +321,21 @@ export default {
                 }
             });
         },
+        async fetchData() {
+            const token = localStorage.getItem('token');
+            await axios.get("/api/auth/me", {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then((res) => {
+
+                    this.users = res.data;
+                })
+                .catch((error) => {
+                    console.log(error.response ? error.response.data : error.message);
+                });
+        }
     },
 };
 </script>
