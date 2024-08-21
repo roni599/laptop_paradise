@@ -51,27 +51,41 @@
           </div>
         </div>
       </div>
-      <p>{{ nnn }}</p>
     </div>
   </div>
 </template>
 
 <script>
+import { inject } from 'vue';
 export default {
   name: "Home-vue",
-  // mounted() {
-  //   if (!User.loggedIn()) {
-  //     this.$router.push({ name: "LoginForm" });
-  //   }
-  // },
   data() {
+    const userName = inject('userName');
+    const profile_img = inject('profile_img');
     return {
-      nnn:''
+      userName,
+      profile_img
     };
   },
-  mounted(){
-    let name=localStorage.getItem('user');
-    this.nnn=name;
+  methods: {
+    async fetchData() {
+      const token = localStorage.getItem('token');
+      await axios.get("/api/auth/me", {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+        .then((res) => {
+          this.userName=res.data.user_name;
+          this.profile_img=res.data.profile_img
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+  created(){
+    this.fetchData()
   }
 };
 </script>

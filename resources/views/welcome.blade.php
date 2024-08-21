@@ -11,6 +11,12 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="{{ asset('backend') }}/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script>
+        // Use PHP to echo the environment variable directly into the JavaScript
+        window.appConfig = {
+            jwtTTL: @json(env('JWT_TTL', 1440)) // Default to 1440 minutes (24 hours) if not set
+        };
+    </script>
     @vite('resources/css/app.css')
 </head>
 

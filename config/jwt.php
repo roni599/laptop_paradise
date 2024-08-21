@@ -1,14 +1,4 @@
 <?php
-
-/*
- * This file is part of jwt-auth.
- *
- * (c) Sean Tymon <tymon148@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 return [
 
     /*
@@ -101,7 +91,7 @@ return [
     |
     */
 
-    'ttl' => env('JWT_TTL', 60),
+    'ttl' => env('JWT_TTL', 60), // 24 hours in minutes
 
     /*
     |--------------------------------------------------------------------------
@@ -120,7 +110,7 @@ return [
     |
     */
 
-    'refresh_ttl' => env('JWT_REFRESH_TTL',60),
+    'refresh_ttl' => env('JWT_REFRESH_TTL', 60), // 24 hours in minutes
 
     /*
     |--------------------------------------------------------------------------

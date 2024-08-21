@@ -29,7 +29,7 @@
                       <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
                     </div>
                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                      <button class="btn btn-primary w-100 mb-2" :disabled="loading">
+                      <button class="btn btn-primary w-100 mb-2" :disabled="loading" @click="login">
                         <span v-if="loading" class="spinner-border spinner-border-sm me-2" role="status"
                           aria-hidden="true"></span>
                         <span v-if="!loading">Login</span>
@@ -47,7 +47,7 @@
   </div>
 </template>
 
-<script>
+<!-- <script>
 import axios from "axios";
 export default {
   name: "Login-From",
@@ -88,6 +88,59 @@ export default {
         .finally(() => {
           this.loading = false
         })
+    },
+  },
+};
+</script> -->
+<script>
+import axios from "axios";
+export default {
+  name: "Login-From",
+  mounted() {
+    if (User.loggedIn()) {
+      this.$router.push({ name: "Home" });
+    }
+  },
+  data() {
+    return {
+      form: {
+        email: "",
+        password: "",
+      },
+      errors: {},
+      loading: false
+    };
+  },
+  methods: {
+    async login() {
+      this.loading = true;
+      try {
+        const res = await axios.post("/api/auth/login", this.form);
+        User.responseAfterLogin(res);
+        Toast.fire({
+          icon: "success",
+          title: "Signed in successfully"
+        });
+        this.$router.push({ name: "Home" });
+      } catch (error) {
+        if (error.response && error.response.data.errors) {
+          // Handle specific errors (e.g., invalid email or password)
+          this.errors = error.response.data.errors;
+          Toast.fire({
+            icon: "warning",
+            title: "Invalid email or password"
+          });
+        } else {
+          // Handle other errors (e.g., network issues)
+          Toast.fire({
+            icon: "error",
+            title: "An error occurred. Please try again later."
+          });
+        }
+      } finally {
+        // Ensure loading is false even after a failed attempt
+        this.loading = false;
+      }
     },
   },
 };

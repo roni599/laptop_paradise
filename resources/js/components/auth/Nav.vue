@@ -20,13 +20,13 @@
             </form>
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img v-show="!loading" @load="handleImageLoad" :src="`/backend/images/users/${profile_img}`"
-                            class="images" alt="">
-                    </a>
                     <!-- <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw text-white"></i></a> -->
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img
+                            src="/public/backend/images/users/135_ekRoni.png" class="images" alt="">
+                        </a> -->
+                    <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw text-white"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#!">Settings</a></li>
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
@@ -169,158 +169,12 @@
 </template>
 
 <script>
-import { ref, provide } from 'vue';
 export default {
-    name: "App",
-    data() {
-        const userName = ref('');
-        const profile_img = ref('');
-        provide('userName', userName);
-        provide('profile_img', profile_img);
-        return {
-            userName,
-            profile_img,
-            loading: true,
-            inactivityTimer: null,
-        };
-    },
-    methods: {
-        handleImageLoad() {
-            this.loading = false;
-        },
-        resetInactivityTimer() {
-            // Clear the existing timer
-            clearTimeout(this.inactivityTimer);
-
-            // Set a new timer for 10 minutes (600,000 milliseconds)
-            this.inactivityTimer = setTimeout(() => {
-                // Check if the user is logged in
-                if (User.loggedIn()) {
-                    // Trigger logout if the user is inactive for 10 minutes
-                    User.logout();
-                    window.location.href = '/'; // Redirect to login page after logout
-                }
-            },  180000 ); // 10 minutes in milliseconds
-        },
-    },
-    mounted() {
-        // Set up event listeners for user activity
-        window.addEventListener('mousemove', this.resetInactivityTimer);
-        window.addEventListener('keypress', this.resetInactivityTimer);
-        window.addEventListener('click', this.resetInactivityTimer);
-        window.addEventListener('scroll', this.resetInactivityTimer);
-
-        // Start the timer initially
-        this.resetInactivityTimer();
-    },
-    beforeUnmount() {
-        // Remove event listeners when the component is destroyed
-        window.removeEventListener('mousemove', this.resetInactivityTimer);
-        window.removeEventListener('keypress', this.resetInactivityTimer);
-        window.removeEventListener('click', this.resetInactivityTimer);
-        window.removeEventListener('scroll', this.resetInactivityTimer);
-
-        // Clear the timer when the component is destroyed
-        clearTimeout(this.inactivityTimer);
-    },
-
-};
+    name:"Nav-vue",
+    data(){
+        return{}
+    }
+}
 </script>
 
-<style>
-.input-group {
-    position: relative;
-}
-
-.input-group .input-group-text {
-    position: absolute;
-    left: 10px;
-    /* Adjust position */
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-}
-
-.input-group .form-control {
-    padding-left: 35px;
-    /* Adjust padding to make room for the icon */
-}
-
-.pc-container {
-    position: relative;
-}
-
-.pc-container .pc-content {
-    padding-left: 35px;
-    /* padding-right: 35px; */
-    /* padding-top: 35px; */
-}
-
-.custom-style {
-    padding-left: 227px;
-    top: 56px;
-    padding-top: 5px;
-    min-height: calc(100vh - 130px);
-}
-
-.no-padding {
-    padding-left: 0px;
-    padding-right: 0px;
-    padding-top: 0px;
-}
-
-@media (max-width: 1200px) {
-    .custom-style {
-        margin-left: 200px;
-        padding-left: 245px;
-        top: 50px;
-    }
-}
-
-@media (max-width: 992px) {
-    .custom-style {
-        margin-left: 150px;
-        top: 40px;
-        min-height: calc(100vh - 100px);
-    }
-
-    .no-padding {
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-top: 20px;
-    }
-}
-
-.images {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    border: 2px solid #708090;
-}
-
-@media (max-width: 768px) {
-    .custom-style {
-        margin-left: 0;
-        top: 40px;
-        min-height: calc(100vh - 80px);
-    }
-
-    .no-padding {
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-}
-
-@media (max-width: 576px) {
-    .custom-style {
-        margin-left: 0;
-        top: 40px;
-        min-height: calc(100vh - 60px);
-    }
-
-    .no-padding {
-        padding-left: 0;
-        padding-right: 0;
-    }
-}
-</style>
+<style></style>

@@ -20,6 +20,7 @@ class AuthController extends Controller
     {
         $this->middleware('JWT', ['except' => ['login', 'signup']]);
     }
+
     /**
      * Get a JWT via given credentials.
      *
@@ -81,7 +82,6 @@ class AuthController extends Controller
         return response()->json(['message' => 'User created successfully']);
     }
 
-
     /**
      * Get the authenticated User.
      *
@@ -92,11 +92,12 @@ class AuthController extends Controller
         return response()->json(auth()->user());
     }
 
-
-    public function all_user(){
-        $user=User::all();
+    public function all_user()
+    {
+        $user = User::all();
         return response()->json($user);
     }
+
     /**
      * Log the user out (Invalidate the token).
      *
@@ -116,7 +117,6 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        // return $this->respondWithToken(auth()->refresh());
         return $this->respondWithToken(JWTAuth::refresh(JWTAuth::getToken()));
     }
 
@@ -129,11 +129,13 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
-        $ttl = config('jwt.ttl');
+        // Fetch the TTL from the config, multiplied by 60 to convert minutes to seconds
+        $ttl = config('jwt.ttl') * 60;
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => $ttl * 60,
+            'expires_in' => $ttl*60,
             'user_id' => auth()->user()->id,
             'name' => auth()->user()->user_name,
             'email' => auth()->user()->email,
