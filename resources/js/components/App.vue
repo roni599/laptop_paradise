@@ -200,7 +200,7 @@ export default {
                     User.logout();
                     window.location.href = '/'; // Redirect to login page after logout
                 }
-            },  180000 ); // 10 minutes in milliseconds
+            },  1800000 ); // 10 minutes in milliseconds
         },
     },
     mounted() {
