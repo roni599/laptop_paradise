@@ -91,7 +91,7 @@ return [
     |
     */
 
-    'ttl' => env('JWT_TTL', 60), // 24 hours in minutes
+    'ttl' => env('JWT_TTL', 1440), // 24 hours in minutes
 
     /*
     |--------------------------------------------------------------------------

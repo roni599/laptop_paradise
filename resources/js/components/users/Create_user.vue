@@ -114,15 +114,17 @@
 
 <script>
 import axios from 'axios';
-
+import { inject } from 'vue';
 export default {
-  name: "Employee_create",
+  name: "Create_user",
   // mounted() {
   //   if (!User.loggedIn()) {
   //     this.$router.push({ name: "LoginForm" });
   //   }
   // },
   data() {
+    const userName = inject('userName');
+    const profile_img = inject('profile_img');
     return {
       form: {
         name: null,
@@ -133,6 +135,8 @@ export default {
         password_confirmation: null,
         image: '/backend/assets/img/pic.jpeg'
       },
+      userName,
+      profile_img,
       errors: {},
       roles: [],
       loading: false
@@ -192,9 +196,26 @@ export default {
           console.log(error)
         })
     },
+    async fetchUsers() {
+      const token = localStorage.getItem('token');
+      await axios.get("/api/auth/me", {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+        .then((res) => {
+          this.userName = res.data.user_name;
+          this.profile_img = res.data.profile_img
+          this.users = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   created() {
     this.all_roles();
+    this.fetchUsers();
   }
 }
 </script>

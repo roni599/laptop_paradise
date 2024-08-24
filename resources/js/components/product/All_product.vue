@@ -209,11 +209,15 @@
 
 <script>
 import axios from 'axios';
-
+import { inject } from 'vue';
 export default {
     name: "AllProduct",
     data() {
+        const userName = inject('userName');
+        const profile_img = inject('profile_img');
         return {
+            userName,
+            profile_img,
             products: [],
             searchProducts: "",
             form: {
@@ -232,20 +236,6 @@ export default {
             brands: [],
             users: ''
         };
-    },
-    created() {
-        this.fetch_products();
-        axios.get("/api/categories").then((res) => {
-            this.categories = res.data;
-        });
-        axios.get("/api/brands").then((res) => {
-            this.brands = res.data;
-        });
-        // axios.get("/api/alluser")
-        //     .then((res) => {
-        //         this.users = res.data;
-        //     });
-        this.fetchData();
     },
     computed: {
         filteredProducts() {
@@ -329,13 +319,24 @@ export default {
                 }
             })
                 .then((res) => {
-
+                    this.userName = res.data.user_name;
+                    this.profile_img = res.data.profile_img
                     this.users = res.data;
                 })
                 .catch((error) => {
                     console.log(error.response ? error.response.data : error.message);
                 });
-        }
+        },
+    },
+    created() {
+        this.fetch_products();
+        axios.get("/api/categories").then((res) => {
+            this.categories = res.data;
+        });
+        axios.get("/api/brands").then((res) => {
+            this.brands = res.data;
+        });
+        this.fetchData();
     },
 };
 </script>

@@ -102,6 +102,16 @@
                                 </div>
                             </router-link>
 
+                            <router-link to="/supplier" class="nav-link collapsed">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-truck"></i>
+                                </div>
+                                Suppliers
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </router-link>
+
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                                 data-bs-target="#collapseproducts" aria-expanded="false"
                                 aria-controls="collapseLayouts">

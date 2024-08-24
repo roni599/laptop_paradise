@@ -177,11 +177,12 @@
 
 <script>
 import axios from "axios";
-
+import { inject } from 'vue';
 export default {
-  name: "AllEmployee",
-
+  name: "Userlist-vue",
   data() {
+    const userName = inject('userName');
+    const profile_img = inject('profile_img');
     return {
       loading: false,
       users: [],
@@ -196,6 +197,8 @@ export default {
         status: null,
         image: null
       },
+      userName,
+      profile_img,
       errors: {},
     };
   },
@@ -317,10 +320,27 @@ export default {
           console.log(error)
         })
     },
+    async fetchUsers() {
+      const token = localStorage.getItem('token');
+      await axios.get("/api/auth/me", {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+        .then((res) => {
+          this.userName = res.data.user_name;
+          this.profile_img = res.data.profile_img
+          this.users = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   created() {
     this.fetch_user();
     this.all_roles();
+    this.fetchUsers();
   }
 }
 </script>

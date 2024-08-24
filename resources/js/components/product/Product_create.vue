@@ -29,7 +29,7 @@
                                             placeholder="Enter product name" v-model="form.product_model" />
                                         <small class="text-danger" v-if="errors.product_model">{{
                                             errors.product_model[0]
-                                            }}</small>
+                                        }}</small>
                                         <label for="inputProductName">Product Model</label>
                                     </div>
                                 </div>
@@ -39,7 +39,7 @@
                                             placeholder="Product Code" v-model="form.specification"></textarea>
                                         <small class="text-danger" v-if="errors.specification">{{
                                             errors.specification[0]
-                                            }}</small>
+                                        }}</small>
                                         <label for="inputEmail">Specification</label>
                                     </div>
                                 </div>
@@ -51,7 +51,7 @@
                                             v-model="form.quantity" />
                                         <small class="text-danger" v-if="errors.quantity">{{
                                             errors.quantity[0]
-                                            }}</small>
+                                        }}</small>
                                         <label for="inputRoot">Quentity</label>
                                     </div>
                                 </div>
@@ -66,7 +66,7 @@
                                         </select>
                                         <small class="text-danger" v-if="errors.cat_id">{{
                                             errors.cat_id[0]
-                                            }}</small>
+                                        }}</small>
                                         <label for="Buying Price">Category</label>
                                     </div>
                                 </div>
@@ -83,7 +83,7 @@
                                         </select>
                                         <small class="text-danger" v-if="errors.brand_id">{{
                                             errors.brand_id[0]
-                                            }}</small>
+                                        }}</small>
                                         <label for="inputSellingPrice">Brand</label>
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@
                                             placeholder="Buying Date" v-model="form.touch_status" />
                                         <small class="text-danger" v-if="errors.touch_status">{{
                                             errors.touch_status[0]
-                                            }}</small>
+                                        }}</small>
                                         <label for="inputBuyingDate">Touch Status</label>
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                                             placeholder="Buying Date" v-model="form.discount" />
                                         <small class="text-danger" v-if="errors.discount">{{
                                             errors.discount[0]
-                                            }}</small>
+                                        }}</small>
                                         <label class="h6 text-muted mb-0" for="inputCategory">Discount</label>
                                     </div>
                                 </div>
@@ -137,10 +137,12 @@
 
 <script>
 import axios from "axios";
-
+import { inject } from 'vue';
 export default {
     name: "Product_create",
     data() {
+        const userName = inject('userName');
+        const profile_img = inject('profile_img');
         return {
             form: {
                 product_model: null,
@@ -152,6 +154,8 @@ export default {
                 cat_id: null,
                 brand_id: null,
             },
+            userName,
+            profile_img,
             categories: [],
             brands: [],
             users: [],
@@ -198,12 +202,14 @@ export default {
                     'Authorization': `Bearer ${token}`
                 }
             })
-            .then((res) => {
-                this.users = res.data;
-            })
-            .catch((error) => {
-                console.log(error.response ? error.response.data : error.message);
-            });
+                .then((res) => {
+                    this.users = res.data;
+                    this.userName = res.data.user_name;
+                    this.profile_img = res.data.profile_img
+                })
+                .catch((error) => {
+                    console.log(error.response ? error.response.data : error.message);
+                });
         }
     },
     created() {

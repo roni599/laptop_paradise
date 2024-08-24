@@ -209,12 +209,17 @@
 
 <script>
 import axios from 'axios';
+import { inject } from 'vue';
 
 export default {
     name: "Brand-vue",
     data() {
+        const userName = inject('userName');
+        const profile_img = inject('profile_img');
         return {
             brands: [],
+            userName,
+            profile_img,
             form: {
                 brand_name: null,
                 image: '/backend/assets/img/pic.jpeg',
@@ -375,11 +380,27 @@ export default {
                     });
                 }
             });
-        }
+        },
+        async fetchUsers() {
+            const token = localStorage.getItem('token');
+            await axios.get("/api/auth/me", {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then((res) => {
+                    this.userName = res.data.user_name;
+                    this.profile_img = res.data.profile_img
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
 
     },
     created() {
         this.fetch_brands();
+        this.fetchUsers();
     }
 }
 </script>

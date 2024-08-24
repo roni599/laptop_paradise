@@ -184,10 +184,12 @@
 
 <script>
 import axios from "axios";
-
+import { inject } from 'vue';
 export default {
   name: "Category_create",
   data() {
+    const userName = inject('userName');
+    const profile_img = inject('profile_img');
     return {
       form: {
         role_name: null,
@@ -198,6 +200,8 @@ export default {
         role_name: null,
         privilege: null
       },
+      userName,
+      profile_img,
       roles: [],
       errors: {},
     };
@@ -290,13 +294,29 @@ export default {
           });
         }
       });
-    }
+    },
+    async fetchUsers() {
+      const token = localStorage.getItem('token');
+      await axios.get("/api/auth/me", {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+        .then((res) => {
+          this.userName = res.data.user_name;
+          this.profile_img = res.data.profile_img
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   created() {
     // if (!User.loggedIn()) {
     //   this.$router.push({ name: "LoginForm" });
     // }
     this.all_roles();
+    this.fetchUsers();
   },
 };
 </script>

@@ -78,6 +78,7 @@ export default {
         .then((res) => {
           this.userName=res.data.user_name;
           this.profile_img=res.data.profile_img
+          this.users=res.data
         })
         .catch((error) => {
           console.log(error);

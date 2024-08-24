@@ -18,6 +18,7 @@ import Product_create from '../components/product/Product_create.vue';
 import All_product from '../components/product/All_product.vue';
 import Stocks_create from '../components/stocks/Stocks_create.vue';
 import All_stocks from '../components/stocks/All_stocks.vue';
+import Supplier from '../components/supplier/Supplier.vue';
 
 const routes = [
     { name: 'LoginForm', component: Login, path: '/' },
@@ -38,7 +39,9 @@ const routes = [
     { name: 'All_product', component: All_product, path: '/all_product' },
 
     {name:"Stocks_create", component:Stocks_create, path:'/stocks_create'},
-    {name:'All_stocks', component:All_stocks, path:'/all_stocks'}
+    {name:'All_stocks', component:All_stocks, path:'/all_stocks'},
+
+    {name:"Supplier", component:Supplier, path:'/supplier'}
 ];
 
 const router = createRouter({
