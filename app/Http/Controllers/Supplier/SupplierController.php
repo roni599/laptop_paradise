@@ -11,12 +11,13 @@ class SupplierController extends Controller
 {
     public function index()
     {
-        $supplier = Supplier::all();
+        $supplier = Supplier::with(['product','user'])->get();
         return response()->json($supplier);
     }
 
     public function store(Request $request)
     {
+        
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:suppliers,email',
@@ -24,8 +25,9 @@ class SupplierController extends Controller
             'phone' => 'required|string|max:15',
             'shopname' => 'required|string|max:255',
             'image' => 'nullable|string',
+            'product_id'=>'required',
+            'user_id'=>'required'
         ]);
-
         $supplier = new Supplier();
 
         $supplier->name = $request->name;
@@ -33,6 +35,8 @@ class SupplierController extends Controller
         $supplier->address = $request->address;
         $supplier->phone = $request->phone;
         $supplier->shopname = $request->shopname;
+        $supplier->product_id = $request->product_id;
+        $supplier->user_id = $request->user_id;
 
         $imageName = '';
         if ($request->image) {
@@ -74,7 +78,7 @@ class SupplierController extends Controller
 
     public function update(Request $request)
     {
-       
+
         $request->validate([
             'id' => 'required|exists:suppliers,id',
             'name' => 'required|string|max:255',
@@ -117,6 +121,4 @@ class SupplierController extends Controller
 
         return response()->json(['message' => 'Supplier updated successfully']);
     }
-
-
 }

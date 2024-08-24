@@ -23,4 +23,9 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+
+    public function suppliers()
+    {
+        return $this->hasMany(Supplier::class);
+    }
 }

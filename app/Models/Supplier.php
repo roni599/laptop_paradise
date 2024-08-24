@@ -8,11 +8,27 @@ use Illuminate\Database\Eloquent\Model;
 class Supplier extends Model
 {
     use HasFactory;
-    protected $fillable=[
-        'name','email','address','phone','image','shopname'
+
+    protected $fillable = [
+        'name',
+        'email',
+        'phone',
+        'address',
+        'image',
+        'shopname',
+        'user_id', // Foreign key for User
+        'product_id', // Foreign key for Product
     ];
-    public function products()
+
+    // Define the relationship with the User model (Many-to-One)
+    public function user()
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsTo(User::class);
+    }
+
+    // Define the relationship with the Product model (Many-to-One)
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }

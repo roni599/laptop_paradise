@@ -7,7 +7,7 @@
                     Supplier</span>
             </div>
         </div>
-        <button class="btn shadow-sm btn-primary mb-2" @click="openCreateSupplierModal()">Add Category</button>
+        <button class="btn shadow-sm btn-primary mb-2" @click="openCreateSupplierModal()">Add Supplier</button>
         <div class="card mb-4 tt">
             <div class="card-header d-flex justify-content-between">
                 <div class="employee_table fw-bold text-muted">
@@ -22,15 +22,41 @@
                             <th scope="col">#</th>
                             <th scope="col">Supplier Name</th>
                             <th scope="col">Eamil</th>
+                            <th scope="col">Phone</th>
                             <th scope="col">Address</th>
                             <th scope="col">Shop Name</th>
-                            <th scope="col">Assign By</th>
                             <th scope="col">Product Name</th>
+                            <th scope="col">Assign By</th>
                             <th scope="col">Image</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <tr v-for="supplier in suppliers" :key="supplier.id">
+                            <td>{{ supplier.id }}</td>
+                            <td>{{ supplier.name }}</td>
+                            <td>{{ supplier.email }}</td>
+                            <td>{{ supplier.phone }}</td>
+                            <td>{{ supplier.address }}</td>
+                            <td>{{ supplier.shopname }}</td>
+                            <td>{{ supplier.product.product_model }}</td>
+                            <td>{{ supplier.user.user_name }}</td>
+                            <td>
+                                <img :src="`/backend/images/supplier/${supplier.image}`" alt="User Image" width="50"
+                                    height="50" />
+                            </td>
+                            <td>
+                                <div class="buttonGroup py-2">
+                                    <button type="button" class="btn btn-sm btn-success"
+                                        @click="openEditModal(supplier)">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger mx-2" @click="deleteCategory(supplier.id)">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -42,7 +68,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="createSupplierModal">
-                            Edit User
+                            Create Supplier
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -53,11 +79,11 @@
                                     <div class="card-header d-flex justify-content-between align-items-center">
                                         <div class="icon_text d-flex gap-2 mt-3">
                                             <p><i class="fa-solid fa-chart-line"></i></p>
-                                            <p class="text-black font-bold">Edit User</p>
+                                            <p class="text-black font-bold">Create Supplier</p>
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <form @submit.prevent="employee_create" enctype="multipart/form-data">
+                                        <form @submit.prevent="supplier_create" enctype="multipart/form-data">
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
@@ -194,6 +220,7 @@ export default {
             profile_img,
             products: [],
             users: [],
+            suppliers: [],
             form: {
                 name: null,
                 email: null,
@@ -218,7 +245,6 @@ export default {
         async fetch_product() {
             await axios.get("/api/products")
                 .then((res) => {
-                    console.log(res.data)
                     this.products = res.data;
                 })
                 .catch((error) => {
@@ -241,16 +267,28 @@ export default {
             }
         },
 
-        async employee_create() {
-            await axios
-                .post("/api/suppliers/store", this.form)
+        async supplier_create() {
+            await axios.post("/api/suppliers/store", this.form)
                 .then((res) => {
-                    this.form = "";
+                    this.form = {
+                        name: null,
+                        email: null,
+                        address: null,
+                        phone: null,
+                        shopname: null,
+                        product_id: null,
+                        user_id: null,
+                        image: '/backend/assets/img/pic.jpeg',
+                    };
+                    let myModal = bootstrap.Modal.getInstance(
+                        document.getElementById("createSupplierModal")
+                    );
+                    myModal.hide();
+                    this.fetch_suppliers();
                     Toast.fire({
                         icon: "success",
                         title: res.data.message,
                     });
-                    this.$router.push({ name: "All_supplier" });
                 })
                 .catch((error) => {
                     this.errors = error.response.data.errors;
@@ -272,10 +310,20 @@ export default {
                     console.log(error);
                 });
         },
+        async fetch_suppliers() {
+            axios.get("/api/suppliers")
+                .then((res) => {
+                    this.suppliers = res.data;
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
     },
     created() {
         this.fetch_product();
         this.fetchUsers();
+        this.fetch_suppliers();
     }
 };
 </script>
