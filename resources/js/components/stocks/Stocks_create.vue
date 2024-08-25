@@ -19,31 +19,88 @@
             </div>
           </div>
           <div class="card-body">
-            <form @submit.prevent="handleSubmit" v-show="visible">
-              <label for="quantity">Enter Quantity:</label>
-              <input v-model.number="quantity" type="number" id="quantity" min="1" required />
-              <button type="submit">Submit</button>
-            </form>
-
-            <div v-if="rows.length > 0">
-              <form @submit.prevent="handleDynamicSubmit">
-                <div v-for="(row, index) in rows" :key="index" class="form-row d-flex">
-                  <input v-model="row.sl_no" type="number" :placeholder="'Sl No ' + (index + 1)" min="1" required />
-                  <input v-model="row.name" type="text" :placeholder="'Name ' + (index + 1)" required />
-                  <div class="form-floating mb-3 mb-md-0">
-                    <input class="form-control p-3 px-4" type="file" @change="handleImageUpload(index, $event)" />
-                    <small class="text-danger" v-if="row.errors.image">{{ row.errors.image[0] }}</small>
-                  </div>
-                  <div class="col-md-1">
+            <div class="card-body">
+              <!-- Form for entering stock details -->
+              <form @submit.prevent="handleSubmit" v-show="visible">
+                <div class="row mb-3">
+                  <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
-                      <img :src="row.image" width="55" height="55" />
+                      <input class="form-control" v-model="form.product_id" type="text" id="productName" required />
+                      <small class="text-danger" v-if="errors.product_id">{{ errors.product_id[0] }}</small>
+                      <label for="productName">Product Name</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3 mb-md-0">
+                      <input class="form-control" id="userName" type="text" v-model="form.user_id" />
+                      <small class="text-danger" v-if="errors.user_id">{{ errors.user_id[0] }}</small>
+                      <label for="userName">User Name</label>
                     </div>
                   </div>
                 </div>
-                <button type="submit">Submit All Rows</button>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3 mb-md-0">
+                      <input class="form-control" id="inputDate" type="date" v-model="form.stock_date" />
+                      <small class="text-danger" v-if="errors.stock_date">{{ errors.stock_date[0] }}</small>
+                      <label for="inputDate">Stock Date</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3 mb-md-0">
+                      <input class="form-control" v-model="form.stock_quantity" type="text" id="inputQuantity"
+                        required />
+                      <small class="text-danger" v-if="errors.stock_quantity">{{ errors.stock_quantity[0] }}</small>
+                      <label for="inputQuantity">Quantity</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3 mb-md-0">
+                      <input class="form-control" v-model="form.buying_price" type="text" id="buyingPrice" />
+                      <small class="text-danger" v-if="errors.buying_price">{{ errors.buying_price[0] }}</small>
+                      <label for="buyingPrice">Buying Price</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3 mb-md-0">
+                      <input class="form-control" v-model="form.selling_price" type="text" id="sellingPrice"/>
+                      <small class="text-danger" v-if="errors.selling_price">{{ errors.selling_price[0] }}</small>
+                      <label for="sellingPrice">Selling Price</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-2 mb-0">
+                  <div class="d-grid">
+                    <button class="btn btn-primary btn-block">Submit</button>
+                  </div>
+                </div>
               </form>
+
+              <!-- Form for dynamic rows -->
+              <div v-if="rows.length > 0">
+                <form @submit.prevent="handleDynamicSubmit">
+                  <div v-for="(row, index) in rows" :key="index" class="form-row d-flex mb-3">
+                    <input v-model="row.sl_no" type="number" :placeholder="'Sl No ' + (index + 1)" min="1" required />
+                    <input v-model="row.name" type="text" :placeholder="'Name ' + (index + 1)" required />
+                    <div class="form-floating mb-3 mb-md-0">
+                      <input class="form-control p-3 px-4" type="file" @change="handleImageUpload(index, $event)" />
+                      <small class="text-danger" v-if="row.errors.image">{{ row.errors.image[0] }}</small>
+                    </div>
+                    <div class="col-md-1">
+                      <div class="form-floating mb-3 mb-md-0">
+                        <img :src="row.image" width="55" height="55" />
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit">Submit All Rows</button>
+                </form>
+              </div>
             </div>
+
           </div>
+
         </div>
       </div>
     </div>
@@ -55,45 +112,65 @@ export default {
   name: "Stocks_create",
   data() {
     return {
-      quantity: 1,
-      rows: [],
-      visible:true
+      form: {
+        product_id: null,
+        user_id: null,
+        stock_date: null,
+        stock_quantity: null, // Default quantity to 1
+        buying_price: null,
+        selling_price: null,
+      },
+      errors: {}, // Error handling object
+      rows: [], // Array to hold dynamic form rows
+      visible: true, // Control visibility of the first form
     };
   },
   methods: {
+    // Handles form submission
     handleSubmit() {
+      // Clear existing 
+      console.log(this.form)
       this.rows = [];
-      this.visible=false
-      for (let i = 0; i < this.quantity; i++) {
+
+      // Hide the initial form
+      this.visible = false;
+
+      // Generate dynamic rows based on quantity
+      for (let i = 0; i < this.form.stock_quantity; i++) {
         this.rows.push({
-          sl_no: '',
-          image: '/backend/assets/img/pic.jpeg',
-          name: '',
-          errors:{}
+          sl_no: "",
+          name: "",
+          image: "/backend/assets/img/pic.jpeg", // Default image
+          errors: {}, // Error handling for each row
         });
       }
     },
+    // Handles image upload for dynamic rows
     handleImageUpload(index, event) {
       let file = event.target.files[0];
       if (file.size > 1048576) {
         Toast.fire({
           icon: "warning",
-          title: "Image must be less than 1 MB!"
+          title: "Image must be less than 1 MB!",
         });
       } else {
         let reader = new FileReader();
         reader.onload = (e) => {
-          this.rows[index].image = e.target.result;
+          this.rows[index].image = e.target.result; // Update image preview
         };
         reader.readAsDataURL(file);
       }
     },
+    // Handles final form submission
     handleDynamicSubmit() {
+      // Log all rows for debugging
       console.log(this.rows);
+
+      // Further processing of rows can be done here
     },
   },
+};
 
-}
 </script>
 
 <style></style>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('image')->nullable();
             $table->string('shopname')->nullable();
+            $table->string('status')->nullable()->default('0');
             $table->unsignedBigInteger('user_id'); 
             $table->unsignedBigInteger('product_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
