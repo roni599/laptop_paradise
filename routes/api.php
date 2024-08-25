@@ -72,7 +72,7 @@ Route::delete('/products/delete/{id}', [ProductController::class, 'delete']);
 //for suppliers
 Route::get('/suppliers', [SupplierController::class, 'index']);
 Route::post('/suppliers/store', [SupplierController::class, 'store']);
-Route::put('/suppliers/update', [SupplierController::class, 'ProductsUpdate']);
+Route::put('/suppliers/update', [SupplierController::class, 'update']);
 Route::delete('/suppliers/delete/{id}', [SupplierController::class, 'delete']);
 // Route::post('/users/store',[UserController::class, 'store']);
 // Route::get('/employees', [EmployeeController::class, 'index']);

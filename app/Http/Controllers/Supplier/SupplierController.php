@@ -11,13 +11,13 @@ class SupplierController extends Controller
 {
     public function index()
     {
-        $supplier = Supplier::with(['product','user'])->get();
+        $supplier = Supplier::with(['product', 'user'])->get();
         return response()->json($supplier);
     }
 
     public function store(Request $request)
     {
-        
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:suppliers,email',
@@ -25,8 +25,8 @@ class SupplierController extends Controller
             'phone' => 'required|string|max:15',
             'shopname' => 'required|string|max:255',
             'image' => 'nullable|string',
-            'product_id'=>'required',
-            'user_id'=>'required'
+            'product_id' => 'required',
+            'user_id' => 'required'
         ]);
         $supplier = new Supplier();
 
@@ -78,36 +78,48 @@ class SupplierController extends Controller
 
     public function update(Request $request)
     {
-
         $request->validate([
-            'id' => 'required|exists:suppliers,id',
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:employees,email,' . $request->id,
-            'address' => 'required|string|max:255',
-            'phone' => 'required|string|max:15',
-            'shopname' => 'required|string|max:255',
-            'image' => 'nullable|string',
+            'edit_id' => 'required|exists:suppliers,id',
+            'edit_name' => 'required|string|max:255',
+            'edit_email' => 'required|email',
+            'edit_address' => 'required|string|max:255',
+            'edit_phone' => 'required|string|max:15',
+            'edit_shopname' => 'required|string|max:255',
+            'edit_image' => 'nullable|string',
+            'edit_user_id' => 'required',
+            'edit_product_id' => 'required'
         ]);
-        $supplier = Supplier::find($request->id);
+        $supplier = Supplier::find($request->edit_id);
         if (!$supplier) {
-            return response()->json(['message' => 'Suppler not found'], 404);
+            return response()->json(['message' => 'Supplier not found'], 404);
         }
 
-        $supplier->update($request->only('name', 'email', 'address', 'phone', 'shopname'));
+        // Update the supplier's details
+        $supplier->update([
+            'name' => $request->edit_name,
+            'email' => $request->edit_email,
+            'address' => $request->edit_address,
+            'phone' => $request->edit_phone,
+            'shopname' => $request->edit_shopname,
+            'user_id' => $request->edit_user_id,
+            'product_id' => $request->edit_product_id,
+        ]);
 
-        if ($request->has('image') && strpos($request->image, 'data:image/') === 0) {
-            $imagePath = public_path('backend/images/supplier/' . $supplier->image);
-            if ($supplier->image && file_exists($imagePath)) {
-                unlink($imagePath);
+        if ($request->has('edit_image') && strpos($request->edit_image, 'data:image/') === 0) {
+            $oldImagePath = public_path('backend/images/supplier/' . $supplier->image);
+            if ($supplier->image && file_exists($oldImagePath)) {
+                unlink($oldImagePath);
             }
 
-            $position = strpos($request->image, ';');
-            $sub = substr($request->image, 0, $position);
+            // Process the new image
+            $position = strpos($request->edit_image, ';');
+            $sub = substr($request->edit_image, 0, $position);
             $ext = explode('/', $sub)[1];
-            $imageName = rand(1, 1000) . '_' . $request->name . '.' . $ext;
-            $image = str_replace('data:image/' . $ext . ';base64,', '', $request->image);
+            $imageName = rand(1, 1000) . '_' . $request->edit_name . '.' . $ext;
+            $image = str_replace('data:image/' . $ext . ';base64,', '', $request->edit_image);
             $image = str_replace(' ', '+', $image);
 
+            // Ensure the directory exists and save the new image
             $imagePath = public_path('backend/images/supplier/' . $imageName);
             if (!File::isDirectory(public_path('backend/images/supplier'))) {
                 File::makeDirectory(public_path('backend/images/supplier'), 0755, true, true);

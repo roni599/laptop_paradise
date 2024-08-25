@@ -51,7 +51,7 @@
                                         @click="openEditModal(supplier)">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
-                                    <button class="btn btn-sm btn-danger mx-2" @click="deleteCategory(supplier.id)">
+                                    <button class="btn btn-sm btn-danger mx-2" @click="deleteSupplier(supplier.id)">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </div>
@@ -157,7 +157,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
@@ -181,6 +180,148 @@
                                                 <div class="col-md-1">
                                                     <div class="form-floating mb-3 mb-md-0">
                                                         <img :src="form.image" width="55" height="55" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-4 mb-0">
+                                                <div class="d-grid">
+                                                    <button class="btn btn-primary btn-block">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="editSupplierModal" tabindex="-1" aria-labelledby="editSupplierLabel"
+            aria-hidden="true">
+            <div class="modal-dialog full-width-modal mt-3">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-muted" id="editSupplierModal">
+                            Edit Supplier
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body mb-2">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card rounded-lg">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <div class="icon_text d-flex gap-2 mt-3">
+                                            <p><i class="fa-solid fa-chart-line"></i></p>
+                                            <p class="text-muted font-bold">Edit Supplier</p>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <form @submit.prevent="supplier_edit" enctype="multipart/form-data">
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" id="inputName" type="text"
+                                                            placeholder="Enter your name"
+                                                            v-model="editForm.edit_name" />
+                                                        <small class="text-danger" v-if="errors.edit_name">{{
+                                                            errors.edit_name[0]
+                                                            }}</small>
+                                                        <label for="inputName">Full Name</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" id="inputEmail" type="email"
+                                                            placeholder="name@example.com"
+                                                            v-model="editForm.edit_email" />
+                                                        <small class="text-danger" v-if="errors.edit_email">{{
+                                                            errors.edit_email[0]
+                                                            }}</small>
+                                                        <label for="inputEmail">Email address</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" id="inputAddress" type="text"
+                                                            placeholder="Address" v-model="editForm.edit_address" />
+                                                        <small class="text-danger" v-if="errors.edit_address">{{
+                                                            errors.edit_address[0]
+                                                            }}</small>
+                                                        <label for="inputAddress">Address</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" id="inputPhone" type="text"
+                                                            placeholder="Phone" v-model="editForm.edit_phone" />
+                                                        <small class="text-danger" v-if="errors.edit_phone">{{
+                                                            errors.edit_phone[0]
+                                                            }}</small>
+                                                        <label for="inputPhone">Phone</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <select class="form-select" readonly
+                                                            aria-label="Default select example"
+                                                            v-model="editForm.edit_user_id">
+                                                            <option :value="users.id">
+                                                                {{ users.user_name }}
+                                                            </option>
+                                                        </select>
+                                                        <small class="text-danger" v-if="errors.edit_user_id">{{
+                                                            errors.edit_user_id[0]
+                                                            }}</small>
+                                                        <label for="inputAddress">Users Name</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <select class="form-select" aria-label="Default select example"
+                                                            v-model="editForm.edit_product_id">
+                                                            <option v-for="product in products" :key="product.id"
+                                                                :value="product.id">{{ product.product_model }}</option>
+                                                        </select>
+                                                        <small class="text-danger" v-if="errors.product_id">{{
+                                                            errors.product_id[0]
+                                                            }}</small>
+                                                        <label for="inputPhone">Product Model</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" id="inputShopName" type="text"
+                                                            placeholder="Shop Name" v-model="editForm.edit_shopname" />
+                                                        <small class="text-danger" v-if="errors.edit_shopname">{{
+                                                            errors.edit_shopname[0]
+                                                            }}</small>
+                                                        <label for="inputNid">Shop Name</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control p-3 px-4" id="inputFile" type="file"
+                                                            @change="onUpdateFileSelect" />
+                                                        <small class="text-danger" v-if="errors.edit_image">{{
+                                                            errors.edit_image[0]
+                                                            }}</small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <img v-if="editForm.edit_image !== null"
+                                                            :src="getupdateimageSrc()" alt="" width="55" height="55" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -230,6 +371,17 @@ export default {
                 product_id: null,
                 user_id: null,
                 image: "/backend/assets/img/pic.jpeg",
+            },
+            editForm: {
+                edit_id: null,
+                edit_name: null,
+                edit_email: null,
+                edit_address: null,
+                edit_phone: null,
+                edit_shopname: null,
+                edit_product_id: null,
+                edit_user_id: null,
+                edit_image: null
             },
             errors: {},
         };
@@ -318,7 +470,103 @@ export default {
                 .catch((error) => {
                     console.log(error)
                 })
-        }
+        },
+        async supplier_edit() {
+            axios.put('/api/suppliers/update', this.editForm)
+                .then((res) => {
+                    this.editForm = {
+                        edit_id: null,
+                        edit_name: null,
+                        edit_email: null,
+                        edit_phone: null,
+                        edit_address: null,
+                        edit_shopname: null,
+                        edit_product_id: null,
+                        edit_user_id: null,
+                        edit_image: null,
+                    }
+                    this.fetch_suppliers();
+                    let myModal = bootstrap.Modal.getInstance(
+                        document.getElementById("editSupplierModal")
+                    );
+                    myModal.hide();
+                    Toast.fire({
+                        icon: "success",
+                        title: res.data.message,
+                    });
+                })
+                .catch((error) => {
+                    this.errors = error.response.data.errors;
+                })
+        },
+        openEditModal(supplier) {
+            this.editForm.edit_id = supplier.id;
+            this.editForm.edit_name = supplier.name;
+            this.editForm.edit_email = supplier.email;
+            this.editForm.edit_address = supplier.address;
+            this.editForm.edit_phone = supplier.phone;
+            this.editForm.edit_product_id = supplier.product_id;
+            this.editForm.edit_user_id = supplier.user_id;
+            this.editForm.edit_shopname = supplier.shopname;
+            this.editForm.edit_image = supplier.image;
+            let myModal = new bootstrap.Modal(
+                document.getElementById("editSupplierModal"),
+                {}
+            );
+            myModal.show();
+        },
+        getupdateimageSrc() {
+            if (this.editForm.edit_image) {
+                if (this.editForm.edit_image.startsWith("data")) {
+                    return this.editForm.edit_image;
+                } else {
+                    return `/backend/images/supplier/${this.editForm.edit_image}`;
+                }
+            }
+            return "";
+        },
+        onUpdateFileSelect(event) {
+            let file = event.target.files[0]
+            if (file.size > 1048576) {
+                Toast.fire({
+                    icon: "warning",
+                    title: "image must be less then 1 mb!"
+                });
+            }
+            else {
+                let reader = new FileReader();
+                reader.onload = (event) => {
+                    this.editForm.edit_image = event.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        },
+        async deleteSupplier(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await axios
+                        .delete("/api/suppliers/delete/" + id)
+                        .then((res) => {
+                            this.fetch_suppliers()
+                        })
+                        .catch((error) => {
+                        });
+                    Swal.fire({
+                        title: "Deleted!",
+                        text: "Category has been deleted.",
+                        icon: "success",
+                    });
+                }
+            });
+        },
     },
     created() {
         this.fetch_product();
