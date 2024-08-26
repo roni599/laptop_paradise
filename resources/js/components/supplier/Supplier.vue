@@ -418,7 +418,6 @@ export default {
                 reader.readAsDataURL(file);
             }
         },
-
         async supplier_create() {
             await axios.post("/api/suppliers/store", this.form)
                 .then((res) => {
