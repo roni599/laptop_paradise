@@ -93,8 +93,6 @@ class SupplierController extends Controller
         if (!$supplier) {
             return response()->json(['message' => 'Supplier not found'], 404);
         }
-
-        // Update the supplier's details
         $supplier->update([
             'name' => $request->edit_name,
             'email' => $request->edit_email,

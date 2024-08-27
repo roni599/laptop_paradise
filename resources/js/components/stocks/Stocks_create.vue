@@ -41,8 +41,8 @@
                           {{ users.user_name }}
                         </option>
                       </select>
-                      <small class="text-danger" v-if="errors.edit_user_id">{{
-                        errors.edit_user_id[0]
+                      <small class="text-danger" v-if="errors.user_id">{{
+                        errors.user_id[0]
                       }}</small>
                       <label for="inputAddress">Users Name</label>
                     </div>
@@ -58,8 +58,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
-                      <input class="form-control" v-model="form.stock_quantity" type="text" id="inputQuantity"
-                        required />
+                      <input class="form-control" v-model="form.stock_quantity" type="text" id="inputQuantity" />
                       <small class="text-danger" v-if="errors.stock_quantity">{{ errors.stock_quantity[0] }}</small>
                       <label for="inputQuantity">Quantity</label>
                     </div>
@@ -87,14 +86,59 @@
                   </div>
                 </div>
               </form>
+
               <div v-if="rows.length > 0">
                 <form @submit.prevent="handleDynamicSubmit">
                   <div v-for="(row, index) in rows" :key="index" class="form-row d-flex mb-3">
-                    <input v-model="row.sl_no" type="number" :placeholder="'Sl No ' + (index + 1)" min="1" required />
-                    <input v-model="row.name" type="text" :placeholder="'Name ' + (index + 1)" required />
-                    <div class="form-floating mb-3 mb-md-0">
-                      <input class="form-control p-3 px-4" type="file" @change="handleImageUpload(index, $event)" />
-                      <small class="text-danger" v-if="row.errors.image">{{ row.errors.image[0] }}</small>
+                    <div class="col-md-2 me-2" hidden>
+                      <div class="form-floating mb-3 mb-md-0">
+                        <select class="form-select" readonly aria-label="Default select example" v-model="row.stocksId">
+                          <option :value="stocksId">
+                            {{ stocksId }}
+                          </option>
+                        </select>
+                        <small class="text-danger" v-if="errors.stock_id">{{
+                          errors.stock_id[0]
+                        }}</small>
+                        <label for="inputAddress">Stocks ID</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4 me-2">
+                      <div class="form-floating mb-3 mb-md-0">
+                        <input class="form-control" v-model="row.serial_no" />
+                        <small class="text-danger" v-if="errors.serial_no">{{
+                          errors.serial_no[0]
+                        }}</small>
+                        <label for="inputAddress">Serial Number</label>
+                      </div>
+                    </div>
+                    <div class="col-md-4 me-2">
+                      <div class="form-floating mb-3 mb-md-0">
+                        <input class="form-control" v-model="row.color" />
+                        <small class="text-danger" v-if="errors.color">{{
+                          errors.color[0]
+                        }}</small>
+                        <label for="inputAddress">Color</label>
+                      </div>
+                    </div>
+                    <div class="col-md-2 me-2" hidden>
+                      <div class="form-floating mb-3 mb-md-0">
+                        <select class="form-select" readonly aria-label="Default select example" v-model="row.userid">
+                          <option :value="users.id">
+                            {{ users.user_name }}
+                          </option>
+                        </select>
+                        <small class="text-danger" v-if="errors.userid">{{
+                          errors.userid[0]
+                        }}</small>
+                        <label for="inputAddress">Users Name</label>
+                      </div>
+                    </div>
+                    <div class="col-md-3 me-2">
+                      <div class="form-floating mb-3 mb-md-0">
+                        <input class="form-control p-3 px-4" type="file" @change="handleImageUpload(index, $event)" />
+                        <small class="text-danger" v-if="row.errors.image">{{ row.errors.image[0] }}</small>
+                      </div>
                     </div>
                     <div class="col-md-1">
                       <div class="form-floating mb-3 mb-md-0">
@@ -102,7 +146,11 @@
                       </div>
                     </div>
                   </div>
-                  <button type="submit">Submit All Rows</button>
+                  <div class="mt-2 mb-0">
+                    <div class="d-grid">
+                      <button class="btn btn-primary btn-block">Submit</button>
+                    </div>
+                  </div>
                 </form>
               </div>
             </div>
@@ -133,21 +181,49 @@ export default {
       errors: {},
       users: [],
       products: [],
+      stocksId: null,
       rows: [],
+      //for inject
       userName,
       profile_img,
+
       visible: true,
     };
   },
   methods: {
-    handleSubmit() {
-      console.log(this.form)
+    async handleSubmit() {
+      await axios.post("/api/stocks/store", this.form)
+        .then((res) => {
+          if (res) {
+            // this.form = {
+            //   product_id: null,
+            //   user_id: null,
+            //   stock_date: null,
+            //   stock_quantity: null,
+            //   buying_price: null,
+            //   selling_price: null,
+            // };
+            this.stocksId = res.data.stock_id;
+            this.visible = false;
+            Toast.fire({
+              icon: "success",
+              title: res.data.message,
+            });
+            this.initializeRows();
+          }
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
+    },
+    initializeRows() {
       this.rows = [];
-      this.visible = false;
       for (let i = 0; i < this.form.stock_quantity; i++) {
         this.rows.push({
-          sl_no: "",
-          name: "",
+          stocksId: this.stocksId,
+          serial_no: null,
+          color: null,
+          userid: this.form.user_id,
           image: "/backend/assets/img/pic.jpeg",
           errors: {},
         });
@@ -170,6 +246,23 @@ export default {
     },
     handleDynamicSubmit() {
       console.log(this.rows);
+      // this.rows.forEach((row, index) => {
+      //   // Validate fields in each row
+      //   if (!row.serial_no || !row.color || !row.userid) {
+      //     row.errors.serial_no = !row.serial_no ? ["Serial number is required."] : [];
+      //     row.errors.color = !row.color ? ["Color is required."] : [];
+      //     row.errors.userid = !row.userid ? ["User ID is required."] : [];
+      //   } else {
+      //     // Submit the form data
+      //     axios.post("/api/stocks/serials", row)
+      //       .then((res) => {
+      //         console.log("Row submitted:", res.data);
+      //       })
+      //       .catch((error) => {
+      //         row.errors = error.response.data.errors;
+      //       });
+      //   }
+      // });
     },
     async fetchUsers() {
       const token = localStorage.getItem('token');
@@ -194,7 +287,7 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-        })
+        });
     },
   },
   created() {

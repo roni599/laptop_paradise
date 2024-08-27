@@ -27,4 +27,8 @@ class Stock extends Model
     {
         return $this->belongsTo(Product::class);
     }
+    public function serials()
+    {
+        return $this->hasMany(Serial::class);
+    }
 }

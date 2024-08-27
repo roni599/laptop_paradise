@@ -74,12 +74,12 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->belongsTo(Role::class);
     }
-    
+
     public function products()
     {
         return $this->hasMany(Product::class);
     }
-    
+
     public function suppliers()
     {
         return $this->hasMany(Supplier::class);
@@ -87,5 +87,9 @@ class User extends Authenticatable implements JWTSubject
     public function stocks()
     {
         return $this->hasMany(Stock::class);
+    }
+    public function serials()
+    {
+        return $this->hasMany(Serial::class);
     }
 }
