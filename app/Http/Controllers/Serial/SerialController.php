@@ -6,13 +6,25 @@ use App\Http\Controllers\Controller;
 use App\Models\Serial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class SerialController extends Controller
 {
     public function index()
     {
-        $stocks = Serial::with('user')->get();
-        return response()->json($stocks);
+        $serials = Serial::with('user')->get();
+        $barcodes = [];
+
+        $generator = new BarcodeGeneratorPNG();
+        foreach ($serials as $serial) {
+            $barcodes[] = [
+                'user' => $serial->user ,
+                'serial' => $serial, 
+                'barcode' => base64_encode($generator->getBarcode($serial->serial_no, $generator::TYPE_CODE_128))
+            ];
+        }
+
+        return response()->json($barcodes);
     }
     public function store(Request $request)
     {

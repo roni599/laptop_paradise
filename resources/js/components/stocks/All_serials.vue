@@ -30,33 +30,41 @@
               <th scope="col">Status</th>
               <th scope="col">Return Status</th>
               <th scope="col">Image</th>
+              <th scope="col">barcode</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="Serial in Serials" :key="Serial.id">
-              <td>{{ Serial.id }}</td>
-              <td>{{ Serial.serial_no }}</td>
-              <td>{{ Serial.stock_id }}</td>
+              <td>{{ Serial.serial.id }}</td>
+              <td>{{ Serial.serial.serial_no }}</td>
+              <td>{{ Serial.serial.stock_id }}</td>
               <td>{{ Serial.user.user_name }}</td>
-              <td>{{ Serial.color }}</td>
+              <td>{{ Serial.serial.color }}</td>
               <td>
-                <span v-if="Serial.status === 0">Processing</span>
+                <span v-if="Serial.serial.status === 0">Processing</span>
                 <span v-else>Ready for sale</span>
               </td>
               <td>
-                <span v-if="Serial.status === 0">At The Shop</span>
+                <span v-if="Serial.serial.return_status === 0">At The Shop</span>
                 <span v-else>Return</span>
               </td>
               <td>
-                <img :src="`/backend/images/serial/${Serial.image}`" alt="User Image" width="55" height="55" />
+                <img :src="`/backend/images/serial/${Serial.serial.image}`" alt="User Image" width="55" height="55" />
+              </td>
+              <td class="text-center">
+                <img v-if="Serial.barcode" :src="`data:image/png;base64,${Serial.barcode}`" alt="Barcode" width="100"
+                  height="20" />
+                <div>
+                  {{ Serial.serial.serial_no }}
+                </div>
               </td>
               <td>
                 <div class="buttonGroup py-2">
-                  <button type="button" class="btn btn-sm btn-success" @click="openEditModal(Serial)">
+                  <button type="button" class="btn btn-sm btn-success" @click="openEditModal(Serial.serial)">
                     <i class="fa-solid fa-pen-to-square"></i>
                   </button>
-                  <button class="btn btn-sm btn-danger mx-2" @click="deleteSerial(Serial.id)">
+                  <button class="btn btn-sm btn-danger mx-2" @click="deleteSerial(Serial.serial.id)">
                     <i class="fa-solid fa-trash"></i>
                   </button>
                 </div>
@@ -186,6 +194,7 @@ export default {
         return_status: null,
         image: null
       },
+      barcodeImage: '',
       errors: {}
     }
   },
@@ -193,6 +202,7 @@ export default {
     async feth_Serials() {
       await axios.get("/api/serials")
         .then((res) => {
+          console.log(res.data)
           this.Serials = res.data
         })
         .catch((error) => {
