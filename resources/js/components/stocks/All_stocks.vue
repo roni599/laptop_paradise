@@ -13,9 +13,9 @@
           <i class="fas fa-table me-1"></i>
           Stocks List Table
         </div>
-        <!-- <div class="addNew">
-          <router-link to="/supplier_create" class="btn btn-sm btn-success">Add New</router-link>
-        </div> -->
+        <div class="addNew">
+          <router-link to="/stocks_create" class="btn btn-sm btn-success">Add New</router-link>
+        </div>
       </div>
       <div class="card-body">
         <input type="text" id="searchInput" placeholder="Search for ID.." />
