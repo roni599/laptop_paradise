@@ -10,6 +10,7 @@ use App\Http\Controllers\Extra\ExtraController;
 use App\Http\Controllers\POS\PosController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Role\RoleController;
+use App\Http\Controllers\Serial\SerialController;
 use App\Http\Controllers\Stock\StockController;
 use App\Http\Controllers\Supplier\SupplierController;
 use App\Http\Controllers\User\UserController;
@@ -76,10 +77,17 @@ Route::post('/suppliers/store', [SupplierController::class, 'store']);
 Route::put('/suppliers/update', [SupplierController::class, 'update']);
 Route::delete('/suppliers/delete/{id}', [SupplierController::class, 'delete']);
 
+//for stocks
 Route::get('/stocks', [StockController::class, 'index']);
 Route::post('/stocks/store', [StockController::class, 'store']);
 Route::put('/stocks/update', [StockController::class, 'update']);
 Route::delete('/stocks/delete/{id}', [StockController::class, 'delete']);
+
+//for serials
+Route::get('/serials', [SerialController::class, 'index']);
+Route::post('/serials/store', [SerialController::class, 'store']);
+Route::put('/serials/upate', [SerialController::class, 'update']);
+Route::delete('/serials/delete/{id}', [SerialController::class, 'delete']);
 // Route::post('/users/store',[UserController::class, 'store']);
 // Route::get('/employees', [EmployeeController::class, 'index']);
 // Route::post('/employees/store', [EmployeeController::class, 'store']);

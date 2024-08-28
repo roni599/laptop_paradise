@@ -146,6 +146,7 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <router-link class="nav-link" to="/stocks_create">Stocks Create</router-link>
                                     <router-link class="nav-link" to="/all_stocks">Stocks List</router-link>
+                                    <router-link class="nav-link" to="/all_serials">Serials List</router-link>
                                 </nav>
                             </div>
                         </div>

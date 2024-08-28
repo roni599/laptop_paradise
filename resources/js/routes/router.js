@@ -19,6 +19,7 @@ import All_product from '../components/product/All_product.vue';
 import Stocks_create from '../components/stocks/Stocks_create.vue';
 import All_stocks from '../components/stocks/All_stocks.vue';
 import Supplier from '../components/supplier/Supplier.vue';
+import All_serials from '../components/stocks/All_serials.vue';
 
 const routes = [
     { name: 'LoginForm', component: Login, path: '/' },
@@ -35,13 +36,14 @@ const routes = [
 
     { name: 'Category', component: Category, path: '/category' },
 
-    { name: 'Product_create', component:Product_create, path: '/product_create' },
+    { name: 'Product_create', component: Product_create, path: '/product_create' },
     { name: 'All_product', component: All_product, path: '/all_product' },
 
-    {name:"Stocks_create", component:Stocks_create, path:'/stocks_create'},
-    {name:'All_stocks', component:All_stocks, path:'/all_stocks'},
+    { name: "Stocks_create", component: Stocks_create, path: '/stocks_create' },
+    { name: 'All_stocks', component: All_stocks, path: '/all_stocks' },
+    { name: 'All_serials', component: All_serials, path: '/all_serials' },
 
-    {name:"Supplier", component:Supplier, path:'/supplier'}
+    { name: "Supplier", component: Supplier, path: '/supplier' }
 ];
 
 const router = createRouter({

@@ -195,14 +195,6 @@ export default {
       await axios.post("/api/stocks/store", this.form)
         .then((res) => {
           if (res) {
-            // this.form = {
-            //   product_id: null,
-            //   user_id: null,
-            //   stock_date: null,
-            //   stock_quantity: null,
-            //   buying_price: null,
-            //   selling_price: null,
-            // };
             this.stocksId = res.data.stock_id;
             this.visible = false;
             Toast.fire({
@@ -244,25 +236,14 @@ export default {
         reader.readAsDataURL(file);
       }
     },
-    handleDynamicSubmit() {
-      console.log(this.rows);
-      // this.rows.forEach((row, index) => {
-      //   // Validate fields in each row
-      //   if (!row.serial_no || !row.color || !row.userid) {
-      //     row.errors.serial_no = !row.serial_no ? ["Serial number is required."] : [];
-      //     row.errors.color = !row.color ? ["Color is required."] : [];
-      //     row.errors.userid = !row.userid ? ["User ID is required."] : [];
-      //   } else {
-      //     // Submit the form data
-      //     axios.post("/api/stocks/serials", row)
-      //       .then((res) => {
-      //         console.log("Row submitted:", res.data);
-      //       })
-      //       .catch((error) => {
-      //         row.errors = error.response.data.errors;
-      //       });
-      //   }
-      // });
+    async handleDynamicSubmit() {
+      await axios.post("/api/serials/store", { rows: this.rows })
+        .then((res) => {
+          this.$router.push({ name: 'All_stocks' })
+        })
+        .catch((error) => {
+          this.rows.errors = error.response.data.errors;
+        })
     },
     async fetchUsers() {
       const token = localStorage.getItem('token');
