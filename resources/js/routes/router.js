@@ -20,6 +20,8 @@ import Stocks_create from '../components/stocks/Stocks_create.vue';
 import All_stocks from '../components/stocks/All_stocks.vue';
 import Supplier from '../components/supplier/Supplier.vue';
 import All_serials from '../components/stocks/All_serials.vue';
+import Expance_create from '../components/expense/Expance_create.vue';
+import All_expense from '../components/expense/All_expense.vue';
 
 const routes = [
     { name: 'LoginForm', component: Login, path: '/' },
@@ -43,7 +45,10 @@ const routes = [
     { name: 'All_stocks', component: All_stocks, path: '/all_stocks' },
     { name: 'All_serials', component: All_serials, path: '/all_serials' },
 
-    { name: "Supplier", component: Supplier, path: '/supplier' }
+    { name: "Supplier", component: Supplier, path: '/supplier' },
+
+    {name:"Expence_create", component:Expance_create, path:'/expence_create'},
+    {name:"All_expense", component:All_expense, path:'/all_expense'}
 ];
 
 const router = createRouter({

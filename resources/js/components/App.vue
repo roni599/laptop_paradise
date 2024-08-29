@@ -149,6 +149,24 @@
                                     <router-link class="nav-link" to="/all_serials">Serials List</router-link>
                                 </nav>
                             </div>
+
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#collapseExpense" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-chart-line mt-1"></i>
+                                </div>
+                                Expence Category
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="collapse" id="collapseExpense" aria-labelledby="headingOne"
+                                data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <router-link class="nav-link" to="/expence_create">Expense Create</router-link>
+                                    <router-link class="nav-link" to="/all_expense">All Expense</router-link>
+                                </nav>
+                            </div>
                         </div>
                     </div>
                 </nav>
