@@ -18,8 +18,8 @@ class SerialController extends Controller
         $generator = new BarcodeGeneratorPNG();
         foreach ($serials as $serial) {
             $barcodes[] = [
-                'user' => $serial->user ,
-                'serial' => $serial, 
+                'user' => $serial->user,
+                'serial' => $serial,
                 'barcode' => base64_encode($generator->getBarcode($serial->serial_no, $generator::TYPE_CODE_128))
             ];
         }
@@ -115,5 +115,18 @@ class SerialController extends Controller
         } else {
             $serial->delete();
         }
+    }
+    public function getSerialsByStock($stockId)
+    {
+        $serials = Serial::where('stock_id', $stockId)->get(['serial_no']);
+        $generator = new BarcodeGeneratorPNG();
+        $serialsWithBarcodes = [];
+        foreach ($serials as $serial) {
+            $serialsWithBarcodes[] = [
+                'serial_no' => $serial->serial_no,
+                'barcode' => base64_encode($generator->getBarcode($serial->serial_no, $generator::TYPE_CODE_128))
+            ];
+        }
+        return response()->json($serialsWithBarcodes);
     }
 }

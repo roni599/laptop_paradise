@@ -82,6 +82,7 @@ Route::get('/stocks', [StockController::class, 'index']);
 Route::post('/stocks/store', [StockController::class, 'store']);
 Route::put('/stocks/update', [StockController::class, 'update']);
 Route::delete('/stocks/delete/{id}', [StockController::class, 'delete']);
+Route::get('/stocks/serial/{stockId}', [SerialController::class, 'getSerialsByStock']);
 
 //for serials
 Route::get('/serials', [SerialController::class, 'index']);

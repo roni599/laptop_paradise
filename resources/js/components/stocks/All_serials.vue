@@ -180,12 +180,17 @@
 
 <script>
 import axios from 'axios';
-
+import { inject } from 'vue';
 export default {
   name: 'All_serials',
   data() {
+    const userName = inject('userName');
+    const profile_img = inject('profile_img');
     return {
       Serials: [],
+      userName,
+      profile_img,
+      users: [],
       form: {
         id: null,
         serial_no: null,
@@ -286,9 +291,26 @@ export default {
         reader.readAsDataURL(file);
       }
     },
+    async fetchUsers() {
+      const token = localStorage.getItem('token');
+      await axios.get("/api/auth/me", {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+        .then((res) => {
+          this.userName = res.data.user_name;
+          this.profile_img = res.data.profile_img
+          this.users = res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   created() {
     this.feth_Serials();
+    this.fetchUsers();
   }
 }
 </script>
