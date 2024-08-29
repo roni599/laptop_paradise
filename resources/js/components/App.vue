@@ -211,7 +211,7 @@ export default {
                     User.logout();
                     window.location.href = '/'; // Redirect to login page after logout
                 }
-            },  1800000 ); // 10 minutes in milliseconds
+            }, 1800000); // 10 minutes in milliseconds
         },
     },
     mounted() {
@@ -332,6 +332,33 @@ export default {
     .no-padding {
         padding-left: 0;
         padding-right: 0;
+    }
+}
+
+@media print {
+
+    #navbar,
+    #layoutSidenav_nav,
+    #footer {
+        display: none;
+    }
+
+    #layoutSidenav_content {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Ensure the content you want to print is visible */
+    #print-area {
+        display: block;
+    }
+
+    .logo-lg {
+        display: none;
+    }
+
+    footer {
+        display: none;
     }
 }
 </style>

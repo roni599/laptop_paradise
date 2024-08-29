@@ -390,182 +390,185 @@ export default {
 
 <template>
   <div class="container">
-    <div class="card mt-4 mb-2">
-      <div class="card-header border-bottom-0 p-4">
-        <router-link class="text-decoration-none h5" to="/home">Dashboard</router-link>
-        <span class="text-muted h5"> / Stocks List</span>
-      </div>
-    </div>
-
-    <div class="card mb-4">
-      <div class="card-header d-flex justify-content-between">
-        <div class="employee_table">
-          <i class="fas fa-table me-1"></i>
-          Stocks List Table
-        </div>
-        <div class="addNew">
-          <router-link to="/stocks_create" class="btn btn-sm btn-success">Add New</router-link>
+    <div id="main-content">
+      <div class="card mt-4 mb-2">
+        <div class="card-header border-bottom-0 p-4">
+          <router-link class="text-decoration-none h5" to="/home">Dashboard</router-link>
+          <span class="text-muted h5"> / Stocks List</span>
         </div>
       </div>
-      <div class="card-body">
-        <input type="text" id="searchInput" placeholder="Search for ID.." />
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Product Name</th>
-              <th scope="col">Assigned By</th>
-              <th scope="col">Stock Quantity</th>
-              <th scope="col">Selling Price</th>
-              <th scope="col">Buying Price</th>
-              <th scope="col">Status</th>
-              <th scope="col">Stocks Data</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="stock in Stocks" :key="stock.id">
-              <td>{{ stock.id }}</td>
-              <td>{{ stock.product.product_model }}</td>
-              <td>{{ stock.user.user_name }}</td>
-              <td>{{ stock.stock_quantity }}</td>
-              <td>{{ stock.selling_price }}</td>
-              <td>{{ stock.buying_price }}</td>
-              <td>{{ stock.status }}</td>
-              <td>{{ stock.stock_date }}</td>
-              <td>
-                <div class="buttonGroup py-2">
-                  <button type="button" class="btn btn-sm btn-success" @click="openEditModal(stock)">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                  </button>
-                  <button class="btn btn-sm btn-danger mx-2" @click="deleteStock(stock.id)">
-                    <i class="fa-solid fa-trash"></i>
-                  </button>
-                  <button class="btn btn-sm btn-success mx-2" @click="fetchSerialsByStock(stock.id)">
-                    <i class="fas fa-print"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
 
-    <div class="modal fade" id="editSupplierModal" tabindex="-1" aria-labelledby="editSupplierLabel" aria-hidden="true">
-      <div class="modal-dialog full-width-modal mt-3">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title text-muted" id="editSupplierModal">
-              Edit Stocks
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between">
+          <div class="employee_table">
+            <i class="fas fa-table me-1"></i>
+            Stocks List Table
           </div>
-          <div class="modal-body mb-2">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="card rounded-lg">
-                  <div class="card-header d-flex justify-content-between align-items-center">
-                    <div class="icon_text d-flex gap-2 mt-3">
-                      <p><i class="fa-solid fa-chart-line"></i></p>
-                      <p class="text-muted font-bold">Edit Stocks</p>
-                    </div>
+          <div class="addNew">
+            <router-link to="/stocks_create" class="btn btn-sm btn-success">Add New</router-link>
+          </div>
+        </div>
+        <div class="card-body">
+          <input type="text" id="searchInput" placeholder="Search for ID.." />
+          <table class="table" id="pp">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Assigned By</th>
+                <th scope="col">Stock Quantity</th>
+                <th scope="col">Selling Price</th>
+                <th scope="col">Buying Price</th>
+                <th scope="col">Status</th>
+                <th scope="col">Stocks Data</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="stock in Stocks" :key="stock.id">
+                <td>{{ stock.id }}</td>
+                <td>{{ stock.product.product_model }}</td>
+                <td>{{ stock.user.user_name }}</td>
+                <td>{{ stock.stock_quantity }}</td>
+                <td>{{ stock.selling_price }}</td>
+                <td>{{ stock.buying_price }}</td>
+                <td>{{ stock.status }}</td>
+                <td>{{ stock.stock_date }}</td>
+                <td>
+                  <div class="buttonGroup py-2">
+                    <button type="button" class="btn btn-sm btn-success" @click="openEditModal(stock)">
+                      <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger mx-2" @click="deleteStock(stock.id)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                    <button class="btn btn-sm btn-success mx-2" @click="fetchSerialsByStock(stock.id)">
+                      <i class="fas fa-print"></i>
+                    </button>
                   </div>
-                  <div class="card-body">
-                    <form @submit.prevent="Stock_edit" enctype="multipart/form-data">
-                      <div class="row mb-3">
-                        <div class="col-md-6">
-                          <div class="form-floating mb-3 mb-md-0">
-                            <select class="form-select" readonly aria-label="Default select example"
-                              v-model="form.product_model">
-                              <option v-for="product in products" :key="product.id" :value="product.product_model">
-                                {{ product.product_model }}
-                              </option>
-                            </select>
-                            <small class="text-danger" v-if="errors.product_model">{{
-                              errors.product_model[0]
-                            }}</small>
-                            <label for="inputEmail">Product Name</label>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-floating mb-3 mb-md-0">
-                            <select class="form-select" readonly aria-label="Default select example"
-                              v-model="form.user_id">
-                              <option v-for="user in users" :key="user.id" :value="user.id">
-                                {{ user.user_name }}
-                              </option>
-                            </select>
-                            <small class="text-danger" v-if="errors.user_id">{{
-                              errors.user_id[0]
-                            }}</small>
-                            <label for="inputAddress">Users Name</label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <div class="col-md-6">
-                          <div class="form-floating mb-3 mb-md-0">
-                            <input class="form-control" id="inputAddress" type="text" placeholder="Address"
-                              v-model="form.stock_quantity" />
-                            <small class="text-danger" v-if="errors.stock_quantity">{{
-                              errors.stock_quantity[0]
-                            }}</small>
-                            <label for="inputAddress">Stock Quantity</label>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-floating mb-3 mb-md-0">
-                            <input class="form-control" id="inputPhone" type="text" placeholder="Phone"
-                              v-model="form.selling_price" />
-                            <small class="text-danger" v-if="errors.selling_price">{{
-                              errors.selling_price[0]
-                            }}</small>
-                            <label for="inputPhone">Selling Price</label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <div class="col-md-6">
-                          <div class="form-floating mb-3 mb-md-0">
-                            <input class="form-control" id="inputPhone" type="text" placeholder="Phone"
-                              v-model="form.buying_price" />
-                            <small class="text-danger" v-if="errors.buying_price">{{
-                              errors.buying_price[0]
-                            }}</small>
-                            <label for="inputAddress">Buying Price</label>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-floating mb-3 mb-md-0">
-                            <select class="form-select" aria-label="Default select example" v-model="form.status">
-                              <option :value="0">Inactive</option>
-                              <option :value="1">Active</option>
-                            </select>
-                            <small class="text-danger" v-if="errors.status">{{ errors.status[0] }}</small>
-                            <label for="inputPhone">Product Status</label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row mb-3">
-                        <div class="col-md-12">
-                          <div class="form-floating mb-3 mb-md-0">
-                            <input class="form-control" id="inputShopName" type="date" placeholder="Shop Name"
-                              v-model="form.stock_date" />
-                            <small class="text-danger" v-if="errors.stock_date">{{
-                              errors.stock_date[0]
-                            }}</small>
-                            <label for="inputNid">Stock Date</label>
-                          </div>
-                        </div>
-                      </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-                      <div class="mt-4 mb-0">
-                        <div class="d-grid">
-                          <button class="btn btn-primary btn-block">Submit</button>
-                        </div>
+      <div class="modal fade" id="editSupplierModal" tabindex="-1" aria-labelledby="editSupplierLabel"
+        aria-hidden="true">
+        <div class="modal-dialog full-width-modal mt-3">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title text-muted" id="editSupplierModal">
+                Edit Stocks
+              </h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body mb-2">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="card rounded-lg">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                      <div class="icon_text d-flex gap-2 mt-3">
+                        <p><i class="fa-solid fa-chart-line"></i></p>
+                        <p class="text-muted font-bold">Edit Stocks</p>
                       </div>
-                    </form>
+                    </div>
+                    <div class="card-body">
+                      <form @submit.prevent="Stock_edit" enctype="multipart/form-data">
+                        <div class="row mb-3">
+                          <div class="col-md-6">
+                            <div class="form-floating mb-3 mb-md-0">
+                              <select class="form-select" readonly aria-label="Default select example"
+                                v-model="form.product_model">
+                                <option v-for="product in products" :key="product.id" :value="product.product_model">
+                                  {{ product.product_model }}
+                                </option>
+                              </select>
+                              <small class="text-danger" v-if="errors.product_model">{{
+                                errors.product_model[0]
+                              }}</small>
+                              <label for="inputEmail">Product Name</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-floating mb-3 mb-md-0">
+                              <select class="form-select" readonly aria-label="Default select example"
+                                v-model="form.user_id">
+                                <option v-for="user in users" :key="user.id" :value="user.id">
+                                  {{ user.user_name }}
+                                </option>
+                              </select>
+                              <small class="text-danger" v-if="errors.user_id">{{
+                                errors.user_id[0]
+                              }}</small>
+                              <label for="inputAddress">Users Name</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <div class="col-md-6">
+                            <div class="form-floating mb-3 mb-md-0">
+                              <input class="form-control" id="inputAddress" type="text" placeholder="Address"
+                                v-model="form.stock_quantity" />
+                              <small class="text-danger" v-if="errors.stock_quantity">{{
+                                errors.stock_quantity[0]
+                              }}</small>
+                              <label for="inputAddress">Stock Quantity</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-floating mb-3 mb-md-0">
+                              <input class="form-control" id="inputPhone" type="text" placeholder="Phone"
+                                v-model="form.selling_price" />
+                              <small class="text-danger" v-if="errors.selling_price">{{
+                                errors.selling_price[0]
+                              }}</small>
+                              <label for="inputPhone">Selling Price</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <div class="col-md-6">
+                            <div class="form-floating mb-3 mb-md-0">
+                              <input class="form-control" id="inputPhone" type="text" placeholder="Phone"
+                                v-model="form.buying_price" />
+                              <small class="text-danger" v-if="errors.buying_price">{{
+                                errors.buying_price[0]
+                              }}</small>
+                              <label for="inputAddress">Buying Price</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-floating mb-3 mb-md-0">
+                              <select class="form-select" aria-label="Default select example" v-model="form.status">
+                                <option :value="0">Inactive</option>
+                                <option :value="1">Active</option>
+                              </select>
+                              <small class="text-danger" v-if="errors.status">{{ errors.status[0] }}</small>
+                              <label for="inputPhone">Product Status</label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <div class="col-md-12">
+                            <div class="form-floating mb-3 mb-md-0">
+                              <input class="form-control" id="inputShopName" type="date" placeholder="Shop Name"
+                                v-model="form.stock_date" />
+                              <small class="text-danger" v-if="errors.stock_date">{{
+                                errors.stock_date[0]
+                              }}</small>
+                              <label for="inputNid">Stock Date</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="mt-4 mb-0">
+                          <div class="d-grid">
+                            <button class="btn btn-primary btn-block">Submit</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -574,11 +577,14 @@ export default {
         </div>
       </div>
     </div>
+
     <div id="print-area" style="display: none;">
       <div v-for="serial in serials" :key="serial.serial_no" class="barcode-section">
-        <p>Serial Number: {{ serial.serial_no }}</p>
-        <img v-if="serial.barcode" :src="'data:image/png;base64,' + serial.barcode" alt="barcode" />
-        <p v-else>No barcode available</p>
+        <img v-if="serial.barcode" :src="`data:image/png;base64,${serial.barcode}`" alt="Barcode" />
+        <div>
+          {{ serial.serial_no  }}
+        </div>
+        <br>
       </div>
     </div>
   </div>
@@ -627,6 +633,33 @@ export default {
     //     printArea.style.display = 'none';
     //   }, 500);
     // },
+    // printBarcodes() {
+    //   const printArea = document.getElementById('print-area');
+    //   const pp = document.getElementById('pp');
+
+    //   // Ensure the print area is displayed
+    //   printArea.style.display = 'block';
+
+    //   // Trigger the print dialog after a short delay
+    //   setTimeout(() => {
+    //     window.print();
+
+    //     // Optionally hide the print area after printing
+    //     printArea.style.display = 'none';
+    //   }, 500);
+    // },
+    printBarcodes() {
+      // Show only the barcode section
+      document.getElementById('main-content').style.display = 'none';
+      document.getElementById('print-area').style.display = 'block';
+
+      setTimeout(() => {
+        window.print();
+        // After printing, restore the visibility of the main content
+        document.getElementById('main-content').style.display = 'block';
+        document.getElementById('print-area').style.display = 'none';
+      }, 0);
+    },
     async fetch_stocks() {
       try {
         const response = await axios.get("/api/stocks");
@@ -742,11 +775,20 @@ export default {
 
 .barcode-section {
   text-align: center;
-  margin: 10px 0;
+  margin: 10px 0px;
 }
 
 .barcode-section img {
   max-width: 100%;
   height: auto;
+}
+#print-area {
+  position: absolute;
+  text-align: center;
+  top: 0;
+  left: 0;
+  margin: auto;
+  width: 100%;
+  height: 100%;
 }
 </style>
