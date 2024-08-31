@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('expenses_category', function (Blueprint $table) {
-            $table->id();
-            $table->string('expen_name');
-            $table->string('image')->nullable();
-            $table->boolean('status')->default(0);
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+        Schema::create('paymenttypes', function (Blueprint $table) {
+            $table->id('id');
+            $table->string('pt_name');
+            $table->tinyInteger('status')->default(0);
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('expenses_category');
+        Schema::dropIfExists('paymenttypes');
     }
 };

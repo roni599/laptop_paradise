@@ -30,16 +30,33 @@
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <form @submit.prevent="brand_create" enctype="multipart/form-data">
+                                        <form @submit.prevent="category_create" enctype="multipart/form-data">
                                             <div class="row mb-1">
                                                 <div class="col-md-12 mb-2">
                                                     <div class="form-floating mb-3 mb-md-0">
                                                         <input class="form-control" id="inputCategoryName" type="text"
-                                                            placeholder="Enter your name" v-model="form.brand_name" />
-                                                        <small class="text-danger" v-if="errors.brand_name">{{
-                                                            errors.brand_name[0]
+                                                            v-model="form.ecname" />
+                                                        <small class="text-danger"
+                                                            v-if="errors.ecname">{{
+                                                                errors.ecname[0]
+                                                            }}</small>
+                                                        <label for="inputName">Expense Category Name</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-1">
+                                                <div class="col-md-12">
+                                                    <div class="form-floating mb-2">
+                                                        <select class="form-select" readonly
+                                                            aria-label="Default select example" v-model="form.user_id">
+                                                            <option :value="users.id">
+                                                                {{ users.user_name }}
+                                                            </option>
+                                                        </select>
+                                                        <small class="text-danger" v-if="errors.user_id">{{
+                                                            errors.user_id[0]
                                                         }}</small>
-                                                        <label for="inputName">Brand Name</label>
+                                                        <label for="inputAddress">Users Name</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -82,18 +99,36 @@
 </template>
 
 <script>
+import axios from 'axios';
+import { inject } from 'vue';
 export default {
     name: "Expance_create",
     data() {
+        const userName = inject('userName');
+        const profile_img = inject('profile_img');
         return {
             form: {
-                brand_name: null,
+                ecname: null,
+                user_id: null,
                 image: '/backend/assets/img/pic.jpeg',
             },
-            errors:{}
+            userName,
+            profile_img,
+            users: [],
+            errors: {},
+            loading: false
         }
     },
     methods: {
+        async category_create() {
+            await axios.get("/api/expensecategory")
+                .then((res) => {
+                    console.log(res)
+                })
+                .catch((error) => {
+                    this.errors = error.response.data.errors
+                })
+        },
         openCreateCategoryModal() {
             let myModal = new bootstrap.Modal(
                 document.getElementById("createCategoryModal"),
@@ -101,8 +136,65 @@ export default {
             );
             myModal.show();
         },
+        onFileSelect(event) {
+            let file = event.target.files[0]
+            if (file.size > 1048576) {
+                Toast.fire({
+                    icon: "warning",
+                    title: "image must be less then 1 mb!"
+                });
+            }
+            else {
+                let reader = new FileReader();
+                reader.onload = (event) => {
+                    this.form.image = event.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        },
+        async fetchUsers() {
+            const token = localStorage.getItem('token');
+            await axios.get("/api/auth/me", {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then((res) => {
+                    this.userName = res.data.user_name;
+                    this.profile_img = res.data.profile_img
+                    this.users = res.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+    },
+    created() {
+        this.fetchUsers();
     }
 }
 </script>
 
-<style></style>
+<style>
+#searchInput {
+    background-image: url("/backend/assets/img/searchicon.png");
+    background-position: 10px 12px;
+    background-repeat: no-repeat;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+}
+
+.full-width-modal {
+    max-width: 100%;
+    max-height: 100vh;
+}
+
+.full-width-modal .modal-content {
+    width: 60%;
+    height: 68vh;
+    margin: auto;
+}
+</style>

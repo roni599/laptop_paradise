@@ -13,13 +13,6 @@ return new class extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
-            $table->string('stock_date');
-            $table->integer('buying_price');
-            $table->integer('selling_price');
-            $table->integer('stock_quantity');
-            $table->string('status')->nullable()->default(0);
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -216,7 +216,6 @@ export default {
         this.fetch_categories();
         this.fetch_brands();
         this.fetchData()
-
     },
 
 };

@@ -150,7 +150,7 @@
                                 </nav>
                             </div>
 
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                                 data-bs-target="#collapseExpense" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon">
                                     <i class="fas fa-chart-line mt-1"></i>
@@ -166,7 +166,18 @@
                                     <router-link class="nav-link" to="/expence_create">Expense Create</router-link>
                                     <router-link class="nav-link" to="/all_expense">All Expense</router-link>
                                 </nav>
-                            </div>
+                            </div> -->
+
+
+                            <router-link to="/payment_type" class="nav-link collapsed">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                Payment
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </router-link>
                         </div>
                     </div>
                 </nav>

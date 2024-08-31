@@ -22,6 +22,7 @@ import Supplier from '../components/supplier/Supplier.vue';
 import All_serials from '../components/stocks/All_serials.vue';
 import Expance_create from '../components/expense/Expance_create.vue';
 import All_expense from '../components/expense/All_expense.vue';
+import PaymentType from '../components/paymentType/PaymentType.vue';
 
 const routes = [
     { name: 'LoginForm', component: Login, path: '/' },
@@ -48,7 +49,9 @@ const routes = [
     { name: "Supplier", component: Supplier, path: '/supplier' },
 
     {name:"Expence_create", component:Expance_create, path:'/expence_create'},
-    {name:"All_expense", component:All_expense, path:'/all_expense'}
+    {name:"All_expense", component:All_expense, path:'/all_expense'},
+
+    {name:"Payment_type", component:PaymentType, path:'/payment_type'}
 ];
 
 const router = createRouter({

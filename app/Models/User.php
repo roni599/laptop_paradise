@@ -92,8 +92,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Serial::class);
     }
-    public function expensesCategories()
+    public function paymentTypes()
     {
-        return $this->hasMany(ExpensesCategory::class);
+        return $this->hasMany(PaymentType::class, 'user_id');
     }
 }
