@@ -20,9 +20,9 @@ class ProductController extends Controller
         $request->validate([
             'product_model' => 'required|string|max:255',
             'specification' => 'required|string',
-            'quantity' => 'required|integer|min:0',
+            // 'quantity' => 'required|integer|min:0',
             'touch_status' => 'required|string',
-            'discount' => 'nullable|numeric|min:0|max:10000',
+            // 'discount' => 'nullable|numeric|min:0|max:10000',
             'user_id' => 'required|exists:users,id',
             'cat_id' => 'required|exists:categories,id',
             'brand_id' => 'required|exists:brands,id',
@@ -30,9 +30,9 @@ class ProductController extends Controller
         $product = new Product();
         $product->product_model = $request->product_model;
         $product->specification = $request->specification;
-        $product->quantity = $request->quantity;
+        // $product->quantity = $request->quantity;
         $product->touch_status = $request->touch_status;
-        $product->discount = $request->discount;
+        // $product->discount = $request->discount;
         $product->user_id = $request->user_id;
         $product->cat_id = $request->cat_id;
         $product->brand_id = $request->brand_id;

@@ -11,7 +11,7 @@ class SupplierController extends Controller
 {
     public function index()
     {
-        $supplier = Supplier::with(['product', 'user'])->get();
+        $supplier = Supplier::with(['user'])->get();
         return response()->json($supplier);
     }
 
@@ -25,7 +25,7 @@ class SupplierController extends Controller
             'phone' => 'required|string|max:15',
             'shopname' => 'required|string|max:255',
             'image' => 'nullable|string',
-            'product_id' => 'required',
+            // 'product_id' => 'required',
             'user_id' => 'required'
         ]);
         $supplier = new Supplier();
@@ -35,7 +35,7 @@ class SupplierController extends Controller
         $supplier->address = $request->address;
         $supplier->phone = $request->phone;
         $supplier->shopname = $request->shopname;
-        $supplier->product_id = $request->product_id;
+        // $supplier->product_id = $request->product_id;
         $supplier->user_id = $request->user_id;
 
         $imageName = '';

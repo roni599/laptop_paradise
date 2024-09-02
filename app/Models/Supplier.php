@@ -17,7 +17,6 @@ class Supplier extends Model
         'image',
         'shopname',
         'user_id',
-        'product_id',
         'status'
     ];
 
@@ -26,10 +25,18 @@ class Supplier extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    // Define the relationship with the Product model (Many-to-One)
-    public function product()
+    public function stocks()
     {
-        return $this->belongsTo(Product::class);
+        return $this->hasMany(Stock::class);
     }
+    // public function products()
+    // {
+    //     return $this->hasMany(Product::class);
+    // }
+    // Define the relationship with the Product model (Many-to-One)
+    // public function product()
+    // {
+    //     return $this->belongsTo(Product::class);
+    // }
+
 }

@@ -9,13 +9,15 @@ class Stock extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id', 
-        'product_id', 
-        'stock_date', 
-        'buying_price', 
-        'selling_price', 
-        'stock_quantity', 
-        'status'
+        'stock_date',
+        'buying_price',
+        'selling_price',
+        'stock_quantity',
+        'status',
+        'user_id',
+        'product_id',
+        'paymenttype_id',
+        'supplier_id',
     ];
 
     public function user()
@@ -30,5 +32,13 @@ class Stock extends Model
     public function serials()
     {
         return $this->hasMany(Serial::class);
+    }
+    public function paymentType()
+    {
+        return $this->belongsTo(PaymentType::class, 'paymenttype_id');
+    }
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
     }
 }

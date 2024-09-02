@@ -16,4 +16,12 @@ class Paymenttype extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function stocks()
+    {
+        return $this->hasMany(Stock::class, 'paymenttype_id');
+    }
+    public function investments()
+    {
+        return $this->hasMany(Investment::class);
+    }
 }

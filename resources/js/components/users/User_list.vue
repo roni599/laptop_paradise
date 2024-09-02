@@ -174,10 +174,10 @@
     </div>
   </div>
 </template>
-
 <script>
 import axios from "axios";
 import { inject } from 'vue';
+
 export default {
   name: "Userlist-vue",
   data() {
@@ -205,9 +205,13 @@ export default {
 
   computed: {
     filteredUsers() {
+      if (!Array.isArray(this.users)) {
+        return [];
+      }
       return this.users.filter((user) => {
         return (
-          user.user_name.toString().includes(this.searchUser) || user.phone.toString().includes(this.searchUser)
+          user.user_name.toString().includes(this.searchUser) ||
+          user.phone.toString().includes(this.searchUser)
         );
       });
     },
@@ -219,7 +223,7 @@ export default {
       if (file.size > 1048576) {
         Toast.fire({
           icon: "warning",
-          title: "image must be less then 1 mb!",
+          title: "image must be less than 1 MB!",
         });
       } else {
         let reader = new FileReader();
@@ -231,19 +235,23 @@ export default {
     },
 
     async fetch_user() {
-      const token = localStorage.getItem('token');
       await axios.get('/api/alluser')
         .then((res) => {
-          this.users = res.data
+          if (Array.isArray(res.data)) {
+            this.users = res.data;
+          } else {
+            this.users = [];
+          }
         })
         .catch((error) => {
-          console.log(error)
-        })
+          console.log(error);
+        });
     },
+
     openEditModal(employee) {
       this.form = { ...employee };
-      this.form.name = employee.user_name
-      this.form.image = employee.profile_img
+      this.form.name = employee.user_name;
+      this.form.image = employee.profile_img;
       let myModal = new bootstrap.Modal(
         document.getElementById("editUserModal"),
         {}
@@ -261,8 +269,8 @@ export default {
       }
       return "";
     },
+
     async deleteUser(id) {
-      console.log(id)
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -276,18 +284,13 @@ export default {
           await axios
             .delete("/api/user/delete/" + id)
             .then((res) => {
-              this.users = this.users.filter((user) => {
-                return user.id != id;
-              });
+              this.users = this.users.filter((user) => user.id !== id);
             })
             .catch((error) => {
+              console.log(error);
               this.$router.push({ name: "All_user" });
             });
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success",
-          });
+          Swal.fire("Deleted!", "User has been deleted.", "success");
         }
       });
     },
@@ -298,7 +301,7 @@ export default {
         .then((res) => {
           let myModal = bootstrap.Modal.getInstance(document.getElementById('editUserModal'));
           myModal.hide();
-          this.fetch_user()
+          this.fetch_user();
           Toast.fire({
             icon: "success",
             title: res.data.message
@@ -308,18 +311,20 @@ export default {
           this.errors = error.response.data.errors;
         })
         .finally(() => {
-          this.loading = false
+          this.loading = false;
         });
     },
+
     async all_roles() {
       await axios.get('/api/roles')
         .then((res) => {
           this.roles = res.data;
         })
         .catch((error) => {
-          console.log(error)
-        })
+          console.log(error);
+        });
     },
+
     async fetchUsers() {
       const token = localStorage.getItem('token');
       await axios.get("/api/auth/me", {
@@ -329,20 +334,24 @@ export default {
       })
         .then((res) => {
           this.userName = res.data.user_name;
-          this.profile_img = res.data.profile_img
-          this.users = res.data;
+          this.profile_img = res.data.profile_img;
+          if (Array.isArray(res.data.users)) {
+            this.users = res.data.users;
+          } else {
+            this.users = [];
+          }
         })
         .catch((error) => {
           console.log(error);
         });
     },
   },
+
   created() {
     this.fetch_user();
     this.all_roles();
-    this.fetchUsers();
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

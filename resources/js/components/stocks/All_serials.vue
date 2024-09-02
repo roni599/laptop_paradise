@@ -30,35 +30,35 @@
               <th scope="col">Status</th>
               <th scope="col">Return Status</th>
               <th scope="col">Image</th>
-              <th scope="col">barcode</th>
+              <!-- <th scope="col">barcode</th> -->
               <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="Serial in Serials" :key="Serial.id">
-              <td>{{ Serial.serial.id }}</td>
-              <td>{{ Serial.serial.serial_no }}</td>
-              <td>{{ Serial.serial.stock_id }}</td>
-              <td>{{ Serial.user.user_name }}</td>
-              <td>{{ Serial.serial.color }}</td>
+            <tr v-for="serial in Serials" :key="serial.id">
+              <td>{{serial.id }}</td>
+              <td>{{serial.serial_no }}</td>
+              <td>{{serial.stock_id }}</td>
+              <td>{{serial.user.user_name }}</td>
+              <td>{{serial.color }}</td>
               <td>
-                <span v-if="Serial.serial.status === 0">Processing</span>
+                <span v-if="serial.status === 0">Processing</span>
                 <span v-else>Ready for sale</span>
               </td>
               <td>
-                <span v-if="Serial.serial.return_status === 0">At The Shop</span>
+                <span v-if="serial.return_status === 0">At The Shop</span>
                 <span v-else>Return</span>
               </td>
               <td>
-                <img :src="`/backend/images/serial/${Serial.serial.image}`" alt="User Image" width="55" height="55" />
+                <img :src="`/backend/images/serial/${serial.image}`" alt="User Image" width="55" height="55" />
               </td>
-              <td class="text-center">
+              <!-- <td class="text-center">
                 <img v-if="Serial.barcode" :src="`data:image/png;base64,${Serial.barcode}`" alt="Barcode" width="100"
                   height="20" />
                 <div>
                   {{ Serial.serial.serial_no }}
                 </div>
-              </td>
+              </td> -->
               <td>
                 <div class="buttonGroup py-2">
                   <button type="button" class="btn btn-sm btn-success" @click="openEditModal(Serial.serial)">
@@ -207,7 +207,6 @@ export default {
     async feth_Serials() {
       await axios.get("/api/serials")
         .then((res) => {
-          console.log(res.data)
           this.Serials = res.data
         })
         .catch((error) => {

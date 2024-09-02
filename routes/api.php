@@ -9,6 +9,7 @@ use App\Http\Controllers\Expense\ExpenseController;
 use App\Http\Controllers\Expense\ExpensesCategoryController;
 use App\Http\Controllers\ExpenseCategory\ExpenseCategoryController;
 use App\Http\Controllers\Extra\ExtraController;
+use App\Http\Controllers\Investment\InvestmentController;
 use App\Http\Controllers\PaymentType\PaymentTypeController;
 use App\Http\Controllers\POS\PosController;
 use App\Http\Controllers\Product\ProductController;
@@ -98,6 +99,12 @@ Route::get('/payment-types', [PaymentTypeController::class, 'index']);
 Route::post('/payment-types/store', [PaymentTypeController::class, 'store']);
 Route::put('/payment-types/upate', [PaymentTypeController::class, 'update']);
 Route::delete('/payment-types/delete/{id}', [PaymentTypeController::class, 'delete']);
+
+//for Investmen
+Route::get('/investments', [InvestmentController::class, 'index']);
+Route::post('/investments/store', [InvestmentController::class, 'store']);
+Route::put('/investments/upate', [InvestmentController::class, 'update']);
+Route::delete('/investments/delete/{id}', [InvestmentController::class, 'delete']);
 // Route::post('/users/store',[UserController::class, 'store']);
 // Route::get('/employees', [EmployeeController::class, 'index']);
 // Route::post('/employees/store', [EmployeeController::class, 'store']);

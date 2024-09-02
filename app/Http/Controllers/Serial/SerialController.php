@@ -13,18 +13,18 @@ class SerialController extends Controller
     public function index()
     {
         $serials = Serial::with('user')->get();
-        $barcodes = [];
+        // $barcodes = [];
 
-        $generator = new BarcodeGeneratorPNG();
-        foreach ($serials as $serial) {
-            $barcodes[] = [
-                'user' => $serial->user,
-                'serial' => $serial,
-                'barcode' => base64_encode($generator->getBarcode($serial->serial_no, $generator::TYPE_CODE_128))
-            ];
-        }
+        // $generator = new BarcodeGeneratorPNG();
+        // foreach ($serials as $serial) {
+        //     $barcodes[] = [
+        //         'user' => $serial->user,
+        //         'serial' => $serial,
+        //         'barcode' => base64_encode($generator->getBarcode($serial->serial_no, $generator::TYPE_CODE_128))
+        //     ];
+        // }
 
-        return response()->json($barcodes);
+        return response()->json($serials);
     }
     public function store(Request $request)
     {

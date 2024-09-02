@@ -23,6 +23,8 @@ import All_serials from '../components/stocks/All_serials.vue';
 import Expance_create from '../components/expense/Expance_create.vue';
 import All_expense from '../components/expense/All_expense.vue';
 import PaymentType from '../components/paymentType/PaymentType.vue';
+import Investment from '../components/paymentType/Investment.vue';
+import Reserve_table from '../components/paymentType/Reserve_table.vue';
 
 const routes = [
     { name: 'LoginForm', component: Login, path: '/' },
@@ -51,7 +53,9 @@ const routes = [
     {name:"Expence_create", component:Expance_create, path:'/expence_create'},
     {name:"All_expense", component:All_expense, path:'/all_expense'},
 
-    {name:"Payment_type", component:PaymentType, path:'/payment_type'}
+    {name:"Payment_type", component:PaymentType, path:'/payment_type'},
+    {name:"Investment",component:Investment, path:'/investment'},
+    {name:"Reserve_table",component:Reserve_table,path:'/reserve_table'}
 ];
 
 const router = createRouter({

@@ -29,7 +29,7 @@
                                             placeholder="Enter product name" v-model="form.product_model" />
                                         <small class="text-danger" v-if="errors.product_model">{{
                                             errors.product_model[0]
-                                        }}</small>
+                                            }}</small>
                                         <label for="inputProductName">Product Model</label>
                                     </div>
                                 </div>
@@ -39,13 +39,13 @@
                                             placeholder="Product Code" v-model="form.specification"></textarea>
                                         <small class="text-danger" v-if="errors.specification">{{
                                             errors.specification[0]
-                                        }}</small>
+                                            }}</small>
                                         <label for="inputEmail">Specification</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
                                         <input class="form-control" id="inputRoot" type="text" placeholder="Root"
                                             v-model="form.quantity" />
@@ -54,7 +54,7 @@
                                         }}</small>
                                         <label for="inputRoot">Quentity</label>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
                                         <select class="form-select" aria-label="Default select example"
@@ -66,13 +66,10 @@
                                         </select>
                                         <small class="text-danger" v-if="errors.cat_id">{{
                                             errors.cat_id[0]
-                                        }}</small>
+                                            }}</small>
                                         <label for="Buying Price">Category</label>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
                                         <select class="form-select" aria-label="Default select example"
@@ -83,30 +80,21 @@
                                         </select>
                                         <small class="text-danger" v-if="errors.brand_id">{{
                                             errors.brand_id[0]
-                                        }}</small>
+                                            }}</small>
                                         <label for="inputSellingPrice">Brand</label>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="row mb-1">
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
                                         <input class="form-control" id="inputBuyingDate" type="text"
                                             placeholder="Buying Date" v-model="form.touch_status" />
                                         <small class="text-danger" v-if="errors.touch_status">{{
                                             errors.touch_status[0]
-                                        }}</small>
+                                            }}</small>
                                         <label for="inputBuyingDate">Touch Status</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6 mb-3">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputBuyingDate" type="text"
-                                            placeholder="Buying Date" v-model="form.discount" />
-                                        <small class="text-danger" v-if="errors.discount">{{
-                                            errors.discount[0]
-                                        }}</small>
-                                        <label class="h6 text-muted mb-0" for="inputCategory">Discount</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -122,7 +110,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mt-4 mb-0">
+                            <div class="mb-2">
                                 <div class="d-grid">
                                     <button class="btn btn-primary btn-block">Submit</button>
                                 </div>
@@ -147,9 +135,9 @@ export default {
             form: {
                 product_model: null,
                 specification: null,
-                quantity: null,
+                // quantity: null,
                 touch_status: null,
-                discount: null,
+                // discount: null,
                 user_id: null,
                 cat_id: null,
                 brand_id: null,

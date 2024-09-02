@@ -80,6 +80,32 @@
                     </div>
                   </div>
                 </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3 mb-md-0">
+                      <select class="form-select" aria-label="Default select example" v-model="form.paymenttype_id">
+                        <option v-for="paymenttype in paymenttypes" :key="paymenttype.id" :value="paymenttype.id">{{
+                          paymenttype.pt_name }}</option>
+                      </select>
+                      <small class="text-danger" v-if="errors.product_id">{{
+                        errors.product_id[0]
+                      }}</small>
+                      <label for="inputPhone">Payment type</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3 mb-md-0">
+                      <select class="form-select" aria-label="Default select example" v-model="form.supplier_id">
+                        <option v-for="supplier in suppliers" :key="supplier.id" :value="supplier.id">{{
+                          supplier.name }}</option>
+                      </select>
+                      <small class="text-danger" v-if="errors.product_id">{{
+                        errors.product_id[0]
+                      }}</small>
+                      <label for="inputPhone">Supplier Name</label>
+                    </div>
+                  </div>
+                </div>
                 <div class="mt-2 mb-0">
                   <div class="d-grid">
                     <button class="btn btn-primary btn-block">Submit</button>
@@ -177,12 +203,16 @@ export default {
         stock_quantity: null,
         buying_price: null,
         selling_price: null,
+        paymenttype_id: null,
+        supplier_id: null
       },
       errors: {},
+      suppliers:[],
       users: [],
       products: [],
       stocksId: null,
       rows: [],
+      paymenttypes: [],
       //for inject
       userName,
       profile_img,
@@ -261,6 +291,25 @@ export default {
           console.log(error);
         });
     },
+    async fetch_paymenttype() {
+      await axios.get('/api/payment-types')
+        .then((res) => {
+          this.paymenttypes = res.data;
+        })
+        .catch((res) => {
+          console.log(res)
+        })
+    },
+    fetchSuppliers() {
+      axios
+        .get("/api/suppliers")
+        .then((response) => {
+          this.suppliers = response.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     async fetch_product() {
       await axios.get("/api/products")
         .then((res) => {
@@ -274,6 +323,8 @@ export default {
   created() {
     this.fetchUsers();
     this.fetch_product();
+    this.fetch_paymenttype();
+    this.fetchSuppliers()
   }
 };
 

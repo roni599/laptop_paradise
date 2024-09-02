@@ -419,6 +419,8 @@ export default {
                 <th scope="col">Stock Quantity</th>
                 <th scope="col">Selling Price</th>
                 <th scope="col">Buying Price</th>
+                <th scope="col">Payment Methods</th>
+                <th scope="col">Supplied By</th>
                 <th scope="col">Status</th>
                 <th scope="col">Stocks Data</th>
                 <th scope="col">Action</th>
@@ -432,6 +434,8 @@ export default {
                 <td>{{ stock.stock_quantity }}</td>
                 <td>{{ stock.selling_price }}</td>
                 <td>{{ stock.buying_price }}</td>
+                <td>{{ stock.paymenttype.pt_name }}</td>
+                <td>{{ stock.supplier.name }}</td>
                 <td>{{ stock.status }}</td>
                 <td>{{ stock.stock_date }}</td>
                 <td>
@@ -494,8 +498,8 @@ export default {
                             <div class="form-floating mb-3 mb-md-0">
                               <select class="form-select" readonly aria-label="Default select example"
                                 v-model="form.user_id">
-                                <option v-for="user in users" :key="user.id" :value="user.id">
-                                  {{ user.user_name }}
+                                <option :value="users.id">
+                                  {{ users.user_name }}
                                 </option>
                               </select>
                               <small class="text-danger" v-if="errors.user_id">{{
@@ -550,7 +554,7 @@ export default {
                           </div>
                         </div>
                         <div class="row mb-3">
-                          <div class="col-md-12">
+                          <div class="col-md-6">
                             <div class="form-floating mb-3 mb-md-0">
                               <input class="form-control" id="inputShopName" type="date" placeholder="Shop Name"
                                 v-model="form.stock_date" />
@@ -560,8 +564,37 @@ export default {
                               <label for="inputNid">Stock Date</label>
                             </div>
                           </div>
+                          <div class="col-md-6">
+                            <div class="form-floating mb-3 mb-md-0">
+                              <select class="form-select" readonly aria-label="Default select example"
+                                v-model="form.paymenttype_name">
+                                <option v-for="paymenttype in paymenttypes" :key="paymenttype.id"
+                                  :value="paymenttype.pt_name">
+                                  {{ paymenttype.pt_name }}
+                                </option>
+                              </select>
+                              <small class="text-danger" v-if="errors.pt_name">{{
+                                errors.pt_name[0]
+                              }}</small>
+                              <label for="inputEmail">Payment Type</label>
+                            </div>
+                          </div>
                         </div>
-
+                        <div class="row mb-3">
+                          <div class="col-md-12">
+                            <div class="form-floating mb-3 mb-md-0">
+                              <select class="form-select" aria-label="Default select example"
+                                v-model="form.supplier_id">
+                                <option v-for="supplier in suppliers" :key="supplier.id" :value="supplier.id">{{
+                                  supplier.name }}</option>
+                              </select>
+                              <small class="text-danger" v-if="errors.product_id">{{
+                                errors.product_id[0]
+                              }}</small>
+                              <label for="inputPhone">Supplier Name</label>
+                            </div>
+                          </div>
+                        </div>
                         <div class="mt-4 mb-0">
                           <div class="d-grid">
                             <button class="btn btn-primary btn-block">Submit</button>
@@ -582,7 +615,7 @@ export default {
       <div v-for="serial in serials" :key="serial.serial_no" class="barcode-section">
         <img v-if="serial.barcode" :src="`data:image/png;base64,${serial.barcode}`" alt="Barcode" />
         <div>
-          {{ serial.serial_no  }}
+          {{ serial.serial_no }}
         </div>
         <br>
       </div>
@@ -592,26 +625,34 @@ export default {
 
 <script>
 import axios from 'axios';
-
+import { inject } from 'vue';
 export default {
   name: "All_stocks",
   data() {
+    const userName = inject('userName');
+    const profile_img = inject('profile_img');
     return {
       Stocks: [],
       products: [],
       users: [],
       serials: [],
+      paymenttypes: [],
       form: {
         id: null,
         product_model: null,
+        paymenttype_name: null,
         user_id: null,
         stock_quantity: null,
         selling_price: null,
         buying_price: null,
         status: null,
-        stock_date: null
+        stock_date: null,
+        supplier_id: null
       },
-      errors: {}
+      suppliers: [],
+      errors: {},
+      userName,
+      profile_img,
     }
   },
   methods: {
@@ -625,37 +666,12 @@ export default {
         console.error('Error fetching serials:', error);
       }
     },
-    // printBarcodes() {
-    //   const printArea = document.getElementById('print-area');
-    //   printArea.style.display = 'block';
-    //   setTimeout(() => {
-    //     window.print();
-    //     printArea.style.display = 'none';
-    //   }, 500);
-    // },
-    // printBarcodes() {
-    //   const printArea = document.getElementById('print-area');
-    //   const pp = document.getElementById('pp');
 
-    //   // Ensure the print area is displayed
-    //   printArea.style.display = 'block';
-
-    //   // Trigger the print dialog after a short delay
-    //   setTimeout(() => {
-    //     window.print();
-
-    //     // Optionally hide the print area after printing
-    //     printArea.style.display = 'none';
-    //   }, 500);
-    // },
     printBarcodes() {
-      // Show only the barcode section
       document.getElementById('main-content').style.display = 'none';
       document.getElementById('print-area').style.display = 'block';
-
       setTimeout(() => {
         window.print();
-        // After printing, restore the visibility of the main content
         document.getElementById('main-content').style.display = 'block';
         document.getElementById('print-area').style.display = 'none';
       }, 0);
@@ -691,9 +707,20 @@ export default {
         console.error('Error fetching products:', error);
       }
     },
+    fetchSuppliers() {
+      axios
+        .get("/api/suppliers")
+        .then((response) => {
+          this.suppliers = response.data;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     async Stock_edit() {
       try {
         const response = await axios.put("/api/stocks/update", this.form);
+        console.log(response)
         let myModal = bootstrap.Modal.getInstance(
           document.getElementById("editSupplierModal")
         );
@@ -735,17 +762,29 @@ export default {
     openEditModal(stock) {
       this.form = { ...stock };
       this.form.product_model = stock.product.product_model;
+      this.form.paymenttype_name = stock.paymenttype.pt_name;
       let myModal = new bootstrap.Modal(
         document.getElementById("editSupplierModal"),
         {}
       );
       myModal.show();
     },
+    async fetch_paymenttype() {
+      await axios.get('/api/payment-types')
+        .then((res) => {
+          this.paymenttypes = res.data;
+        })
+        .catch((res) => {
+          console.log(res)
+        })
+    },
   },
   created() {
     this.fetch_stocks();
     this.fetchUsers();
     this.fetch_products();
+    this.fetch_paymenttype();
+    this.fetchSuppliers();
   }
 }
 </script>
@@ -769,7 +808,7 @@ export default {
 
 .full-width-modal .modal-content {
   width: 60%;
-  height: 79vh;
+  height: 86vh;
   margin: auto;
 }
 
@@ -782,6 +821,7 @@ export default {
   max-width: 100%;
   height: auto;
 }
+
 #print-area {
   position: absolute;
   text-align: center;
