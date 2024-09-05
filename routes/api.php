@@ -13,6 +13,7 @@ use App\Http\Controllers\Investment\InvestmentController;
 use App\Http\Controllers\PaymentType\PaymentTypeController;
 use App\Http\Controllers\POS\PosController;
 use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\Reserve\ReserveController;
 use App\Http\Controllers\Role\RoleController;
 use App\Http\Controllers\Serial\SerialController;
 use App\Http\Controllers\Stock\StockController;
@@ -105,6 +106,12 @@ Route::get('/investments', [InvestmentController::class, 'index']);
 Route::post('/investments/store', [InvestmentController::class, 'store']);
 Route::put('/investments/upate', [InvestmentController::class, 'update']);
 Route::delete('/investments/delete/{id}', [InvestmentController::class, 'delete']);
+
+//for Reserve
+Route::get('/reserves', [ReserveController::class, 'index']);
+Route::post('/reserves/store', [ReserveController::class, 'store']);
+Route::put('/reserves/upate', [ReserveController::class, 'update']);
+Route::delete('/reserves/delete/{id}', [ReserveController::class, 'delete']);
 // Route::post('/users/store',[UserController::class, 'store']);
 // Route::get('/employees', [EmployeeController::class, 'index']);
 // Route::post('/employees/store', [EmployeeController::class, 'store']);

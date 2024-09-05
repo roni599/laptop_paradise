@@ -24,4 +24,8 @@ class Paymenttype extends Model
     {
         return $this->hasMany(Investment::class);
     }
+    public function reserves()
+    {
+        return $this->hasMany(Reserve::class);
+    }
 }

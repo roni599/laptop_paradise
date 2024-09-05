@@ -321,6 +321,7 @@ export default {
       this.loading = true
       await axios.post("/api/investments/store", this.form)
         .then((res) => {
+          console.log(res)
           this.form = {
             investment_name: null,
             amount: null,

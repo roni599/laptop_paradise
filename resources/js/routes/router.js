@@ -16,15 +16,20 @@ import Category from '../components/category/Category.vue';
 
 import Product_create from '../components/product/Product_create.vue';
 import All_product from '../components/product/All_product.vue';
+import All_serials from '../components/stocks/All_serials.vue';
+
 import Stocks_create from '../components/stocks/Stocks_create.vue';
 import All_stocks from '../components/stocks/All_stocks.vue';
+
 import Supplier from '../components/supplier/Supplier.vue';
-import All_serials from '../components/stocks/All_serials.vue';
-import Expance_create from '../components/expense/Expance_create.vue';
-import All_expense from '../components/expense/All_expense.vue';
+
 import PaymentType from '../components/paymentType/PaymentType.vue';
 import Investment from '../components/paymentType/Investment.vue';
 import Reserve_table from '../components/paymentType/Reserve_table.vue';
+
+import All_expense from '../components/expense/All_expense.vue';
+import Expence_create from '../components/expense/Expence_create.vue';
+import Expence_category from '../components/expense/Expence_category.vue';
 
 const routes = [
     { name: 'LoginForm', component: Login, path: '/' },
@@ -50,12 +55,14 @@ const routes = [
 
     { name: "Supplier", component: Supplier, path: '/supplier' },
 
-    {name:"Expence_create", component:Expance_create, path:'/expence_create'},
+    {name:"Expence_category",component:Expence_category, path:'/expence_category'},
+    {name:"Expence_create", component:Expence_create, path:'/expence_create'},
     {name:"All_expense", component:All_expense, path:'/all_expense'},
 
     {name:"Payment_type", component:PaymentType, path:'/payment_type'},
     {name:"Investment",component:Investment, path:'/investment'},
     {name:"Reserve_table",component:Reserve_table,path:'/reserve_table'}
+
 ];
 
 const router = createRouter({

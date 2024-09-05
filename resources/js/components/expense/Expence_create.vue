@@ -4,10 +4,10 @@
             <div class="card-header border-bottom-0 p-4">
                 <router-link class="text-decoration-none h5" to="/home">Dashboard</router-link><span
                     class="text-muted h5"> /
-                    Expense_Category</span>
+                    Expense Create</span>
             </div>
         </div>
-        <button class="btn shadow-sm btn-primary mb-2" @click="openCreateCategoryModal()">Add Expense_Category</button>
+        <button class="btn shadow-sm btn-primary mb-2" @click="openCreateCategoryModal()">Create Expense</button>
 
         <div class="modal fade" id="createCategoryModal" tabindex="-1" aria-labelledby="createCategoryLabel"
             aria-hidden="true">
@@ -15,7 +15,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title text-muted" id="createCategoryModal">
-                            Add Expense_Category
+                            Creste Expence
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>

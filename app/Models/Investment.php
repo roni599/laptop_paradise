@@ -29,4 +29,8 @@ class Investment extends Model
     {
         return $this->belongsTo(PaymentType::class);
     }
+    public function reserves()
+    {
+        return $this->hasMany(Reserve::class);
+    }
 }

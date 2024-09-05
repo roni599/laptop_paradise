@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Investment;
 
 use App\Http\Controllers\Controller;
 use App\Models\Investment;
+use App\Models\Reserve;
 use Illuminate\Http\Request;
 
 class InvestmentController extends Controller
@@ -15,6 +16,7 @@ class InvestmentController extends Controller
     }
     public function store(Request $request)
     {
+       
         $request->validate([
             'investment_name' => 'required|string|max:255',
             'amount' => 'required|numeric|min:0',
@@ -24,7 +26,6 @@ class InvestmentController extends Controller
         ]);
 
         $investment = new Investment();
-
         $investment->In_name = $request->investment_name;
         $investment->Amount = $request->amount;
         $investment->date = $request->invest_date;
@@ -32,6 +33,15 @@ class InvestmentController extends Controller
         $investment->paymenttype_id = $request->paymenttype;
 
         $investment->save();
+
+        $investment_id = $investment->id;
+        $reserve = new Reserve();
+        $reserve->transaction_type = 'in';
+        $reserve->amount = $request->amount;
+        $reserve->investment_id = $investment_id;
+        $reserve->user_id = $request->user_id;
+        $reserve->payment_type_id = $request->paymenttype;
+        $reserve->save();
         return response()->json(['message' => 'Investment successfully Created']);
     }
     public function update(Request $request)
