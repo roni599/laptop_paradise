@@ -8,13 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class ExpenseCategory extends Model
 {
     use HasFactory;
-    protected $fillable = ['category_name', 'images', 'status', 'user_id'];
+    protected $table = 'expensecategories';
 
-    /**
-     * Get the user that owns the expense category.
-     */
+    protected $fillable = [
+        'category_name',
+        'images',
+        'status',
+        'user_id',
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class, 'expense_category_id');
     }
 }

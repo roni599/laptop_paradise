@@ -3,15 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Category\CategoryController;
-use App\Http\Controllers\Customer\CustomerController;
-use App\Http\Controllers\Employee\EmployeeController;
-use App\Http\Controllers\Expense\ExpenseController;
-use App\Http\Controllers\Expense\ExpensesCategoryController;
-use App\Http\Controllers\ExpenseCategory\ExpenseCategoryController;
-use App\Http\Controllers\Extra\ExtraController;
+use App\Http\Controllers\Expense\ExpenseCategoryController;
 use App\Http\Controllers\Investment\InvestmentController;
 use App\Http\Controllers\PaymentType\PaymentTypeController;
-use App\Http\Controllers\POS\PosController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Reserve\ReserveController;
 use App\Http\Controllers\Role\RoleController;
@@ -112,6 +106,12 @@ Route::get('/reserves', [ReserveController::class, 'index']);
 Route::post('/reserves/store', [ReserveController::class, 'store']);
 Route::put('/reserves/upate', [ReserveController::class, 'update']);
 Route::delete('/reserves/delete/{id}', [ReserveController::class, 'delete']);
+
+
+Route::get('/expensecategory', [ExpenseCategoryController::class, 'index']);
+Route::post('/expensecategory/store', [ExpenseCategoryController::class, 'store']);
+Route::put('/expensecategory/upate', [ExpenseCategoryController::class, 'update']);
+Route::delete('/expensecategory/delete/{id}', [ExpenseCategoryController::class, 'delete']);
 // Route::post('/users/store',[UserController::class, 'store']);
 // Route::get('/employees', [EmployeeController::class, 'index']);
 // Route::post('/employees/store', [EmployeeController::class, 'store']);

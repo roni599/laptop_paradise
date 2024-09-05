@@ -28,4 +28,8 @@ class Paymenttype extends Model
     {
         return $this->hasMany(Reserve::class);
     }
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class, 'payment_type_id');
+    }
 }

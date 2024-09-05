@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('expensecategories', function (Blueprint $table) {
-            $table->id();
+            $table->id(); 
             $table->string('category_name');
             $table->string('images')->nullable();
-            $table->string('status')->default(0);
+            $table->string('status')->default('0');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
