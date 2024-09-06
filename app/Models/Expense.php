@@ -11,14 +11,16 @@ class Expense extends Model
     protected $table = 'expenses';
 
     protected $fillable = [
-        'description',
+        'expenser_name',
+        'expense_des',
         'amount',
+        'cost_type',
         'date',
         'status',
         'receipt_img',
         'expense_category_id',
         'user_id',
-        'payment_type_id'
+        'payment_type_id',
     ];
 
     public function expenseCategory()

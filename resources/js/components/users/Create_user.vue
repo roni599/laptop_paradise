@@ -161,7 +161,6 @@ export default {
     },
 
     async user_create() {
-      console.log(this.form)
       this.loading = true
       await axios.post("/api/auth/signup", this.form)
         .then((res) => {

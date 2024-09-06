@@ -233,7 +233,7 @@ export default {
         reader.readAsDataURL(file);
       }
     },
-
+    
     async fetch_user() {
       await axios.get('/api/alluser')
         .then((res) => {
