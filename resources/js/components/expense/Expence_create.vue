@@ -25,14 +25,14 @@
                                 <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
                                         <select class="form-select" aria-label="Default select example"
-                                            v-model="form.expenser_name">
+                                            v-model="form.expenserName">
                                             <option v-for="userlist in userslist" :key="userlist.id"
                                                 :value="userlist.id">
                                                 {{ userlist.user_name }}
                                             </option>
                                         </select>
-                                        <small class="text-danger" v-if="errors.expenser_name">{{
-                                            errors.expenser_name[0]
+                                        <small class="text-danger" v-if="errors.expenserName">{{
+                                            errors.expenserName[0]
                                             }}</small>
                                         <label for="inputSellingPrice">Expenser Name</label>
                                     </div>
@@ -171,7 +171,7 @@ export default {
         const profile_img = inject('profile_img');
         return {
             form: {
-                expenser_name: null,
+                expenserName: null,
                 expense_description: null,
                 amount: null,
                 date: null,

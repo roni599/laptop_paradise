@@ -380,6 +380,7 @@ export default {
       this.updating = true;
       axios.put('/api/investments/upate', this.editForm)
         .then((res) => {
+          console.log(res)
           this.editForm = {
             id: null,
             edit_investment_name: null,

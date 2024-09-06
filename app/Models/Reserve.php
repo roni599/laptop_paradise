@@ -28,4 +28,8 @@ class Reserve extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function expenser()
+    {
+        return $this->belongsTo(User::class, 'expenser_id');
+    }
 }

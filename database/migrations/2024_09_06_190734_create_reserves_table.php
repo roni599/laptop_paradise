@@ -16,12 +16,20 @@ return new class extends Migration
             $table->string('transaction_type')->nullable()->default(0);
             $table->integer('amount');
             $table->string('status')->nullable()->default(0);
-            $table->unsignedBigInteger('investment_id');
-            $table->unsignedBigInteger('payment_type_id');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('investment_id')->references('id')->on('investments')->onDelete('cascade');
+
+            // Assuming you want to make expenser_id nullable
+            $table->unsignedBigInteger('expenser_id')->nullable();
+
+            $table->unsignedBigInteger('payment_type_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('investment_id')->nullable();
+
+            // Foreign key constraints
+            $table->foreign('expenser_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('payment_type_id')->references('id')->on('paymenttypes')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('investment_id')->references('id')->on('investments')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

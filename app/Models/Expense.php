@@ -11,8 +11,8 @@ class Expense extends Model
     protected $table = 'expenses';
 
     protected $fillable = [
-        'expenser_name',
-        'expense_des',
+        'expenser_id',
+        'expense_desc',
         'amount',
         'cost_type',
         'date',
@@ -20,7 +20,7 @@ class Expense extends Model
         'receipt_img',
         'expense_category_id',
         'user_id',
-        'payment_type_id',
+        'payment_type_id'
     ];
 
     public function expenseCategory()
@@ -34,5 +34,13 @@ class Expense extends Model
     public function paymentType()
     {
         return $this->belongsTo(PaymentType::class);
+    }
+    public function expenser()
+    {
+        return $this->belongsTo(User::class, 'expenser_id');
+    }
+    public function reserves()
+    {
+        return $this->hasMany(Reserve::class, 'expenser_id');
     }
 }

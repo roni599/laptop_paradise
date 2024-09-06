@@ -33,7 +33,16 @@
               <td>{{ reserve.id }}</td>
               <td>{{ reserve.transaction_type }}</td>
               <td>{{ reserve.amount }}</td>
-              <td>{{ reserve.investment.In_name }}</td>
+              <td>
+                <span v-if="!reserve.investment">
+                  {{ reserve.expenser ? reserve.expenser.user_name + ' (expenser) ' : '' }}
+                </span>
+                <span v-else-if="!reserve.expenser">
+                  {{ reserve.investment ? reserve.investment.In_name + ' (investor) ' : '' }}
+                </span>
+                <span v-else>
+                </span>
+              </td>
               <td>{{ reserve.paymenttype.pt_name }}</td>
               <td>{{ reserve.user.user_name }}</td>
               <td>
@@ -111,6 +120,7 @@ export default {
     async fetch_reserve() {
       await axios.get("/api/reserves")
         .then((res) => {
+          console.log(res)
           this.reserves = res.data
         })
         .catch((error) => {

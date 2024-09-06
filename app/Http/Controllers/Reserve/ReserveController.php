@@ -10,7 +10,7 @@ class ReserveController extends Controller
 {
     public function index()
     {
-        $payments = Reserve::with(['user', 'paymenttype', 'investment'])->get();
+        $payments = Reserve::with(['user', 'paymenttype', 'investment','expenser'])->get();
         return response()->json($payments);
     }
 }

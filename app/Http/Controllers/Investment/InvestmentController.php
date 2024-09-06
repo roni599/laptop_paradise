@@ -16,7 +16,7 @@ class InvestmentController extends Controller
     }
     public function store(Request $request)
     {
-       
+
         $request->validate([
             'investment_name' => 'required|string|max:255',
             'amount' => 'required|numeric|min:0',
@@ -63,7 +63,15 @@ class InvestmentController extends Controller
             'date' => $request->input('edit_invest_date'),
             'status' => $request->input('edit_status'),
         ]);
-        return response()->json(['message' => 'Investment Updated successfully Added']);
+
+        $reserve = Reserve::where('investment_id', $request->input('id'))->first();
+        $reserve->update([
+            'amount' => $request->input('edit_amount'),
+            'status' => $request->input('edit_status'),
+            'payment_type_id' => $request->input('edit_paymenttype'),
+        ]);
+
+        return response()->json(['message' => 'Investment Updated successfully']);
     }
     public function delete($id)
     {
