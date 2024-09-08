@@ -13,19 +13,18 @@ return new class extends Migration
     {
         Schema::create('reserves', function (Blueprint $table) {
             $table->id();
-            $table->string('transaction_type')->nullable()->default(0);
+            $table->string('transaction_type')->nullable()->default('0');
             $table->integer('amount');
-            $table->string('status')->nullable()->default(0);
+            $table->string('status')->nullable()->default('0');
 
-            // Assuming you want to make expenser_id nullable
-            $table->unsignedBigInteger('expenser_id')->nullable();
-
+            // Foreign key columns
+            $table->unsignedBigInteger('expense_id')->nullable(); 
             $table->unsignedBigInteger('payment_type_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('investment_id')->nullable();
 
             // Foreign key constraints
-            $table->foreign('expenser_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('expense_id')->references('id')->on('expenses')->onDelete('cascade');
             $table->foreign('payment_type_id')->references('id')->on('paymenttypes')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('investment_id')->references('id')->on('investments')->onDelete('cascade');

@@ -112,8 +112,18 @@ class User extends Authenticatable implements JWTSubject
     // {
     //     return $this->hasMany(Expense::class);
     // }
+    public function expenser()
+    {
+        return $this->hasMany(User::class, 'expenser_id');
+    }
     public function reserves()
     {
-        return $this->hasMany(Reserve::class, 'user_id');
+        return $this->hasMany(Reserve::class);
+    }
+
+
+    public function expenses()
+    {
+        return $this->hasMany(Expense::class, 'expenser_id');
     }
 }

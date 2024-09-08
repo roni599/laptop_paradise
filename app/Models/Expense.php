@@ -35,12 +35,29 @@ class Expense extends Model
     {
         return $this->belongsTo(PaymentType::class);
     }
-    public function expenser()
-    {
-        return $this->belongsTo(User::class, 'expenser_id');
-    }
-    public function reserves()
-    {
-        return $this->hasMany(Reserve::class, 'expenser_id');
-    }
+    // public function expenser()
+    // {
+    //     return $this->belongsTo(User::class, 'expense_id');
+    // }
+    // public function reserves()
+    // {
+    //     return $this->hasMany(Reserve::class, 'expense_id');
+    // }
+
+
+
+//     public function expenser()
+// {
+//     return $this->belongsTo(User::class, 'expenser_id');
+// }
+
+public function reserves()
+{
+    return $this->hasMany(Reserve::class, 'expense_id');
+}
+public function expenser()
+{
+    return $this->belongsTo(User::class, 'expenser_id');
+}
+
 }

@@ -35,9 +35,9 @@
               <td>{{ reserve.amount }}</td>
               <td>
                 <span v-if="!reserve.investment">
-                  {{ reserve.expenser ? reserve.expenser.user_name + ' (expenser) ' : '' }}
+                  {{ reserve.expense ? reserve.expense.expenser.user_name + ' (expenser) ' : '' }}
                 </span>
-                <span v-else-if="!reserve.expenser">
+                <span v-else-if="!reserve.expense">
                   {{ reserve.investment ? reserve.investment.In_name + ' (investor) ' : '' }}
                 </span>
                 <span v-else>

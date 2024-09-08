@@ -152,9 +152,6 @@
                       </div>
                       <div class="mt-4 mb-0">
                         <div class="d-grid">
-                          <!-- <button type="submit" class="btn btn-primary btn-block">
-                            Submit
-                          </button> -->
                           <button class="btn btn-primary w-100 mb-2" :disabled="loading">
                             <span v-if="loading" class="spinner-border spinner-border-sm me-2" role="status"
                               aria-hidden="true"></span>

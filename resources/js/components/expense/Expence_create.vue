@@ -13,7 +13,7 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div class="icon_text d-flex gap-2 mt-3">
                             <p><i class="fa-solid fa-chart-line"></i></p>
-                            <p class="text-black font-bold">Product Create</p>
+                            <p class="text-black font-bold">Expense Create</p>
                         </div>
                         <div class="code">
                             <router-link class="btn btn-sm btn-success" to="/all_expense">Expense List</router-link>
@@ -90,7 +90,7 @@
                                         <select class="form-select" readonly aria-label="Default select example"
                                             v-model="form.cost_type">
                                             <option value="1">Fixed Cost</option>
-                                            <option value="1">Running Cost</option>
+                                            <option value="2">Running Cost</option>
                                         </select>
                                         <small class="text-danger" v-if="errors.cost_type">{{ errors.cost_type[0]
                                             }}</small>
@@ -115,8 +115,8 @@
                                     <div class="form-floating mb-3 mb-md-0">
                                         <select class="form-select" aria-label="Default select example"
                                             v-model="form.expensecategory">
-                                            <option v-for="expensecategory in expensecategories" :key="expensecategory.id"
-                                                :value="expensecategory.id">
+                                            <option v-for="expensecategory in expensecategories"
+                                                :key="expensecategory.id" :value="expensecategory.id">
                                                 {{ expensecategory.category_name }}
                                             </option>
                                         </select>
@@ -176,7 +176,7 @@ export default {
                 amount: null,
                 date: null,
                 user_id: null,
-                expensecategory:null,
+                expensecategory: null,
                 paymenttype: null,
                 cost_type: null,
                 image: '/backend/assets/img/pic.jpeg',
@@ -196,13 +196,17 @@ export default {
             this.loading = true
             await axios.post("/api/expense/store", this.form)
                 .then((res) => {
-                    console.log(res)
+                    Toast.fire({
+                        icon: "success",
+                        title: res.data.message
+                    });
+                    this.$router.push({ name: 'All_expense' })
                 })
                 .catch((error) => {
                     this.errors = error.response.data.errors;
                 })
-                .finally(()=>{
-                    this.loading=false
+                .finally(() => {
+                    this.loading = false
                 })
         },
         onFileSelect(event) {
