@@ -129,7 +129,7 @@
                         <label for="inputAddress">Stocks ID</label>
                       </div>
                     </div>
-                    <div class="col-md-4 me-2">
+                    <!-- <div class="col-md-4 me-2">
                       <div class="form-floating mb-3 mb-md-0">
                         <input class="form-control" v-model="row.serial_no" />
                         <small class="text-danger" v-if="errors.serial_no">{{
@@ -137,7 +137,16 @@
                         }}</small>
                         <label for="inputAddress">Serial Number</label>
                       </div>
+                    </div> -->
+                    <div class="col-md-4 me-2">
+                      <div class="form-floating mb-3 mb-md-0">
+                        <input class="form-control" v-model="row.serial_no" @keydown.enter.prevent="focusNext(index)"
+                          :ref="'barcode-' + index" :id="'serial-no-' + index" />
+                        <small class="text-danger" v-if="row.errors.serial_no">{{ row.errors.serial_no[0] }}</small>
+                        <label :for="'serial-no-' + index">Serial Number</label>
+                      </div>
                     </div>
+
                     <div class="col-md-4 me-2">
                       <div class="form-floating mb-3 mb-md-0">
                         <input class="form-control" v-model="row.color" />
@@ -207,7 +216,7 @@ export default {
         supplier_id: null
       },
       errors: {},
-      suppliers:[],
+      suppliers: [],
       users: [],
       products: [],
       stocksId: null,
@@ -238,6 +247,20 @@ export default {
           this.errors = error.response.data.errors;
         });
     },
+    // initializeRows() {
+    //   this.rows = [];
+    //   for (let i = 0; i < this.form.stock_quantity; i++) {
+    //     this.rows.push({
+    //       stocksId: this.stocksId,
+    //       serial_no: null,
+    //       color: null,
+    //       userid: this.form.user_id,
+    //       image: "/backend/assets/img/pic.jpeg",
+    //       errors: {},
+    //     });
+    //   }
+    // },
+
     initializeRows() {
       this.rows = [];
       for (let i = 0; i < this.form.stock_quantity; i++) {
@@ -250,6 +273,25 @@ export default {
           errors: {},
         });
       }
+      this.focusFirstInput(); // Automatically focus the first input after initialization
+    },
+
+    focusNext(index) {
+      this.$nextTick(() => {
+        const nextInput = this.$refs[`barcode-${index + 1}`]?.[0];
+        if (nextInput) {
+          nextInput.focus();
+        }
+      });
+    },
+
+    focusFirstInput() {
+      this.$nextTick(() => {
+        const firstInput = this.$refs['barcode-0']?.[0];
+        if (firstInput) {
+          firstInput.focus();
+        }
+      });
     },
     handleImageUpload(index, event) {
       let file = event.target.files[0];

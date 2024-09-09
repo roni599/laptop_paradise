@@ -207,6 +207,7 @@ export default {
     async feth_Serials() {
       await axios.get("/api/serials")
         .then((res) => {
+          console.log(res)
           this.Serials = res.data
         })
         .catch((error) => {
