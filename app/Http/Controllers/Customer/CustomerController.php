@@ -15,111 +15,115 @@ class CustomerController extends Controller
         $customer = Customer::all();
         return response()->json($customer);
     }
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:customers,email',
-            'address' => 'required|string|max:255',
-            'phone' => 'required|string|max:15',
-            'nid' => 'required|string|max:20',
-            'image' => 'nullable|string',
-        ]);
 
-        $customer = new Customer();
-
-        $customer->name = $request->name;
-        $customer->email = $request->email;
-        $customer->address = $request->address;
-        $customer->phone = $request->phone;
-        $customer->nid = $request->nid;
-
-        $imageName = '';
-        if ($request->image) {
-            $position = strpos($request->image, ';');
-            $sub = substr($request->image, 0, $position);
-            $ext = explode('/', $sub)[1];
-            $imageName = rand(1, 1000) . '_' . $request->name . '.' . $ext;
-            $image = str_replace('data:image/' . $ext . ';base64,', '', $request->image);
-            $image = str_replace(' ', '+', $image);
-
-            $imagePath = public_path('backend/images/customer/' . $imageName);
-
-            // Ensure the directory exists
-            if (!File::isDirectory(public_path('backend/images/customer'))) {
-                File::makeDirectory(public_path('backend/images/customer'), 0755, true, true);
-            }
-
-            File::put($imagePath, base64_decode($image));
-            $customer->image = $imageName;
-        }
-
-        $customer->save();
-
-        return response()->json(['message' => 'Customer created successfully']);
+    public function store(Request $request){
+        return response()->json($request->all());
     }
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'email' => 'required|email|unique:customers,email',
+    //         'address' => 'required|string|max:255',
+    //         'phone' => 'required|string|max:15',
+    //         'nid' => 'required|string|max:20',
+    //         'image' => 'nullable|string',
+    //     ]);
 
-    public function delete($id)
-    {
-        $customer = Customer::find($id);
-        $image = $customer->image;
-        $imagePath = public_path('backend/images/customer/' . $image);
-        if ($image && file_exists($imagePath)) {
-            unlink($imagePath);
-            $customer->delete();
-        } else {
-            $customer->delete();
-        }
-    }
+    //     $customer = new Customer();
 
-    public function update(Request $request)
-    {
-        $request->validate([
-            'id' => 'required|exists:customers,id',
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:customers,email,' . $request->id,
-            'address' => 'required|string|max:255',
-            'phone' => 'required|string|max:15',
-            'nid' => 'required|string|max:20',
-            'image' => 'nullable|string',
-        ]);
+    //     $customer->name = $request->name;
+    //     $customer->email = $request->email;
+    //     $customer->address = $request->address;
+    //     $customer->phone = $request->phone;
+    //     $customer->nid = $request->nid;
 
-        $customer = Customer::find($request->id);
-        if (!$customer) {
-            return response()->json(['message' => 'Employee not found'], 404);
-        }
+    //     $imageName = '';
+    //     if ($request->image) {
+    //         $position = strpos($request->image, ';');
+    //         $sub = substr($request->image, 0, $position);
+    //         $ext = explode('/', $sub)[1];
+    //         $imageName = rand(1, 1000) . '_' . $request->name . '.' . $ext;
+    //         $image = str_replace('data:image/' . $ext . ';base64,', '', $request->image);
+    //         $image = str_replace(' ', '+', $image);
 
-        $customer->update($request->only('name', 'email', 'address', 'phone', 'nid'));
+    //         $imagePath = public_path('backend/images/customer/' . $imageName);
 
-        if ($request->has('image') && strpos($request->image, 'data:image/') === 0) {
-            $imagePath = public_path('backend/images/customer/' . $customer->image);
-            if ($customer->image && file_exists($imagePath)) {
-                unlink($imagePath);
-            }
+    //         // Ensure the directory exists
+    //         if (!File::isDirectory(public_path('backend/images/customer'))) {
+    //             File::makeDirectory(public_path('backend/images/customer'), 0755, true, true);
+    //         }
 
-            $position = strpos($request->image, ';');
-            $sub = substr($request->image, 0, $position);
-            $ext = explode('/', $sub)[1];
-            $imageName = rand(1, 1000) . '_' . $request->name . '.' . $ext;
-            $image = str_replace('data:image/' . $ext . ';base64,', '', $request->image);
-            $image = str_replace(' ', '+', $image);
+    //         File::put($imagePath, base64_decode($image));
+    //         $customer->image = $imageName;
+    //     }
 
-            $imagePath = public_path('backend/images/customer/' . $imageName);
-            if (!File::isDirectory(public_path('backend/images/customer'))) {
-                File::makeDirectory(public_path('backend/images/customer'), 0755, true, true);
-            }
+    //     $customer->save();
 
-            File::put($imagePath, base64_decode($image));
-            $customer->image = $imageName;
-        }
+    //     return response()->json(['message' => 'Customer created successfully']);
+    // }
 
-        $customer->save();
+    // public function delete($id)
+    // {
+    //     $customer = Customer::find($id);
+    //     $image = $customer->image;
+    //     $imagePath = public_path('backend/images/customer/' . $image);
+    //     if ($image && file_exists($imagePath)) {
+    //         unlink($imagePath);
+    //         $customer->delete();
+    //     } else {
+    //         $customer->delete();
+    //     }
+    // }
 
-        return response()->json(['message' => 'Customer updated successfully']);
-    }
+    // public function update(Request $request)
+    // {
+    //     $request->validate([
+    //         'id' => 'required|exists:customers,id',
+    //         'name' => 'required|string|max:255',
+    //         'email' => 'required|email|unique:customers,email,' . $request->id,
+    //         'address' => 'required|string|max:255',
+    //         'phone' => 'required|string|max:15',
+    //         'nid' => 'required|string|max:20',
+    //         'image' => 'nullable|string',
+    //     ]);
 
-    public function subproduct($id){
-        $category=Product::where('category_id',$id)->get();
-        return response()->json($category);
-    }
+    //     $customer = Customer::find($request->id);
+    //     if (!$customer) {
+    //         return response()->json(['message' => 'Employee not found'], 404);
+    //     }
+
+    //     $customer->update($request->only('name', 'email', 'address', 'phone', 'nid'));
+
+    //     if ($request->has('image') && strpos($request->image, 'data:image/') === 0) {
+    //         $imagePath = public_path('backend/images/customer/' . $customer->image);
+    //         if ($customer->image && file_exists($imagePath)) {
+    //             unlink($imagePath);
+    //         }
+
+    //         $position = strpos($request->image, ';');
+    //         $sub = substr($request->image, 0, $position);
+    //         $ext = explode('/', $sub)[1];
+    //         $imageName = rand(1, 1000) . '_' . $request->name . '.' . $ext;
+    //         $image = str_replace('data:image/' . $ext . ';base64,', '', $request->image);
+    //         $image = str_replace(' ', '+', $image);
+
+    //         $imagePath = public_path('backend/images/customer/' . $imageName);
+    //         if (!File::isDirectory(public_path('backend/images/customer'))) {
+    //             File::makeDirectory(public_path('backend/images/customer'), 0755, true, true);
+    //         }
+
+    //         File::put($imagePath, base64_decode($image));
+    //         $customer->image = $imageName;
+    //     }
+
+    //     $customer->save();
+
+    //     return response()->json(['message' => 'Customer updated successfully']);
+    // }
+
+    // public function subproduct($id){
+    //     $category=Product::where('category_id',$id)->get();
+    //     return response()->json($category);
+    // }
 }

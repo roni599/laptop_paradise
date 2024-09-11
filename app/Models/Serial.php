@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Serial extends Model
 {
     use HasFactory;
-    protected $fillable = ['serial_no', 'color', 'image', 'status', 'return_status', 'stock_id','barcode_image'];
+    protected $fillable = ['serial_no', 'color', 'image', 'status', 'return_status', 'stock_id', 'barcode_image'];
 
     public function stock()
     {
@@ -18,5 +18,8 @@ class Serial extends Model
     {
         return $this->belongsTo(User::class);
     }
-
+    public function bills()
+    {
+        return $this->hasMany(Bill::class);
+    }
 }

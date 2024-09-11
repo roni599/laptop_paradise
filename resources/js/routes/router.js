@@ -30,6 +30,7 @@ import Reserve_table from '../components/paymentType/Reserve_table.vue';
 import All_expense from '../components/expense/All_expense.vue';
 import Expence_create from '../components/expense/Expence_create.vue';
 import Expence_category from '../components/expense/Expence_category.vue';
+import Bill_generate from '../components/bill/Bill_generate.vue';
 
 const routes = [
     { name: 'LoginForm', component: Login, path: '/' },
@@ -61,7 +62,9 @@ const routes = [
 
     {name:"Payment_type", component:PaymentType, path:'/payment_type'},
     {name:"Investment",component:Investment, path:'/investment'},
-    {name:"Reserve_table",component:Reserve_table,path:'/reserve_table'}
+    {name:"Reserve_table",component:Reserve_table,path:'/reserve_table'},
+
+    {name:"Bill", component:Bill_generate, path:'/bill_generate'}
 
 ];
 

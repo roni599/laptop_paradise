@@ -129,4 +129,20 @@ class SerialController extends Controller
         }
         return response()->json($serialsWithBarcodes);
     }
+    public function searchBarcode(Request $request)
+    {
+        // return response()->json($request->all());
+        $barcode = $request->input('barcode');
+
+        // $item = Serial::where('serial_no', $barcode)->first();
+        // $serial = Serial::with(['stock', 'user'])
+        //     ->where('serial_no', $barcode)
+        //     ->first();
+        $serial = Serial::with(['stock.product', 'user'])
+            ->where('serial_no', $barcode)
+            ->first();
+
+        return response()->json($serial);
+    }
+    
 }

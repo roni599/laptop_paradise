@@ -8,7 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Customer extends Model
 {
     use HasFactory;
-    protected $fillable=[
-        'name','email','phone','nid','address','image'
+
+    protected $fillable = [
+        'customer_name',
+        'phone',
+        'address',
+        'email',
+        'dob',
+        'nid',
+        'status',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

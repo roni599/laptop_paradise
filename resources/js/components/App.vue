@@ -160,10 +160,9 @@
 
 
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                data-bs-target="#collapseExpense" aria-expanded="false"
-                                aria-controls="collapseLayouts">
+                                data-bs-target="#collapseExpense" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon">
-                                    <i class="fas fa-money-bill-wave"></i> 
+                                    <i class="fas fa-money-bill-wave"></i>
                                 </div>
                                 Expence
                                 <div class="sb-sidenav-collapse-arrow">
@@ -197,6 +196,16 @@
                                     <router-link class="nav-link" to="/all_serials">Serials List</router-link>
                                 </nav>
                             </div>
+
+                            <router-link to="/bill_generate" class="nav-link collapsed">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-receipt"></i>
+                                </div>
+                                Bill Generate
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </router-link>
 
                             <!-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                                 data-bs-target="#collapseExpense" aria-expanded="false" aria-controls="collapseLayouts">

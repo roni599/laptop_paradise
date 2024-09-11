@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Bill\BillController;
 use App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Category\CategoryController;
+use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Expense\ExpenseCategoryController;
 use App\Http\Controllers\Expense\ExpenseController;
 use App\Http\Controllers\Investment\InvestmentController;
@@ -89,6 +91,8 @@ Route::get('/serials', [SerialController::class, 'index']);
 Route::post('/serials/store', [SerialController::class, 'store']);
 Route::put('/serials/upate', [SerialController::class, 'update']);
 Route::delete('/serials/delete/{id}', [SerialController::class, 'delete']);
+Route::post('/barcode-search', [SerialController::class, 'searchBarcode']);
+Route::post('/submit-sale', [SerialController::class, 'submit_sale']);
 
 //for paymentType
 Route::get('/payment-types', [PaymentTypeController::class, 'index']);
@@ -119,6 +123,17 @@ Route::get('/expense', [ExpenseController::class, 'index']);
 Route::post('/expense/store', [ExpenseController::class, 'store']);
 Route::put('/expense/upate', [ExpenseController::class, 'update']);
 Route::delete('/expense/delete/{id}', [ExpenseController::class, 'delete']);
+
+
+Route::get('/customers', [CustomerController::class, 'index']);
+Route::post('/customers/store', [CustomerController::class, 'store']);
+Route::put('/customers/update', [CustomerController::class, 'CategoryUpdate']);
+Route::delete('/customers/delete/{id}', [CustomerController::class, 'delete']);
+
+Route::get('/bills', [BillController::class, 'index']);
+Route::post('/bills/store', [BillController::class, 'store']);
+Route::put('/bills/update', [BillController::class, 'CategoryUpdate']);
+Route::delete('/bills/delete/{id}', [BillController::class, 'delete']);
 // Route::post('/users/store',[UserController::class, 'store']);
 // Route::get('/employees', [EmployeeController::class, 'index']);
 // Route::post('/employees/store', [EmployeeController::class, 'store']);
