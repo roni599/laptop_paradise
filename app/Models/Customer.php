@@ -24,4 +24,17 @@ class Customer extends Model
     {
         return $this->belongsTo(User::class);
     }
+    // Customer.php
+    // public function bills()
+    // {
+    //     return $this->hasMany(Bill::class);
+    // }
+    public function bills()
+    {
+        return $this->hasMany(Bill::class)->distinct('paymenttype_id');
+    }
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }

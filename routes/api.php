@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Bill\BillController;
 use App\Http\Controllers\Brand\BrandController;
+use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\CartItem\CartItemController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Expense\ExpenseCategoryController;
@@ -134,6 +136,10 @@ Route::get('/bills', [BillController::class, 'index']);
 Route::post('/bills/store', [BillController::class, 'store']);
 Route::put('/bills/update', [BillController::class, 'CategoryUpdate']);
 Route::delete('/bills/delete/{id}', [BillController::class, 'delete']);
+
+
+Route::get('/carts', [CartController::class, 'index']);
+Route::get('/cartsitmes', [CartItemController::class, 'index']);
 // Route::post('/users/store',[UserController::class, 'store']);
 // Route::get('/employees', [EmployeeController::class, 'index']);
 // Route::post('/employees/store', [EmployeeController::class, 'store']);

@@ -36,4 +36,10 @@ class Paymenttype extends Model
     {
         return $this->hasMany(Bill::class);
     }
+
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
+
 }

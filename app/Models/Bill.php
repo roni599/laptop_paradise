@@ -14,14 +14,14 @@ class Bill extends Model
 
     // The attributes that are mass assignable.
     protected $fillable = [
+        'bill_id',
         'total_price',
-        'quantity',
-        'price',
+        // 'quantity',
+        // 'price',
         'status',
         'customer_id',
-        'paymenttype_id',
         'user_id',
-        'serial_id',
+        'cart_id'
     ];
 
     // Define relationships if necessary
@@ -43,5 +43,13 @@ class Bill extends Model
     public function serial()
     {
         return $this->belongsTo(Serial::class);
+    }
+    public function cart()
+    {
+        return $this->belongsTo(Cart::class);
+    }
+    public function reserves()
+    {
+        return $this->hasMany(Reserve::class);
     }
 }

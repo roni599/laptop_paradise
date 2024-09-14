@@ -14,11 +14,11 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
-            $table->string('customer_name');
-            $table->string('phone');
-            $table->text('address');
+            $table->string('customer_name')->nullable();
+            $table->string('phone')->nullable();
+            $table->text('address')->nullable();
             $table->string('email')->nullable();
-            $table->date('dob')->default(DB::raw('CURDATE()'));
+            $table->string('dob')->default(DB::raw('CURDATE()'));
             $table->string('nid')->nullable();
             $table->string('status')->default(1);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');

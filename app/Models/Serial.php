@@ -22,4 +22,8 @@ class Serial extends Model
     {
         return $this->hasMany(Bill::class);
     }
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }

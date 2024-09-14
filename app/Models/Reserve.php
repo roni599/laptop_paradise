@@ -9,13 +9,13 @@ class Reserve extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'transaction_type',
-        'amount',
-        'status',
-        'investment_id',
-        'payment_type_id',
-        'user_id',
+        'transaction_type', 'amount', 'status', 'expense_id', 'payment_type_id', 'user_id', 'investment_id', 'bill_id'
     ];
+
+    public function bill()
+    {
+        return $this->belongsTo(Bill::class);
+    }
     // public function investment()
     // {
     //     return $this->belongsTo(Investment::class);

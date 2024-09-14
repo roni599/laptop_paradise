@@ -16,6 +16,7 @@
                 </div>
                 <div class="addNew">
                     <router-link to="/product_create" class="btn btn-sm btn-success">Add New</router-link>
+                    <button class="btn btn-sm btn-success ms-2" @click="exportToExcel">Export to Excel</button>
                 </div>
             </div>
             <div class="card-body">
@@ -210,6 +211,7 @@
 <script>
 import axios from 'axios';
 import { inject } from 'vue';
+import * as XLSX from "xlsx";
 export default {
     name: "AllProduct",
     data() {
@@ -247,6 +249,34 @@ export default {
         },
     },
     methods: {
+
+        exportToExcel() {
+            // Prepare data for Excel export
+            const exportData = this.filteredProducts.map(product => ({
+                "Product ID": product.id,
+                "Product Model": product.product_model,
+                "Specification": product.specification,
+                "Quantity": product.quantity,
+                "Touch Status": product.touch_status,
+                "Discount": product.discount,
+                "Stored By": product.user.user_name,
+                "Category Name": product.category.cat_name,
+                "Brand Name": product.brand.brand_name
+            }));
+
+            // Create a new worksheet from the data
+            const worksheet = XLSX.utils.json_to_sheet(exportData);
+
+            // Create a new workbook and append the worksheet
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Products");
+
+            // Trigger file download
+            XLSX.writeFile(workbook, "Product_Table.xlsx");
+        },
+
+
+
         async fetch_products() {
             await axios.get("/api/products")
                 .then((res) => {
